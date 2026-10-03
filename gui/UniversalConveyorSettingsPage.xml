@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+<GUI>
+    <GuiElement profile="fs25_menuContainer">
+        <BoxLayout profile="fs25_subCategorySelectorTabbedBox">
+            <Button profile="fs25_subCategorySelectorTabbedTab" id="uchConveyorSettingsTab" text="$l10n_uch_ui_folders" onClick="onClickConveyorSettings">
+                <ThreePartBitmap profile="fs25_subCategorySelectorTabbedTabBg" name="background"/>
+            </Button>
+        </BoxLayout>
+
+        <GuiElement profile="fs25_subCategorySelectorTabbedContainer" id="uchConveyorSettingsPage">
+            <!-- Fully opaque custom background; do not use the native fullScreenBackground here because it contains transparent UI layers. -->
+            <Bitmap profile="uch_pageBackground" id="uchPageBackground"/>
+            <ScrollingLayout profile="fs25_settingsLayout" id="conveyorSettingsLayout">
+                <Bitmap profile="uch_headerRow" id="uchHeaderRow">
+                    <Text profile="uch_headerType" text="$l10n_uch_ui_type"/>
+                    <Text profile="uch_headerName" text="$l10n_uch_ui_name"/>
+                    <Text profile="uch_headerAutomation" text="$l10n_uch_ui_automation"/>
+                    <Text profile="uch_headerTeleport" text="$l10n_uch_ui_teleport"/>
+                </Bitmap>
+
+                <Bitmap profile="uch_row" id="row1">
+                    <Text profile="uch_typeText" id="type1" text="" onFocus="onFocusType"/>
+                    <TextInput profile="uch_nameInput" id="name1" text="" maxCharacters="40" textColor="1 1 1 1" textHighlightedColor="1 1 1 1" textSelectedColor="1 1 1 1" textDisabledColor="1 1 1 1" imeTitle="$l10n_uch_ui_conveyorName" imeDescription="$l10n_uch_ui_conveyorNameDescription" imePlaceholder="$l10n_uch_ui_conveyorNamePlaceholder" onEnterPressed="onEnterName" onFocus="onFocusName" onFocusLeave="onFocusLeaveName"/>
+                    <BinaryOption profile="uch_enabled" id="enabled1" onClick="onClickCheckbox" onFocus="onFocusAutomation" onHighlight="onFocusAutomation" onHighlightRemove="onHighlightRemove">
+                    </BinaryOption>
+                    <Button profile="uch_teleport" id="teleport1" text="$l10n_uch_ui_teleportButton" onClick="onClickTeleport" onFocus="onFocusTeleport" onHighlight="onFocusTeleport" onHighlightRemove="onHighlightRemove"/>
+                </Bitmap>
+                <Bitmap profile="uch_row" id="row2">
+                    <Text profile="uch_typeText" id="type2" text="" onFocus="onFocusType"/>
+                    <TextInput profile="uch_nameInput" id="name2" text="" maxCharacters="40" textColor="1 1 1 1" textHighlightedColor="1 1 1 1" textSelectedColor="1 1 1 1" textDisabledColor="1 1 1 1" imeTitle="$l10n_uch_ui_conveyorName" imeDescription="$l10n_uch_ui_conveyorNameDescription" imePlaceholder="$l10n_uch_ui_conveyorNamePlaceholder" onEnterPressed="onEnterName" onFocus="onFocusName" onFocusLeave="onFocusLeaveName"/>
+                    <BinaryOption profile="uch_enabled" id="enabled2" onClick="onClickCheckbox" onFocus="onFocusAutomation" onHighlight="onFocusAutomation" onHighlightRemove="onHighlightRemove">
+                    </BinaryOption>
+                    <Button profile="uch_teleport" id="teleport2" text="$l10n_uch_ui_teleportButton" onClick="onClickTeleport" onFocus="onFocusTeleport" onHighlight="onFocusTeleport" onHighlightRemove="onHighlightRemove"/>
+                </Bitmap>
+                <Bitmap profile="uch_row" id="row3">
+                    <Text profile="uch_typeText" id="type3" text="" onFocus="onFocusType"/>
+                    <TextInput profile="uch_nameInput" id="name3" text="" maxCharacters="40" textColor="1 1 1 1" textHighlightedColor="1 1 1 1" textSelectedColor="1 1 1 1" textDisabledColor="1 1 1 1" imeTitle="$l10n_uch_ui_conveyorName" imeDescription="$l10n_uch_ui_conveyorNameDescription" imePlaceholder="$l10n_uch_ui_conveyorNamePlaceholder" onEnterPressed="onEnterName" onFocus="onFocusName" onFocusLeave="onFocusLeaveName"/>
+                    <BinaryOption profile="uch_enabled" id="enabled3" onClick="onClickCheckbox" onFocus="onFocusAutomation" onHighlight="onFocusAutomation" onHighlightRemove="onHighlightRemove">
+                    </BinaryOption>
+                    <Button profile="uch_teleport" id="teleport3" text="$l10n_uch_ui_teleportButton" onClick="onClickTeleport" onFocus="onFocusTeleport" onHighlight="onFocusTeleport" onHighlightRemove="onHighlightRemove"/>
+                </Bitmap>
+                <Bitmap profile="uch_row" id="row4">
+                    <Text profile="uch_typeText" id="type4" text="" onFocus="onFocusType"/>
+                    <TextInput profile="uch_nameInput" id="name4" text="" maxCharacters="40" textColor="1 1 1 1" textHighlightedColor="1 1 1 1" textSelectedColor="1 1 1 1" textDisabledColor="1 1 1 1" imeTitle="$l10n_uch_ui_conveyorName" imeDescription="$l10n_uch_ui_conveyorNameDescription" imePlaceholder="$l10n_uch_ui_conveyorNamePlaceholder" onEnterPressed="onEnterName" onFocus="onFocusName" onFocusLeave="onFocusLeaveName"/>
+                    <BinaryOption profile="uch_enabled" id="enabled4" onClick="onClickCheckbox" onFocus="onFocusAutomation" onHighlight="onFocusAutomation" onHighlightRemove="onHighlightRemove">
+                    </BinaryOption>
+                    <Button profile="uch_teleport" id="teleport4" text="$l10n_uch_ui_teleportButton" onClick="onClickTeleport" onFocus="onFocusTeleport" onHighlight="onFocusTeleport" onHighlightRemove="onHighlightRemove"/>
+                </Bitmap>
+                <Bitmap profile="uch_row" id="row5">
+                    <Text profile="uch_typeText" id="type5" text="" onFocus="onFocusType"/>
+                    <TextInput profile="uch_nameInput" id="name5" text="" maxCharacters="40" textColor="1 1 1 1" textHighlightedColor="1 1 1 1" textSelectedColor="1 1 1 1" textDisabledColor="1 1 1 1" imeTitle="$l10n_uch_ui_conveyorName" imeDescription="$l10n_uch_ui_conveyorNameDescription" imePlaceholder="$l10n_uch_ui_conveyorNamePlaceholder" onEnterPressed="onEnterName" onFocus="onFocusName" onFocusLeave="onFocusLeaveName"/>
+                    <BinaryOption profile="uch_enabled" id="enabled5" onClick="onClickCheckbox" onFocus="onFocusAutomation" onHighlight="onFocusAutomation" onHighlightRemove="onHighlightRemove">
+                    </BinaryOption>
+                    <Button profile="uch_teleport" id="teleport5" text="$l10n_uch_ui_teleportButton" onClick="onClickTeleport" onFocus="onFocusTeleport" onHighlight="onFocusTeleport" onHighlightRemove="onHighlightRemove"/>
+                </Bitmap>
+                <Bitmap profile="uch_row" id="row6">
+                    <Text profile="uch_typeText" id="type6" text="" onFocus="onFocusType"/>
+                    <TextInput profile="uch_nameInput" id="name6" text="" maxCharacters="40" textColor="1 1 1 1" textHighlightedColor="1 1 1 1" textSelectedColor="1 1 1 1" textDisabledColor="1 1 1 1" imeTitle="$l10n_uch_ui_conveyorName" imeDescription="$l10n_uch_ui_conveyorNameDescription" imePlaceholder="$l10n_uch_ui_conveyorNamePlaceholder" onEnterPressed="onEnterName" onFocus="onFocusName" onFocusLeave="onFocusLeaveName"/>
+                    <BinaryOption profile="uch_enabled" id="enabled6" onClick="onClickCheckbox" onFocus="onFocusAutomation" onHighlight="onFocusAutomation" onHighlightRemove="onHighlightRemove">
+                    </BinaryOption>
+                    <Button profile="uch_teleport" id="teleport6" text="$l10n_uch_ui_teleportButton" onClick="onClickTeleport" onFocus="onFocusTeleport" onHighlight="onFocusTeleport" onHighlightRemove="onHighlightRemove"/>
+                </Bitmap>
+                <Bitmap profile="uch_row" id="row7">
+                    <Text profile="uch_typeText" id="type7" text="" onFocus="onFocusType"/>
+                    <TextInput profile="uch_nameInput" id="name7" text="" maxCharacters="40" textColor="1 1 1 1" textHighlightedColor="1 1 1 1" textSelectedColor="1 1 1 1" textDisabledColor="1 1 1 1" imeTitle="$l10n_uch_ui_conveyorName" imeDescription="$l10n_uch_ui_conveyorNameDescription" imePlaceholder="$l10n_uch_ui_conveyorNamePlaceholder" onEnterPressed="onEnterName" onFocus="onFocusName" onFocusLeave="onFocusLeaveName"/>
+                    <BinaryOption profile="uch_enabled" id="enabled7" onClick="onClickCheckbox" onFocus="onFocusAutomation" onHighlight="onFocusAutomation" onHighlightRemove="onHighlightRemove">
+                    </BinaryOption>
+                    <Button profile="uch_teleport" id="teleport7" text="$l10n_uch_ui_teleportButton" onClick="onClickTeleport" onFocus="onFocusTeleport" onHighlight="onFocusTeleport" onHighlightRemove="onHighlightRemove"/>
+                </Bitmap>
+                <Bitmap profile="uch_row" id="row8">
+                    <Text profile="uch_typeText" id="type8" text="" onFocus="onFocusType"/>
+                    <TextInput profile="uch_nameInput" id="name8" text="" maxCharacters="40" textColor="1 1 1 1" textHighlightedColor="1 1 1 1" textSelectedColor="1 1 1 1" textDisabledColor="1 1 1 1" imeTitle="$l10n_uch_ui_conveyorName" imeDescription="$l10n_uch_ui_conveyorNameDescription" imePlaceholder="$l10n_uch_ui_conveyorNamePlaceholder" onEnterPressed="onEnterName" onFocus="onFocusName" onFocusLeave="onFocusLeaveName"/>
+                    <BinaryOption profile="uch_enabled" id="enabled8" onClick="onClickCheckbox" onFocus="onFocusAutomation" onHighlight="onFocusAutomation" onHighlightRemove="onHighlightRemove">
+                    </BinaryOption>
+                    <Button profile="uch_teleport" id="teleport8" text="$l10n_uch_ui_teleportButton" onClick="onClickTeleport" onFocus="onFocusTeleport" onHighlight="onFocusTeleport" onHighlightRemove="onHighlightRemove"/>
+                </Bitmap>
+                <Bitmap profile="uch_row" id="row9">
+                    <Text profile="uch_typeText" id="type9" text="" onFocus="onFocusType"/>
+                    <TextInput profile="uch_nameInput" id="name9" text="" maxCharacters="40" textColor="1 1 1 1" textHighlightedColor="1 1 1 1" textSelectedColor="1 1 1 1" textDisabledColor="1 1 1 1" imeTitle="$l10n_uch_ui_conveyorName" imeDescription="$l10n_uch_ui_conveyorNameDescription" imePlaceholder="$l10n_uch_ui_conveyorNamePlaceholder" onEnterPressed="onEnterName" onFocus="onFocusName" onFocusLeave="onFocusLeaveName"/>
+                    <BinaryOption profile="uch_enabled" id="enabled9" onClick="onClickCheckbox" onFocus="onFocusAutomation" onHighlight="onFocusAutomation" onHighlightRemove="onHighlightRemove">
+                    </BinaryOption>
+                    <Button profile="uch_teleport" id="teleport9" text="$l10n_uch_ui_teleportButton" onClick="onClickTeleport" onFocus="onFocusTeleport" onHighlight="onFocusTeleport" onHighlightRemove="onHighlightRemove"/>
+                </Bitmap>
+                <Bitmap profile="uch_row" id="row10">
+                    <Text profile="uch_typeText" id="type10" text="" onFocus="onFocusType"/>
+                    <TextInput profile="uch_nameInput" id="name10" text="" maxCharacters="40" textColor="1 1 1 1" textHighlightedColor="1 1 1 1" textSelectedColor="1 1 1 1" textDisabledColor="1 1 1 1" imeTitle="$l10n_uch_ui_conveyorName" imeDescription="$l10n_uch_ui_conveyorNameDescription" imePlaceholder="$l10n_uch_ui_conveyorNamePlaceholder" onEnterPressed="onEnterName" onFocus="onFocusName" onFocusLeave="onFocusLeaveName"/>
+                    <BinaryOption profile="uch_enabled" id="enabled10" onClick="onClickCheckbox" onFocus="onFocusAutomation" onHighlight="onFocusAutomation" onHighlightRemove="onHighlightRemove">
+                    </BinaryOption>
+                    <Button profile="uch_teleport" id="teleport10" text="$l10n_uch_ui_teleportButton" onClick="onClickTeleport" onFocus="onFocusTeleport" onHighlight="onFocusTeleport" onHighlightRemove="onHighlightRemove"/>
+                </Bitmap>
+                <Bitmap profile="uch_row" id="row11">
+                    <Text profile="uch_typeText" id="type11" text="" onFocus="onFocusType"/>
+                    <TextInput profile="uch_nameInput" id="name11" text="" maxCharacters="40" textColor="1 1 1 1" textHighlightedColor="1 1 1 1" textSelectedColor="1 1 1 1" textDisabledColor="1 1 1 1" imeTitle="$l10n_uch_ui_conveyorName" imeDescription="$l10n_uch_ui_conveyorNameDescription" imePlaceholder="$l10n_uch_ui_conveyorNamePlaceholder" onEnterPressed="onEnterName" onFocus="onFocusName" onFocusLeave="onFocusLeaveName"/>
+                    <BinaryOption profile="uch_enabled" id="enabled11" onClick="onClickCheckbox" onFocus="onFocusAutomation" onHighlight="onFocusAutomation" onHighlightRemove="onHighlightRemove">
+                    </BinaryOption>
+                    <Button profile="uch_teleport" id="teleport11" text="$l10n_uch_ui_teleportButton" onClick="onClickTeleport" onFocus="onFocusTeleport" onHighlight="onFocusTeleport" onHighlightRemove="onHighlightRemove"/>
+                </Bitmap>
+                <Bitmap profile="uch_row" id="row12">
+                    <Text profile="uch_typeText" id="type12" text="" onFocus="onFocusType"/>
+                    <TextInput profile="uch_nameInput" id="name12" text="" maxCharacters="40" textColor="1 1 1 1" textHighlightedColor="1 1 1 1" textSelectedColor="1 1 1 1" textDisabledColor="1 1 1 1" imeTitle="$l10n_uch_ui_conveyorName" imeDescription="$l10n_uch_ui_conveyorNameDescription" imePlaceholder="$l10n_uch_ui_conveyorNamePlaceholder" onEnterPressed="onEnterName" onFocus="onFocusName" onFocusLeave="onFocusLeaveName"/>
+                    <BinaryOption profile="uch_enabled" id="enabled12" onClick="onClickCheckbox" onFocus="onFocusAutomation" onHighlight="onFocusAutomation" onHighlightRemove="onHighlightRemove">
+                    </BinaryOption>
+                    <Button profile="uch_teleport" id="teleport12" text="$l10n_uch_ui_teleportButton" onClick="onClickTeleport" onFocus="onFocusTeleport" onHighlight="onFocusTeleport" onHighlightRemove="onHighlightRemove"/>
+                </Bitmap>
+                <Bitmap profile="uch_row" id="row13">
+                    <Text profile="uch_typeText" id="type13" text="" onFocus="onFocusType"/>
+                    <TextInput profile="uch_nameInput" id="name13" text="" maxCharacters="40" textColor="1 1 1 1" textHighlightedColor="1 1 1 1" textSelectedColor="1 1 1 1" textDisabledColor="1 1 1 1" imeTitle="$l10n_uch_ui_conveyorName" imeDescription="$l10n_uch_ui_conveyorNameDescription" imePlaceholder="$l10n_uch_ui_conveyorNamePlaceholder" onEnterPressed="onEnterName" onFocus="onFocusName" onFocusLeave="onFocusLeaveName"/>
+                    <BinaryOption profile="uch_enabled" id="enabled13" onClick="onClickCheckbox" onFocus="onFocusAutomation" onHighlight="onFocusAutomation" onHighlightRemove="onHighlightRemove">
+                    </BinaryOption>
+                    <Button profile="uch_teleport" id="teleport13" text="$l10n_uch_ui_teleportButton" onClick="onClickTeleport" onFocus="onFocusTeleport" onHighlight="onFocusTeleport" onHighlightRemove="onHighlightRemove"/>
+                </Bitmap>
+                <Bitmap profile="uch_row" id="row14">
+                    <Text profile="uch_typeText" id="type14" text="" onFocus="onFocusType"/>
+                    <TextInput profile="uch_nameInput" id="name14" text="" maxCharacters="40" textColor="1 1 1 1" textHighlightedColor="1 1 1 1" textSelectedColor="1 1 1 1" textDisabledColor="1 1 1 1" imeTitle="$l10n_uch_ui_conveyorName" imeDescription="$l10n_uch_ui_conveyorNameDescription" imePlaceholder="$l10n_uch_ui_conveyorNamePlaceholder" onEnterPressed="onEnterName" onFocus="onFocusName" onFocusLeave="onFocusLeaveName"/>
+                    <BinaryOption profile="uch_enabled" id="enabled14" onClick="onClickCheckbox" onFocus="onFocusAutomation" onHighlight="onFocusAutomation" onHighlightRemove="onHighlightRemove">
+                    </BinaryOption>
+                    <Button profile="uch_teleport" id="teleport14" text="$l10n_uch_ui_teleportButton" onClick="onClickTeleport" onFocus="onFocusTeleport" onHighlight="onFocusTeleport" onHighlightRemove="onHighlightRemove"/>
+                </Bitmap>
+                <Bitmap profile="uch_row" id="row15">
+                    <Text profile="uch_typeText" id="type15" text="" onFocus="onFocusType"/>
+                    <TextInput profile="uch_nameInput" id="name15" text="" maxCharacters="40" textColor="1 1 1 1" textHighlightedColor="1 1 1 1" textSelectedColor="1 1 1 1" textDisabledColor="1 1 1 1" imeTitle="$l10n_uch_ui_conveyorName" imeDescription="$l10n_uch_ui_conveyorNameDescription" imePlaceholder="$l10n_uch_ui_conveyorNamePlaceholder" onEnterPressed="onEnterName" onFocus="onFocusName" onFocusLeave="onFocusLeaveName"/>
+                    <BinaryOption profile="uch_enabled" id="enabled15" onClick="onClickCheckbox" onFocus="onFocusAutomation" onHighlight="onFocusAutomation" onHighlightRemove="onHighlightRemove">
+                    </BinaryOption>
+                    <Button profile="uch_teleport" id="teleport15" text="$l10n_uch_ui_teleportButton" onClick="onClickTeleport" onFocus="onFocusTeleport" onHighlight="onFocusTeleport" onHighlightRemove="onHighlightRemove"/>
+                </Bitmap>
+                <Bitmap profile="uch_row" id="row16">
+                    <Text profile="uch_typeText" id="type16" text="" onFocus="onFocusType"/>
+                    <TextInput profile="uch_nameInput" id="name16" text="" maxCharacters="40" textColor="1 1 1 1" textHighlightedColor="1 1 1 1" textSelectedColor="1 1 1 1" textDisabledColor="1 1 1 1" imeTitle="$l10n_uch_ui_conveyorName" imeDescription="$l10n_uch_ui_conveyorNameDescription" imePlaceholder="$l10n_uch_ui_conveyorNamePlaceholder" onEnterPressed="onEnterName" onFocus="onFocusName" onFocusLeave="onFocusLeaveName"/>
+                    <BinaryOption profile="uch_enabled" id="enabled16" onClick="onClickCheckbox" onFocus="onFocusAutomation" onHighlight="onFocusAutomation" onHighlightRemove="onHighlightRemove">
+                    </BinaryOption>
+                    <Button profile="uch_teleport" id="teleport16" text="$l10n_uch_ui_teleportButton" onClick="onClickTeleport" onFocus="onFocusTeleport" onHighlight="onFocusTeleport" onHighlightRemove="onHighlightRemove"/>
+                </Bitmap>
+                <Bitmap profile="uch_row" id="row17">
+                    <Text profile="uch_typeText" id="type17" text="" onFocus="onFocusType"/>
+                    <TextInput profile="uch_nameInput" id="name17" text="" maxCharacters="40" textColor="1 1 1 1" textHighlightedColor="1 1 1 1" textSelectedColor="1 1 1 1" textDisabledColor="1 1 1 1" imeTitle="$l10n_uch_ui_conveyorName" imeDescription="$l10n_uch_ui_conveyorNameDescription" imePlaceholder="$l10n_uch_ui_conveyorNamePlaceholder" onEnterPressed="onEnterName" onFocus="onFocusName" onFocusLeave="onFocusLeaveName"/>
+                    <BinaryOption profile="uch_enabled" id="enabled17" onClick="onClickCheckbox" onFocus="onFocusAutomation" onHighlight="onFocusAutomation" onHighlightRemove="onHighlightRemove">
+                    </BinaryOption>
+                    <Button profile="uch_teleport" id="teleport17" text="$l10n_uch_ui_teleportButton" onClick="onClickTeleport" onFocus="onFocusTeleport" onHighlight="onFocusTeleport" onHighlightRemove="onHighlightRemove"/>
+                </Bitmap>
+                <Bitmap profile="uch_row" id="row18">
+                    <Text profile="uch_typeText" id="type18" text="" onFocus="onFocusType"/>
+                    <TextInput profile="uch_nameInput" id="name18" text="" maxCharacters="40" textColor="1 1 1 1" textHighlightedColor="1 1 1 1" textSelectedColor="1 1 1 1" textDisabledColor="1 1 1 1" imeTitle="$l10n_uch_ui_conveyorName" imeDescription="$l10n_uch_ui_conveyorNameDescription" imePlaceholder="$l10n_uch_ui_conveyorNamePlaceholder" onEnterPressed="onEnterName" onFocus="onFocusName" onFocusLeave="onFocusLeaveName"/>
+                    <BinaryOption profile="uch_enabled" id="enabled18" onClick="onClickCheckbox" onFocus="onFocusAutomation" onHighlight="onFocusAutomation" onHighlightRemove="onHighlightRemove">
+                    </BinaryOption>
+                    <Button profile="uch_teleport" id="teleport18" text="$l10n_uch_ui_teleportButton" onClick="onClickTeleport" onFocus="onFocusTeleport" onHighlight="onFocusTeleport" onHighlightRemove="onHighlightRemove"/>
+                </Bitmap>
+                <Bitmap profile="uch_row" id="row19">
+                    <Text profile="uch_typeText" id="type19" text="" onFocus="onFocusType"/>
+                    <TextInput profile="uch_nameInput" id="name19" text="" maxCharacters="40" textColor="1 1 1 1" textHighlightedColor="1 1 1 1" textSelectedColor="1 1 1 1" textDisabledColor="1 1 1 1" imeTitle="$l10n_uch_ui_conveyorName" imeDescription="$l10n_uch_ui_conveyorNameDescription" imePlaceholder="$l10n_uch_ui_conveyorNamePlaceholder" onEnterPressed="onEnterName" onFocus="onFocusName" onFocusLeave="onFocusLeaveName"/>
+                    <BinaryOption profile="uch_enabled" id="enabled19" onClick="onClickCheckbox" onFocus="onFocusAutomation" onHighlight="onFocusAutomation" onHighlightRemove="onHighlightRemove">
+                    </BinaryOption>
+                    <Button profile="uch_teleport" id="teleport19" text="$l10n_uch_ui_teleportButton" onClick="onClickTeleport" onFocus="onFocusTeleport" onHighlight="onFocusTeleport" onHighlightRemove="onHighlightRemove"/>
+                </Bitmap>
+                <Bitmap profile="uch_row" id="row20">
+                    <Text profile="uch_typeText" id="type20" text="" onFocus="onFocusType"/>
+                    <TextInput profile="uch_nameInput" id="name20" text="" maxCharacters="40" textColor="1 1 1 1" textHighlightedColor="1 1 1 1" textSelectedColor="1 1 1 1" textDisabledColor="1 1 1 1" imeTitle="$l10n_uch_ui_conveyorName" imeDescription="$l10n_uch_ui_conveyorNameDescription" imePlaceholder="$l10n_uch_ui_conveyorNamePlaceholder" onEnterPressed="onEnterName" onFocus="onFocusName" onFocusLeave="onFocusLeaveName"/>
+                    <BinaryOption profile="uch_enabled" id="enabled20" onClick="onClickCheckbox" onFocus="onFocusAutomation" onHighlight="onFocusAutomation" onHighlightRemove="onHighlightRemove">
+                    </BinaryOption>
+                    <Button profile="uch_teleport" id="teleport20" text="$l10n_uch_ui_teleportButton" onClick="onClickTeleport" onFocus="onFocusTeleport" onHighlight="onFocusTeleport" onHighlightRemove="onHighlightRemove"/>
+                </Bitmap>
+                <Bitmap profile="uch_row" id="row21">
+                    <Text profile="uch_typeText" id="type21" text="" onFocus="onFocusType"/>
+                    <TextInput profile="uch_nameInput" id="name21" text="" maxCharacters="40" textColor="1 1 1 1" textHighlightedColor="1 1 1 1" textSelectedColor="1 1 1 1" textDisabledColor="1 1 1 1" imeTitle="$l10n_uch_ui_conveyorName" imeDescription="$l10n_uch_ui_conveyorNameDescription" imePlaceholder="$l10n_uch_ui_conveyorNamePlaceholder" onEnterPressed="onEnterName" onFocus="onFocusName" onFocusLeave="onFocusLeaveName"/>
+                    <BinaryOption profile="uch_enabled" id="enabled21" onClick="onClickCheckbox" onFocus="onFocusAutomation" onHighlight="onFocusAutomation" onHighlightRemove="onHighlightRemove">
+                    </BinaryOption>
+                    <Button profile="uch_teleport" id="teleport21" text="$l10n_uch_ui_teleportButton" onClick="onClickTeleport" onFocus="onFocusTeleport" onHighlight="onFocusTeleport" onHighlightRemove="onHighlightRemove"/>
+                </Bitmap>
+                <Bitmap profile="uch_row" id="row22">
+                    <Text profile="uch_typeText" id="type22" text="" onFocus="onFocusType"/>
+                    <TextInput profile="uch_nameInput" id="name22" text="" maxCharacters="40" textColor="1 1 1 1" textHighlightedColor="1 1 1 1" textSelectedColor="1 1 1 1" textDisabledColor="1 1 1 1" imeTitle="$l10n_uch_ui_conveyorName" imeDescription="$l10n_uch_ui_conveyorNameDescription" imePlaceholder="$l10n_uch_ui_conveyorNamePlaceholder" onEnterPressed="onEnterName" onFocus="onFocusName" onFocusLeave="onFocusLeaveName"/>
+                    <BinaryOption profile="uch_enabled" id="enabled22" onClick="onClickCheckbox" onFocus="onFocusAutomation" onHighlight="onFocusAutomation" onHighlightRemove="onHighlightRemove">
+                    </BinaryOption>
+                    <Button profile="uch_teleport" id="teleport22" text="$l10n_uch_ui_teleportButton" onClick="onClickTeleport" onFocus="onFocusTeleport" onHighlight="onFocusTeleport" onHighlightRemove="onHighlightRemove"/>
+                </Bitmap>
+                <Bitmap profile="uch_row" id="row23">
+                    <Text profile="uch_typeText" id="type23" text="" onFocus="onFocusType"/>
+                    <TextInput profile="uch_nameInput" id="name23" text="" maxCharacters="40" textColor="1 1 1 1" textHighlightedColor="1 1 1 1" textSelectedColor="1 1 1 1" textDisabledColor="1 1 1 1" imeTitle="$l10n_uch_ui_conveyorName" imeDescription="$l10n_uch_ui_conveyorNameDescription" imePlaceholder="$l10n_uch_ui_conveyorNamePlaceholder" onEnterPressed="onEnterName" onFocus="onFocusName" onFocusLeave="onFocusLeaveName"/>
+                    <BinaryOption profile="uch_enabled" id="enabled23" onClick="onClickCheckbox" onFocus="onFocusAutomation" onHighlight="onFocusAutomation" onHighlightRemove="onHighlightRemove">
+                    </BinaryOption>
+                    <Button profile="uch_teleport" id="teleport23" text="$l10n_uch_ui_teleportButton" onClick="onClickTeleport" onFocus="onFocusTeleport" onHighlight="onFocusTeleport" onHighlightRemove="onHighlightRemove"/>
+                </Bitmap>
+                <Bitmap profile="uch_row" id="row24">
+                    <Text profile="uch_typeText" id="type24" text="" onFocus="onFocusType"/>
+                    <TextInput profile="uch_nameInput" id="name24" text="" maxCharacters="40" textColor="1 1 1 1" textHighlightedColor="1 1 1 1" textSelectedColor="1 1 1 1" textDisabledColor="1 1 1 1" imeTitle="$l10n_uch_ui_conveyorName" imeDescription="$l10n_uch_ui_conveyorNameDescription" imePlaceholder="$l10n_uch_ui_conveyorNamePlaceholder" onEnterPressed="onEnterName" onFocus="onFocusName" onFocusLeave="onFocusLeaveName"/>
+                    <BinaryOption profile="uch_enabled" id="enabled24" onClick="onClickCheckbox" onFocus="onFocusAutomation" onHighlight="onFocusAutomation" onHighlightRemove="onHighlightRemove">
+                    </BinaryOption>
+                    <Button profile="uch_teleport" id="teleport24" text="$l10n_uch_ui_teleportButton" onClick="onClickTeleport" onFocus="onFocusTeleport" onHighlight="onFocusTeleport" onHighlightRemove="onHighlightRemove"/>
+                </Bitmap>
+                <Bitmap profile="uch_row" id="row25">
+                    <Text profile="uch_typeText" id="type25" text="" onFocus="onFocusType"/>
+                    <TextInput profile="uch_nameInput" id="name25" text="" maxCharacters="40" textColor="1 1 1 1" textHighlightedColor="1 1 1 1" textSelectedColor="1 1 1 1" textDisabledColor="1 1 1 1" imeTitle="$l10n_uch_ui_conveyorName" imeDescription="$l10n_uch_ui_conveyorNameDescription" imePlaceholder="$l10n_uch_ui_conveyorNamePlaceholder" onEnterPressed="onEnterName" onFocus="onFocusName" onFocusLeave="onFocusLeaveName"/>
+                    <BinaryOption profile="uch_enabled" id="enabled25" onClick="onClickCheckbox" onFocus="onFocusAutomation" onHighlight="onFocusAutomation" onHighlightRemove="onHighlightRemove">
+                    </BinaryOption>
+                    <Button profile="uch_teleport" id="teleport25" text="$l10n_uch_ui_teleportButton" onClick="onClickTeleport" onFocus="onFocusTeleport" onHighlight="onFocusTeleport" onHighlightRemove="onHighlightRemove"/>
+                </Bitmap>
+                <Bitmap profile="uch_row" id="row26">
+                    <Text profile="uch_typeText" id="type26" text="" onFocus="onFocusType"/>
+                    <TextInput profile="uch_nameInput" id="name26" text="" maxCharacters="40" textColor="1 1 1 1" textHighlightedColor="1 1 1 1" textSelectedColor="1 1 1 1" textDisabledColor="1 1 1 1" imeTitle="$l10n_uch_ui_conveyorName" imeDescription="$l10n_uch_ui_conveyorNameDescription" imePlaceholder="$l10n_uch_ui_conveyorNamePlaceholder" onEnterPressed="onEnterName" onFocus="onFocusName" onFocusLeave="onFocusLeaveName"/>
+                    <BinaryOption profile="uch_enabled" id="enabled26" onClick="onClickCheckbox" onFocus="onFocusAutomation" onHighlight="onFocusAutomation" onHighlightRemove="onHighlightRemove">
+                    </BinaryOption>
+                    <Button profile="uch_teleport" id="teleport26" text="$l10n_uch_ui_teleportButton" onClick="onClickTeleport" onFocus="onFocusTeleport" onHighlight="onFocusTeleport" onHighlightRemove="onHighlightRemove"/>
+                </Bitmap>
+                <Bitmap profile="uch_row" id="row27">
+                    <Text profile="uch_typeText" id="type27" text="" onFocus="onFocusType"/>
+                    <TextInput profile="uch_nameInput" id="name27" text="" maxCharacters="40" textColor="1 1 1 1" textHighlightedColor="1 1 1 1" textSelectedColor="1 1 1 1" textDisabledColor="1 1 1 1" imeTitle="$l10n_uch_ui_conveyorName" imeDescription="$l10n_uch_ui_conveyorNameDescription" imePlaceholder="$l10n_uch_ui_conveyorNamePlaceholder" onEnterPressed="onEnterName" onFocus="onFocusName" onFocusLeave="onFocusLeaveName"/>
+                    <BinaryOption profile="uch_enabled" id="enabled27" onClick="onClickCheckbox" onFocus="onFocusAutomation" onHighlight="onFocusAutomation" onHighlightRemove="onHighlightRemove">
+                    </BinaryOption>
+                    <Button profile="uch_teleport" id="teleport27" text="$l10n_uch_ui_teleportButton" onClick="onClickTeleport" onFocus="onFocusTeleport" onHighlight="onFocusTeleport" onHighlightRemove="onHighlightRemove"/>
+                </Bitmap>
+                <Bitmap profile="uch_row" id="row28">
+                    <Text profile="uch_typeText" id="type28" text="" onFocus="onFocusType"/>
+                    <TextInput profile="uch_nameInput" id="name28" text="" maxCharacters="40" textColor="1 1 1 1" textHighlightedColor="1 1 1 1" textSelectedColor="1 1 1 1" textDisabledColor="1 1 1 1" imeTitle="$l10n_uch_ui_conveyorName" imeDescription="$l10n_uch_ui_conveyorNameDescription" imePlaceholder="$l10n_uch_ui_conveyorNamePlaceholder" onEnterPressed="onEnterName" onFocus="onFocusName" onFocusLeave="onFocusLeaveName"/>
+                    <BinaryOption profile="uch_enabled" id="enabled28" onClick="onClickCheckbox" onFocus="onFocusAutomation" onHighlight="onFocusAutomation" onHighlightRemove="onHighlightRemove">
+                    </BinaryOption>
+                    <Button profile="uch_teleport" id="teleport28" text="$l10n_uch_ui_teleportButton" onClick="onClickTeleport" onFocus="onFocusTeleport" onHighlight="onFocusTeleport" onHighlightRemove="onHighlightRemove"/>
+                </Bitmap>
+                <Bitmap profile="uch_row" id="row29">
+                    <Text profile="uch_typeText" id="type29" text="" onFocus="onFocusType"/>
+                    <TextInput profile="uch_nameInput" id="name29" text="" maxCharacters="40" textColor="1 1 1 1" textHighlightedColor="1 1 1 1" textSelectedColor="1 1 1 1" textDisabledColor="1 1 1 1" imeTitle="$l10n_uch_ui_conveyorName" imeDescription="$l10n_uch_ui_conveyorNameDescription" imePlaceholder="$l10n_uch_ui_conveyorNamePlaceholder" onEnterPressed="onEnterName" onFocus="onFocusName" onFocusLeave="onFocusLeaveName"/>
+                    <BinaryOption profile="uch_enabled" id="enabled29" onClick="onClickCheckbox" onFocus="onFocusAutomation" onHighlight="onFocusAutomation" onHighlightRemove="onHighlightRemove">
+                    </BinaryOption>
+                    <Button profile="uch_teleport" id="teleport29" text="$l10n_uch_ui_teleportButton" onClick="onClickTeleport" onFocus="onFocusTeleport" onHighlight="onFocusTeleport" onHighlightRemove="onHighlightRemove"/>
+                </Bitmap>
+                <Bitmap profile="uch_row" id="row30">
+                    <Text profile="uch_typeText" id="type30" text="" onFocus="onFocusType"/>
+                    <TextInput profile="uch_nameInput" id="name30" text="" maxCharacters="40" textColor="1 1 1 1" textHighlightedColor="1 1 1 1" textSelectedColor="1 1 1 1" textDisabledColor="1 1 1 1" imeTitle="$l10n_uch_ui_conveyorName" imeDescription="$l10n_uch_ui_conveyorNameDescription" imePlaceholder="$l10n_uch_ui_conveyorNamePlaceholder" onEnterPressed="onEnterName" onFocus="onFocusName" onFocusLeave="onFocusLeaveName"/>
+                    <BinaryOption profile="uch_enabled" id="enabled30" onClick="onClickCheckbox" onFocus="onFocusAutomation" onHighlight="onFocusAutomation" onHighlightRemove="onHighlightRemove">
+                    </BinaryOption>
+                    <Button profile="uch_teleport" id="teleport30" text="$l10n_uch_ui_teleportButton" onClick="onClickTeleport" onFocus="onFocusTeleport" onHighlight="onFocusTeleport" onHighlightRemove="onHighlightRemove"/>
+                </Bitmap>
+            </ScrollingLayout>
+
+            <Text profile="uch_noConveyors" id="noConveyorsText" text="$l10n_uch_ui_noConveyors"/>
+
+            <Bitmap profile="fs25_settingsTooltipSeparator" id="uchSettingsSeparator"/>
+            <Bitmap profile="uch_infoPanelBackground" id="uchInfoPanelBackground"/>
+            <Text profile="uch_infoTitle" id="uchInfoTitle" text="$l10n_uch_ui_infoTitle"/>
+            <Text profile="uch_infoText" id="uchInfoText" text="$l10n_uch_ui_pageInfo"/>
+        </GuiElement>
+
+    </GuiElement>
+
+    <GUIProfiles>
+        
+
+        <Profile name="uch_settingsLayout" extends="fs25_settingsLayout">
+        </Profile>
+
+        <Profile name="uch_pageBackground" extends="emptyPanel" with="anchorTopLeft">
+            <imageFilename value="gui/uch_background.png"/>
+            <imageColor value="1 1 1 1"/>
+            <position value="0px 0px"/>
+            <width value="100%"/>
+            <height value="100%"/>
+        </Profile>
+
+        <Profile name="uch_row" extends="emptyPanel" with="anchorMiddleCenter">
+            <imageFilename value="gui/uch_panel.png"/>
+            <width value="820px"/>
+            <height value="46px"/>
+            <imageColor value="0.16 0.16 0.16 1"/>
+            <focusOnHighlight value="false"/>
+        </Profile>
+
+        <Profile name="uch_headerRow" extends="emptyPanel" with="anchorMiddleCenter">
+            <imageFilename value="gui/uch_panel.png"/>
+            <width value="820px"/>
+            <height value="40px"/>
+            <imageColor value="0.12 0.12 0.12 1"/>
+        </Profile>
+
+        <Profile name="uch_typeText" extends="fs25_textDefault" with="anchorMiddleLeft"><focusOnHighlight value="true"/>
+            <position value="18px 0px"/>
+            <width value="125px"/>
+            <textAlignment value="left"/>
+            <textSize value="18px"/>
+            <textBold value="false"/>
+            <textAutoWidth value="false"/>
+        </Profile>
+
+        <Profile name="uch_headerType" extends="fs25_textDefault" with="anchorMiddleLeft"><position value="18px 0px"/><width value="125px"/><textSize value="13px"/></Profile>
+        <Profile name="uch_headerName" extends="fs25_textDefault" with="anchorMiddleLeft"><position value="150px 0px"/><width value="240px"/><textSize value="13px"/><textAlignment value="left"/></Profile>
+        <Profile name="uch_headerAutomation" extends="fs25_textDefault" with="anchorMiddleLeft"><position value="400px 0px"/><width value="130px"/><textSize value="13px"/><textAlignment value="center"/></Profile>
+        <Profile name="uch_headerTeleport" extends="fs25_textDefault" with="anchorMiddleLeft"><position value="620px 0px"/><width value="180px"/><textSize value="13px"/><textAlignment value="center"/></Profile>
+
+        <Profile name="uch_nameInput" extends="textInput" with="anchorMiddleLeft"><enterWhenClickOutside value="true"/><position value="150px 0px"/><width value="240px"/><height value="38px"/><textSize value="18px"/><textAlignment value="left"/><textAutoWidth value="false"/><imageColor value="0.10 0.10 0.10 1"/><textColor value="1 1 1 1"/><textHighlightedColor value="1 1 1 1"/><textSelectedColor value="1 1 1 1"/><textDisabledColor value="1 1 1 1"/><focusOnHighlight value="true"/><maxCharacters value="40"/><maxInputTextWidth value="205px"/><cursorSize value="2px 24px"/><cursorOffset value="0px 0px"/><applyProfanityFilter value="false"/></Profile>
+
+        <Profile name="uch_enabled" extends="fs25_binaryOption" with="anchorMiddleLeft"><position value="400px 0px"/><width value="130px"/><height value="38px"/><focusOnHighlight value="true"/></Profile>
+
+        <Profile name="uch_teleport" extends="buttonActivate" with="anchorMiddleLeft"><position value="620px 0px"/><width value="180px"/><height value="38px"/><textSize value="15px"/><textAlignment value="center"/><focusOnHighlight value="true"/></Profile>
+
+        <Profile name="uch_infoSeparator" extends="fs25_settingsTooltipSeparator" with="anchorTopLeft"><position value="825px 0px"/><height value="660px"/></Profile>
+
+        <Profile name="uch_infoPanel" extends="emptyPanel" with="anchorTopLeft"><position value="855px 0px"/><width value="500px"/><height value="660px"/></Profile>
+
+        <Profile name="uch_infoPanelBackground" extends="emptyPanel" with="anchorTopLeft"><imageFilename value="gui/uch_panel.png"/><position value="855px 0px"/><width value="500px"/><height value="660px"/><imageColor value="0.085 0.085 0.085 1"/></Profile>
+
+        <Profile name="uch_infoTitle" extends="fs25_textDefault" with="anchorTopLeft"><position value="930px 0px"/><width value="600px"/><textSize value="19px"/><textBold value="true"/><textColor value="1 1 1 1"/><textAlignment value="left"/></Profile>
+
+        <Profile name="uch_infoText" extends="fs25_textDefault" with="anchorTopLeft"><position value="930px 50px"/><width value="600px"/><height value="360px"/><textSize value="16px"/><textColor value="1 1 1 1"/><textAlignment value="left"/><textAutoWidth value="false"/></Profile>
+
+        <Profile name="uch_noConveyors" extends="fs25_textDefault" with="anchorTopLeft">
+            <position value="25px 120px"/>
+            <width value="700px"/>
+            <textSize value="20px"/>
+        </Profile>
+    </GUIProfiles>
+</GUI>

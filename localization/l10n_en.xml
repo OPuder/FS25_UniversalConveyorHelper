@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+<l10n>
+    <texts>
+        <text name="global_uch_ui_folders" text="CONVEYORS" />
+        <text name="uch_ui_conveyorSettings" text="Conveyor Settings" />
+        <text name="uch_ui_type" text="TYPE" />
+        <text name="uch_ui_name" text="NAME" />
+        <text name="uch_ui_automation" text="AUTOMATION" />
+        <text name="uch_ui_teleport" text="TELEPORT" />
+        <text name="uch_ui_teleportButton" text="TO CONVEYOR" />
+        <text name="uch_ui_noConveyors" text="No managed conveyors found." />
+        <text name="uch_ui_automationTooltip" text="Enables or disables automation for this conveyor. When OFF, the Universal Conveyor Helper does not act on this conveyor." />
+        <text name="uch_ui_conveyorName" text="Conveyor name" />
+        <text name="uch_ui_conveyorNameDescription" text="Name of the conveyor" />
+        <text name="uch_ui_conveyorNamePlaceholder" text="Enter name" />
+        <text name="uch_ui_infoTitle" text="Conveyor Help" />
+        <text name="uch_ui_typeInfo" text="Shows the detected conveyor type for this entry." />
+        <text name="uch_ui_nameInfo" text="Assign a custom name to this conveyor." />
+        <text name="uch_ui_automationInfo" text="Enables or disables automatic control of this conveyor." />
+        <text name="uch_ui_teleportInfo" text="Moves the player directly next to the selected conveyor." />
+        <text name="uch_ui_teleportSuccess" text="Teleported to conveyor '%s'." />
+        <text name="uch_ui_teleportConfirm" text="Do you really want to teleport to conveyor '%s'?" />
+        <text name="uch_ui_pageInfo" text="Manage the detected conveyors here. Names, automation and teleport settings are stored per conveyor." />
+    </texts>
+</l10n>

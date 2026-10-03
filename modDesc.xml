@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+<modDesc descVersion="113">
+    <author>OligenOle</author>
+    <version>1.9.41.0</version>
+    <title>
+        <en>Universal Conveyor Helper</en>
+        <de>Universal Förderband Helper</de>
+    </title>
+    <description>
+        <en><![CDATA[Universal conveyor helper with automatic start, extended discharge range and per-conveyor settings. Rename conveyors, enable or disable the helper and teleport to them directly from the game settings.]]></en>
+        <de><![CDATA[Universeller Förderband-Helfer mit automatischem Start, erweitertem Auswurfbereich und eigenen Einstellungen pro Förderband. Förderbänder umbenennen, Automatik ein-/ausschalten und direkt aus den Spieleinstellungen zum Förderband teleportieren.]]></de>
+    </description>
+    <iconFilename>icon.dds</iconFilename>
+    <multiplayer supported="true"/>
+    <l10n filenamePrefix="localization/l10n"/>
+    <extraSourceFiles>
+        <sourceFile filename="scripts/UniversalConveyorSettingsPage.lua"/>
+        <sourceFile filename="scripts/UniversalConveyorSettingsGui.lua"/>
+        <sourceFile filename="scripts/UniversalConveyorSettings.lua"/>
+        <sourceFile filename="scripts/UniversalConveyorHelper.lua"/>
+    </extraSourceFiles>
+</modDesc>

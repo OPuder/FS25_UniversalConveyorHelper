@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+<l10n>
+    <texts>
+        <text name="global_uch_ui_folders" text="FÖRDERBÄNDER" />
+        <text name="uch_ui_conveyorSettings" text="Förderband-Einstellungen" />
+        <text name="uch_ui_type" text="TYP" />
+        <text name="uch_ui_name" text="NAME" />
+        <text name="uch_ui_automation" text="AUTOMATIK" />
+        <text name="uch_ui_teleport" text="TELEPORT" />
+        <text name="uch_ui_teleportButton" text="ZUM FÖRDERBAND" />
+        <text name="uch_ui_noConveyors" text="Keine verwalteten Förderbänder gefunden." />
+        <text name="uch_ui_automationTooltip" text="Aktiviert oder deaktiviert die Automatik dieses Förderbands. Bei AUS greift der Universal Conveyor Helper für dieses Förderband nicht ein." />
+        <text name="uch_ui_conveyorName" text="Förderbandname" />
+        <text name="uch_ui_conveyorNameDescription" text="Name des Förderbands" />
+        <text name="uch_ui_conveyorNamePlaceholder" text="Name eingeben" />
+        <text name="uch_ui_infoTitle" text="Förderband-Hilfe" />
+        <text name="uch_ui_typeInfo" text="Zeigt den erkannten Förderbandtyp dieses Eintrags an." />
+        <text name="uch_ui_nameInfo" text="Vergib einen eigenen Namen für dieses Förderband." />
+        <text name="uch_ui_automationInfo" text="Aktiviert oder deaktiviert die automatische Steuerung dieses Förderbands." />
+        <text name="uch_ui_teleportInfo" text="Setzt den Spieler direkt neben das ausgewählte Förderband." />
+        <text name="uch_ui_teleportSuccess" text="Zum Förderband '%s' teleportiert." />
+        <text name="uch_ui_teleportConfirm" text="Möchtest du dich wirklich zum Förderband '%s' teleportieren?" />
+        <text name="uch_ui_pageInfo" text="Hier verwaltest du die erkannten Förderbänder. Namen, Automatik und Teleport werden pro Förderband gespeichert." />
+    </texts>
+</l10n>
