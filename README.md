@@ -8,7 +8,9 @@ Der **Universal Conveyor Helper** erweitert die Bedienung und Verwaltung von Fö
 
 ## 📥 Download
 
-### 👉 [⬇️ Universal Conveyor Helper – aktuelle Version herunterladen](https://github.com/OPuder/FS25_UniversalConveyorHelper/releases/latest/download/FS25_UniversalConveyorHelper.zip)
+### 👉 [⬇️ Universal Conveyor Helper herunterladen](https://github.com/OPuder/FS25_UniversalConveyorHelper/releases)
+
+Auf der Release-Seite findest du unter **Assets** die aktuelle fertige Mod-ZIP.
 
 **Die ZIP-Datei direkt in den `mods`-Ordner von Farming Simulator 25 kopieren.**
 
@@ -150,8 +152,26 @@ Fehler und Verbesserungsvorschläge können über die GitHub-Issues gemeldet wer
 
 ---
 
-## 📦 Installation über Download
+## 📦 Releases
 
 Die jeweils aktuelle fertige Mod-Version wird über die **GitHub Releases** bereitgestellt.
 
-### 👉 [Zur Download-Seite](https://github.com/OPuder/FS25_UniversalConveyorHelper/releases
+👉 [Zur aktuellen Release](https://github.com/OPuder/FS25_UniversalConveyorHelper/releases)
+
+Dort unter **Assets** die Datei `FS25_UniversalConveyorHelper.zip` herunterladen.
+
+---
+
+## 📋 Version
+
+**FS25 Universal Conveyor Helper**
+
+Aktuelle Version: siehe [Releases](https://github.com/OPuder/FS25_UniversalConveyorHelper/releases)
+
+---
+
+## 👨‍💻 Projekt
+
+[OPuder/FS25_UniversalConveyorHelper](https://github.com/OPuder/FS25_UniversalConveyorHelper)
+
+Viel Spaß mit dem Universal Conveyor Helper! 🚜
