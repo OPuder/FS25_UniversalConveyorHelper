@@ -2,15 +2,17 @@
 
 Ein universeller Helfer für Förderbänder in **Farming Simulator 25**.
 
-Der **Universal Conveyor Helper** erweitert Förderbänder um zusätzliche Funktionen und ermöglicht es, mehrere Förderbänder komfortabel über eine zentrale Übersicht zu verwalten.
+Der **Universal Conveyor Helper** erweitert die Bedienung und Verwaltung von Förderbändern und ermöglicht eine übersichtliche Steuerung mehrerer Förderbänder.
 
-## 📦 Download
+---
 
-### 👉 [Universal Conveyor Helper herunterladen](https://github.com/OPuder/FS25_UniversalConveyorHelper/releases/latest/download/FS25_UniversalConveyorHelper.zip)
+## 📥 Download
 
-Die heruntergeladene **ZIP-Datei direkt in den `mods`-Ordner von Farming Simulator 25 kopieren.**
+### 👉 [⬇️ Universal Conveyor Helper – aktuelle Version herunterladen](https://github.com/OPuder/FS25_UniversalConveyorHelper/releases/latest/download/FS25_UniversalConveyorHelper.zip)
 
-**Die ZIP-Datei nicht entpacken!**
+**Die ZIP-Datei direkt in den `mods`-Ordner von Farming Simulator 25 kopieren.**
+
+⚠️ **Die ZIP-Datei nicht entpacken!**
 
 Standardpfad:
 
@@ -24,36 +26,34 @@ Dokumente/My Games/FarmingSimulator2025/mods
 
 Der Universal Conveyor Helper bietet unter anderem:
 
-- Automatisches Starten der Förderbänder
+- Automatisches Starten von Förderbändern
 - Erweiterter Auswurfbereich
 - Individuelle Einstellungen für jedes Förderband
 - Förderbänder umbenennen
-- Förderbänder gezielt aktivieren oder deaktivieren
 - Übersicht über alle erkannten Förderbänder
+- Förderbänder gezielt auswählen
 - Direkter Teleport zum ausgewählten Förderband
 - Unterstützung für Multiplayer
-- Vorbereitung für die Nutzung mit KI-Helfern und weiteren Automatisierungen
+- Unterstützung für automatisierte Abläufe
 
-Die Einstellungen können direkt im Spiel über die entsprechende Förderband-Übersicht vorgenommen werden.
+Durch die Möglichkeit, Förderbänder individuell umzubenennen, lassen sich auch mehrere gleiche Förderbänder übersichtlich unterscheiden.
 
 ---
 
-# ⚠️ Wichtiger Hinweis zum Ausschalten
+# ⚠️ WICHTIG – Förderband während des Beladens nicht ausschalten!
 
-## Förderbänder während des Beladens nicht ausschalten!
+## 🔴 Förderbänder dürfen während eines laufenden Beladevorgangs nicht ausgeschaltet werden.
 
-**Wenn ein Förderband gerade beladen wird bzw. Material transportiert, darf das Förderband während dieses Vorgangs nicht ausgeschaltet werden.**
+Wenn ein Förderband gerade Material aufnimmt bzw. ein Beladevorgang aktiv ist, muss das Förderband **eingeschaltet bleiben, bis der Vorgang vollständig abgeschlossen ist**.
 
-Der Universal Conveyor Helper benötigt das aktive Förderband, um den laufenden Beladevorgang korrekt zu erkennen und weiterzuführen.
-
-### ❌ Nicht machen
+### ❌ Falsch
 
 ```text
-Förderband wird beladen
-        ↓
+Förderband belädt
+       ↓
 Förderband ausschalten
-        ↓
-Beladevorgang unterbrechen
+       ↓
+Beladevorgang unterbrochen
 ```
 
 Das kann dazu führen, dass der aktuelle Vorgang nicht korrekt abgeschlossen wird.
@@ -61,24 +61,25 @@ Das kann dazu führen, dass der aktuelle Vorgang nicht korrekt abgeschlossen wir
 ### ✅ Richtig
 
 ```text
-Förderband wird beladen
-        ↓
-Beladevorgang vollständig beenden
-        ↓
-Förderband kann anschließend ausgeschaltet werden
+Förderband belädt
+       ↓
+Beladevorgang vollständig abschließen
+       ↓
+Förderband ausschalten
 ```
 
-**Kurz gesagt:**
+### Kurz gesagt:
 
-> 🔴 Während des Beladens Förderband nicht ausschalten.  
-> 🟢 Erst nach Abschluss des Vorgangs ausschalten.
+> 🔴 **Während des Beladens niemals das Förderband ausschalten.**
+>
+> 🟢 **Erst nach Abschluss des Beladevorgangs ausschalten.**
 
 ---
 
 ## ⚙️ Installation
 
 1. Die aktuelle `FS25_UniversalConveyorHelper.zip` herunterladen.
-2. Die ZIP-Datei in den FS25-Mod-Ordner kopieren.
+2. Die ZIP-Datei in den `mods`-Ordner kopieren.
 3. Die ZIP-Datei **nicht entpacken**.
 4. Farming Simulator 25 starten.
 5. Den **Universal Conveyor Helper** im Mod-Menü aktivieren.
@@ -87,55 +88,70 @@ Förderband kann anschließend ausgeschaltet werden
 
 ## 🖥️ Förderband-Verwaltung
 
-Der Mod erkennt die vorhandenen Förderbänder und stellt sie übersichtlich in der Verwaltung dar.
+Der Universal Conveyor Helper erkennt die vorhandenen Förderbänder und stellt sie übersichtlich zur Verfügung.
 
-Für jedes Förderband können eigene Einstellungen vorgenommen werden.
+Jedes Förderband kann individuell verwaltet werden.
 
-Dazu gehören unter anderem:
+Unter anderem können Förderbänder:
 
-- eigener Name
-- Helper aktivieren/deaktivieren
-- Förderband gezielt auswählen
-- direkt zum Förderband teleportieren
-
-Durch die Möglichkeit, Förderbänder umzubenennen, lassen sich auch mehrere identische Förderbänder leichter unterscheiden.
+- aktiviert oder deaktiviert werden
+- individuell benannt werden
+- gezielt ausgewählt werden
+- über die Übersicht gefunden werden
+- direkt angesprungen werden
 
 ---
 
-## 🔧 Kompatibilität
+## 🎮 Verwendung
+
+Nach dem Start des Spiels stehen die Funktionen des Universal Conveyor Helpers über die entsprechende Benutzeroberfläche zur Verfügung.
+
+Die Förderbänder werden automatisch erkannt und können anschließend individuell konfiguriert werden.
+
+### 💡 Tipp
+
+Wenn mehrere Förderbänder des gleichen Typs verwendet werden, empfiehlt es sich, ihnen eindeutige Namen zu geben.
+
+Zum Beispiel:
+
+```text
+S710 Eingang
+S710 Lager 1
+S710 Lager 2
+S710 Ausgang
+```
+
+Dadurch bleibt auch bei vielen Förderbändern die Übersicht erhalten.
+
+---
+
+## ⚠️ Kompatibilität
 
 **Farming Simulator 25**
 
-Der Mod ist als eigenständiger Förderband-Helfer konzipiert.
+Der Universal Conveyor Helper ist als eigenständige Erweiterung für Förderbänder konzipiert.
 
-Er kann zusammen mit anderen Mods verwendet werden, sofern diese nicht gleichzeitig die gleichen Förderbandfunktionen überschreiben.
-
----
-
-## 📋 Version
-
-**Universal Conveyor Helper – v1.9.41.0**
-
-Autor: **OligenOle**
+Die tatsächliche Kompatibilität kann abhängig vom verwendeten Förderband und anderen Mods variieren.
 
 ---
 
-## 🐛 Fehler / Probleme
+## 🐛 Fehler melden
 
-Wenn ein Problem auftritt, bitte möglichst folgende Informationen angeben:
+Sollte ein Problem auftreten, bitte möglichst folgende Informationen angeben:
 
-- verwendete Mod-Version
+- verwendete Version des Universal Conveyor Helpers
 - verwendetes Förderband
-- was genau passiert ist
-- ob das Problem reproduzierbar ist
+- verwendete weitere Mods
+- Beschreibung des Problems
+- möglichst reproduzierbare Schritte
 - `log.txt` von Farming Simulator 25
 
-Fehler und Verbesserungsvorschläge können über die **Issues** dieses GitHub-Projekts gemeldet werden.
+Fehler und Verbesserungsvorschläge können über die GitHub-Issues gemeldet werden.
 
 ---
 
-## ❤️ Projekt
+## 📦 Installation über Download
 
-Der Universal Conveyor Helper wird fortlaufend weiterentwickelt.
+Die jeweils aktuelle fertige Mod-Version wird über die **GitHub Releases** bereitgestellt.
 
-Ideen, Verbesserungsvorschläge und Fehlermeldungen sind willkommen.
+### 👉 [Zur Download-Seite](https://github.com/OPuder/FS25_UniversalConveyorHelper/releases
