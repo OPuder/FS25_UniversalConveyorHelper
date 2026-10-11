@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
 <modDesc descVersion="113">
     <author>OligenOle</author>
-    <version>1.9.80.6</version>
+    <version>1.9.83.3</version>
     <title>
         <en>Universal Conveyor Helper</en>
         <de>Universal Förderband Helper</de>
@@ -18,6 +18,12 @@
         <sourceFile filename="scripts/UniversalConveyorSettingsGui.lua"/>
         <sourceFile filename="scripts/UniversalConveyorSettings.lua"/>
         <sourceFile filename="scripts/UniversalConveyorHelper.lua"/>
+        <sourceFile filename="scripts/ConveyorDetection.lua"/>
+        <sourceFile filename="scripts/ConveyorSpeedControl.lua"/>
+        <sourceFile filename="scripts/AutoDriveUnloadSupport.lua"/>
+        <sourceFile filename="scripts/UniversalConveyorLoadTrigger.lua"/>
+        <sourceFile filename="scripts/AutoDriveUnloadNodeDiagnostics.lua"/>
         <sourceFile filename="scripts/VehicleDetection.lua"/>
+        <sourceFile filename="scripts/S710RuntimeExactFillRoot.lua"/>
     </extraSourceFiles>
 </modDesc>

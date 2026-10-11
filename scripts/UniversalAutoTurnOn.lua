@@ -1,4 +1,4 @@
--- FS25 Universal Conveyor Helper 1.9.23
+-- FS25 Universal Conveyor Helper 1.9.82.9
 -- Automatic start based directly on the proven S710_WW AutoTurnOn behavior.
 -- Immediate attempt after load + very short retry + update/onUpdateTick fallback.
 
@@ -48,8 +48,18 @@ end
 
 function UniversalAutoTurnOn.registerEventListeners(vehicleType)
     SpecializationUtil.registerEventListener(vehicleType, "onPostLoad", UniversalAutoTurnOn)
+    SpecializationUtil.registerEventListener(vehicleType, "onDelete", UniversalAutoTurnOn)
     SpecializationUtil.registerEventListener(vehicleType, "onUpdate", UniversalAutoTurnOn)
     SpecializationUtil.registerEventListener(vehicleType, "onUpdateTick", UniversalAutoTurnOn)
+end
+
+function UniversalAutoTurnOn:onDelete()
+    if UCHS710RuntimeExactFillRoot ~= nil and UCHS710RuntimeExactFillRoot.cleanup ~= nil then
+        UCHS710RuntimeExactFillRoot.cleanup(self)
+    end
+    if UCHSL8022RuntimeExactFillRoot ~= nil and UCHSL8022RuntimeExactFillRoot.cleanup ~= nil then
+        UCHSL8022RuntimeExactFillRoot.cleanup(self)
+    end
 end
 
 function UniversalAutoTurnOn:onPostLoad(savegame)
@@ -67,6 +77,13 @@ function UniversalAutoTurnOn:onPostLoad(savegame)
     end
 
     Logging.info("[UniversalConveyorHelper][AUTO_START][INIT] %s | waiting=%sms", uchName(self), tostring(UniversalAutoTurnOn.RECHECK_TIMER))
+
+    if UCHS710RuntimeExactFillRoot ~= nil and UCHS710RuntimeExactFillRoot.attach ~= nil then
+        UCHS710RuntimeExactFillRoot.attach(self)
+    end
+    if UCHSL8022RuntimeExactFillRoot ~= nil and UCHSL8022RuntimeExactFillRoot.attach ~= nil then
+        UCHSL8022RuntimeExactFillRoot.attach(self)
+    end
 end
 
 function UniversalAutoTurnOn:onUpdate(dt)
