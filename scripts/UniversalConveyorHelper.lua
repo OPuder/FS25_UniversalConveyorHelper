@@ -1,9 +1,9 @@
--- FS25 Universal Conveyor Helper 1.9.41
+-- FS25 Universal Conveyor Helper 1.9.68
 -- Universal helper for automatic conveyor start, extended discharge range and per-conveyor settings.
 -- Specializations are registered manually, following the proven FS25 pattern.
 
 UniversalConveyorHelper = {}
-UniversalConveyorHelper.VERSION = "1.9.41"
+UniversalConveyorHelper.VERSION = "1.9.80.6"
 UniversalConveyorHelper.AUTO_START = true
 UniversalConveyorHelper.EXTENDED_DISCHARGE = true
 UniversalConveyorHelper.DEBUG = true
@@ -13,8 +13,8 @@ UniversalConveyorHelper.globalStartTimer = 1000
 UniversalConveyorHelper.globalDischargeTimer = 1000
 UniversalConveyorHelper.globalStartLogged = false
 UniversalConveyorHelper.globalDischargeLogged = false
-UniversalConveyorHelper.aiDiagnosticTimer = 1500
-UniversalConveyorHelper.aiDiagnosticDone = false
+UniversalConveyorHelper.startupLogFinished = false
+UniversalConveyorHelper.startupUpdateCount = 0
 
 local MOD_NAME = g_currentModName or "FS25_UniversalConveyorHelper"
 
@@ -292,8 +292,231 @@ function UniversalConveyorHelper:isConveyorVehicle(vehicle)
     return false
 end
 
+-- AutoStart is intentionally restricted to the actual in-game shop category.
+-- Do not infer eligibility from names or conveyor specializations alone: those
+-- are useful for UCH management, but can match unrelated vehicles.
+function UniversalConveyorHelper:isShopCategoryConveyorBelt(vehicle)
+    if vehicle == nil or g_storeManager == nil or g_storeManager.getItemByXMLFilename == nil then
+        return false, "storeItemUnavailable"
+    end
+
+    local filenames = {
+        vehicle.configFileName,
+        vehicle.configFileNameClean,
+        vehicle.xmlFilename,
+        vehicle.xmlFileName
+    }
+
+    local storeItem = nil
+    for _, filename in ipairs(filenames) do
+        if filename ~= nil and filename ~= "" then
+            local ok, item = pcall(g_storeManager.getItemByXMLFilename, g_storeManager, filename)
+            if ok and item ~= nil then
+                storeItem = item
+                break
+            end
+        end
+    end
+
+    if storeItem == nil then
+        return false, "storeItemNotFound"
+    end
+
+    local categories = storeItem.categoryNames
+    if categories == nil then
+        categories = {storeItem.categoryName}
+    end
+
+    for _, category in pairs(categories or {}) do
+        if string.lower(tostring(category or "")) == "belts" then
+            return true, "category=belts"
+        end
+    end
+
+    return false, "categoryNotBelts"
+end
+
 function UniversalConveyorHelper:isAutoStartVehicle(vehicle)
-    return self:isConveyorVehicle(vehicle)
+    if not self:isConveyorVehicle(vehicle) then
+        return false
+    end
+
+    local eligible, reason = self:isShopCategoryConveyorBelt(vehicle)
+    if not eligible and vehicle ~= nil and not vehicle.uchAutoStartCategoryLogged then
+        vehicle.uchAutoStartCategoryLogged = true
+        logInfo("[AUTO_START][CATEGORY_GATE] blockiert | Fahrzeug=%s | Grund=%s",
+            tostring(vehicle.configFileName or vehicle.configFileNameClean or vehicle.typeName or "unknown"),
+            tostring(reason))
+    elseif eligible and vehicle ~= nil and not vehicle.uchAutoStartCategoryLogged then
+        vehicle.uchAutoStartCategoryLogged = true
+        logInfo("[AUTO_START][CATEGORY_GATE] erlaubt | Fahrzeug=%s | Kategorie=belts",
+            tostring(vehicle.configFileName or vehicle.configFileNameClean or vehicle.typeName or "unknown"))
+    end
+
+    return eligible
+end
+
+-- -------------------------------------------------------------------------
+-- Runtime speed cap for shop-category conveyor belts only.
+-- The two reference conveyor mods use motorized maxForwardSpeed/maxBackwardSpeed
+-- values of 25 km/h in their XML. GIANTS stores these motor values in m/s.
+-- This reuses the existing global vehicle-list pass; no additional scan is added.
+-- -------------------------------------------------------------------------
+
+UniversalConveyorHelper.CONVEYOR_MAX_SPEED_KMH = 25
+
+function UniversalConveyorHelper:applyConveyorSpeedLimit(vehicle)
+    if vehicle == nil or vehicle.spec_motorized == nil then
+        return false
+    end
+
+    -- Apply only to recognized conveyors in the actual shop category "belts".
+    if not self:isConveyorVehicle(vehicle) then
+        return false
+    end
+
+    local eligible, reason = self:isShopCategoryConveyorBelt(vehicle)
+    if not eligible then
+        return false
+    end
+
+    local motor = vehicle.spec_motorized.motor
+    if motor == nil then
+        if not vehicle.uchSpeedLimitMissingMotorLogged then
+            vehicle.uchSpeedLimitMissingMotorLogged = true
+            logInfo("[SPEED_LIMIT] übersprungen | Fahrzeug=%s | Grund=spec_motorized.motor fehlt",
+                tostring(vehicle.configFileName or vehicle.configFileNameClean or vehicle.typeName or "unknown"))
+        end
+        return false
+    end
+
+    if vehicle.uchConveyorSpeedLimitApplied then
+        return true
+    end
+
+    local speedMps = UniversalConveyorHelper.CONVEYOR_MAX_SPEED_KMH / 3.6
+    local oldForward = tonumber(motor.maxForwardSpeed)
+    local oldBackward = tonumber(motor.maxBackwardSpeed)
+    local oldMinForwardRatio = tonumber(motor.minForwardGearRatio)
+    local oldMinBackwardRatio = tonumber(motor.minBackwardGearRatio)
+
+    -- Some conveyor vehicles expose a 25 km/h reverse limiter while their
+    -- backward transmission ratio still physically limits reverse speed to
+    -- 5 km/h. Check the native physical maximum as well as the limiter.
+    local physicalBackwardBefore = nil
+    if type(motor.calculatePhysicalMaximumBackwardSpeed) == "function" then
+        local ok, value = pcall(motor.calculatePhysicalMaximumBackwardSpeed, motor)
+        if ok and tonumber(value) ~= nil and tonumber(value) > 0 then
+            physicalBackwardBefore = tonumber(value)
+        end
+    end
+
+    -- maxForwardSpeed/maxBackwardSpeed are only limiters. On the vanilla S710,
+    -- the transmission's gear ratios still physically restrict the vehicle to
+    -- its original 5 km/h. Scale the affected transmission ratios by the same
+    -- factor as the old speed limiter so the native motor can actually reach
+    -- the requested speed. Existing 25 km/h conveyor configurations remain
+    -- unchanged (factor 1.0).
+    local function scaleRatioField(field, factor)
+        local value = tonumber(motor[field])
+        if value ~= nil then
+            motor[field] = value * factor
+        end
+        local originField = field .. "Origin"
+        local originValue = tonumber(motor[originField])
+        if originValue ~= nil then
+            motor[originField] = originValue * factor
+        end
+    end
+
+    local function scaleGearTable(gears, factor, seen)
+        if type(gears) ~= "table" or seen[gears] then
+            return
+        end
+        seen[gears] = true
+        for _, gear in pairs(gears) do
+            if type(gear) == "table" and tonumber(gear.ratio) ~= nil then
+                gear.ratio = gear.ratio * factor
+            end
+        end
+    end
+
+    local forwardFactor = 1
+    if oldForward ~= nil and oldForward > 0 and oldForward < speedMps then
+        forwardFactor = oldForward / speedMps
+    end
+    local backwardFactor = 1
+    if oldBackward ~= nil and oldBackward > 0 and oldBackward < speedMps then
+        backwardFactor = oldBackward / speedMps
+    end
+    -- The reverse limiter may already be 25 km/h even though the native
+    -- transmission can only reach 5 km/h. In that case derive the ratio
+    -- correction from the physical maximum instead of trusting the limiter.
+    if physicalBackwardBefore ~= nil and physicalBackwardBefore < speedMps then
+        backwardFactor = math.min(backwardFactor, physicalBackwardBefore / speedMps)
+    end
+
+    if forwardFactor < 0.999 then
+        scaleRatioField("minForwardGearRatio", forwardFactor)
+        scaleRatioField("maxForwardGearRatio", forwardFactor)
+        scaleRatioField("minGearRatio", forwardFactor)
+        scaleRatioField("maxGearRatio", forwardFactor)
+    end
+    if backwardFactor < 0.999 then
+        scaleRatioField("minBackwardGearRatio", backwardFactor)
+        scaleRatioField("maxBackwardGearRatio", backwardFactor)
+    end
+
+    local seenGearTables = {}
+    -- FS25 can use the same forwardGears table for reverse when backwardGears
+    -- is nil (or when both references point to the same table). The previous
+    -- order marked that shared table as processed with forwardFactor=1 before
+    -- reverse could scale it, so the calculated physical maximum increased
+    -- while the actual gear ratios stayed unchanged. Apply the stricter factor
+    -- once to a shared table; the 25 km/h motor limiter still caps forward speed.
+    local sharedDirectionGears = motor.forwardGears ~= nil
+        and (motor.backwardGears == nil or motor.backwardGears == motor.forwardGears)
+    if sharedDirectionGears then
+        scaleGearTable(motor.forwardGears, math.min(forwardFactor, backwardFactor), seenGearTables)
+    else
+        scaleGearTable(motor.forwardGears, forwardFactor, seenGearTables)
+        scaleGearTable(motor.backwardGears, backwardFactor, seenGearTables)
+    end
+    scaleGearTable(motor.currentGears, motor.currentDirection ~= nil and motor.currentDirection < 0 and backwardFactor or forwardFactor, seenGearTables)
+
+    motor.maxForwardSpeed = speedMps
+    motor.maxBackwardSpeed = speedMps
+    if motor.maxForwardSpeedOrigin ~= nil then
+        motor.maxForwardSpeedOrigin = speedMps
+    end
+    if motor.maxBackwardSpeedOrigin ~= nil then
+        motor.maxBackwardSpeedOrigin = speedMps
+    end
+
+    vehicle.uchConveyorSpeedLimitApplied = true
+    local physicalBackwardAfter = nil
+    if type(motor.calculatePhysicalMaximumBackwardSpeed) == "function" then
+        local ok, value = pcall(motor.calculatePhysicalMaximumBackwardSpeed, motor)
+        if ok and tonumber(value) ~= nil then
+            physicalBackwardAfter = tonumber(value)
+        end
+    end
+    logInfo("[SPEED_LIMIT] gesetzt | Fahrzeug=%s | Kategorie=belts | vorwärts %.2f->%.2f m/s | rückwärts %.2f->%.2f m/s | Übersetzung vorwärts %.3f | rückwärts %.3f | physRueckwaerts %.2f->%.2f m/s | minRatio %.3f->%.3f / %.3f->%.3f | Ziel=%d km/h",
+        tostring(vehicle.configFileName or vehicle.configFileNameClean or vehicle.typeName or "unknown"),
+        oldForward or -1,
+        speedMps,
+        oldBackward or -1,
+        speedMps,
+        forwardFactor,
+        backwardFactor,
+        physicalBackwardBefore or -1,
+        physicalBackwardAfter or -1,
+        oldMinForwardRatio or -1,
+        tonumber(motor.minForwardGearRatio) or -1,
+        oldMinBackwardRatio or -1,
+        tonumber(motor.minBackwardGearRatio) or -1,
+        UniversalConveyorHelper.CONVEYOR_MAX_SPEED_KMH)
+    return true
 end
 
 function UniversalConveyorHelper:getGlobalVehicleList()
@@ -327,6 +550,182 @@ function UniversalConveyorHelper:getGlobalVehicleList()
     return result
 end
 
+-- Temporary diagnostics: compare the live motor state while a conveyor is moving.
+-- This function only logs values; it does not change motor, gear, or speed settings.
+function UniversalConveyorHelper:logLiveSpeedDiagnostics(vehicle)
+    if vehicle == nil or vehicle.spec_motorized == nil then
+        return
+    end
+    if not self:isConveyorVehicle(vehicle) then
+        return
+    end
+    local eligible = self:isShopCategoryConveyorBelt(vehicle)
+    if not eligible then
+        return
+    end
+
+    local motor = vehicle.spec_motorized.motor
+    if motor == nil then
+        return
+    end
+
+    local speedRaw = tonumber(vehicle.lastSpeedReal) or 0
+    local speedKmh = math.abs(speedRaw) * 3.6
+    if type(vehicle.getLastSpeed) == "function" then
+        local ok, value = pcall(vehicle.getLastSpeed, vehicle)
+        if ok and tonumber(value) ~= nil then
+            speedKmh = math.abs(tonumber(value))
+        end
+    end
+    -- Only report vehicles that are actually moving; no idle/per-frame log spam.
+    if speedKmh < 1 then
+        return
+    end
+
+    local now = g_time or 0
+    local last = tonumber(vehicle.uchLiveSpeedDiagLastTime) or -10000
+    if now - last < 1000 then
+        return
+    end
+    vehicle.uchLiveSpeedDiagLastTime = now
+
+    local function safeCall(object, method)
+        if object == nil or type(object[method]) ~= "function" then
+            return nil
+        end
+        local ok, value = pcall(object[method], object)
+        if ok then return value end
+        return nil
+    end
+    local function num(value)
+        local n = tonumber(value)
+        return n ~= nil and string.format("%.3f", n) or "nil"
+    end
+    local physicalBackward = safeCall(motor, "calculatePhysicalMaximumBackwardSpeed")
+    local maxBackward = safeCall(motor, "getMaximumBackwardSpeed") or motor.maxBackwardSpeed
+    local maxForward = safeCall(motor, "getMaximumForwardSpeed") or motor.maxForwardSpeed
+    local gearRatio = safeCall(motor, "getGearRatio") or motor.gearRatio
+    local driveDirection = safeCall(motor, "getDrivingDirection")
+    local lastSpeedFromMethod = safeCall(vehicle, "getLastSpeed")
+
+    logInfo("[SPEED_DIAG][LIVE] Fahrzeug=%s | speedKmh=%.2f | lastSpeedReal=%s | getLastSpeed=%s | movingDirection=%s | driveDirection=%s | currentDirection=%s | transmissionDirection=%s | gear=%s | targetGear=%s | gearRatio=%s | maxForward=%s | maxBackward=%s | speedLimit=%s | speedLimitAcc=%s | rpmLimit=%s | maxRpm=%s | lastMotorRpm=%s | physicalBackward=%s | minBackwardRatio=%s | maxBackwardRatio=%s | minGearRatio=%s | maxGearRatio=%s | backwardGears=%s | forwardGears=%s",
+        tostring(vehicle.configFileName or vehicle.configFileNameClean or vehicle.typeName or "unknown"),
+        speedKmh,
+        num(speedRaw),
+        num(lastSpeedFromMethod),
+        num(vehicle.movingDirection),
+        num(driveDirection),
+        num(motor.currentDirection),
+        num(motor.transmissionDirection),
+        tostring(motor.gear),
+        tostring(motor.targetGear),
+        num(gearRatio),
+        num(maxForward),
+        num(maxBackward),
+        num(motor.speedLimit),
+        num(motor.speedLimitAcc),
+        num(motor.rpmLimit),
+        num(motor.maxRpm),
+        num(motor.lastRealMotorRpm),
+        num(physicalBackward),
+        num(motor.minBackwardGearRatio),
+        num(motor.maxBackwardGearRatio),
+        num(motor.minGearRatio),
+        num(motor.maxGearRatio),
+        type(motor.backwardGears) == "table" and tostring(#motor.backwardGears) or "nil",
+        type(motor.forwardGears) == "table" and tostring(#motor.forwardGears) or "nil")
+end
+
+-- FS25 exposes a separate live motor.speedLimit in addition to the
+-- maxBackwardSpeed gearbox limit. The diagnostic log showed this value being
+-- set to 5 km/h only while reversing, even after the physical reverse speed
+-- and maxBackwardSpeed had been raised to 25 km/h. Raise only that active
+-- limit for recognized conveyors while moving backwards; forward behavior is
+-- untouched. The engine may refresh the live limit, so this is rechecked by
+-- the existing conveyor manager loop.
+-- GIANTS or another vehicle-control path can reapply a low live speedLimit
+-- through VehicleMotor:setSpeedLimit while reversing. The 500 ms manager pass
+-- sees the value reset to 5 km/h, so clamp at the setter source, but only for
+-- UCH-recognized conveyor vehicles in the actual shop category "belts".
+-- This does not alter other vehicles or the forward speed limit.
+function UniversalConveyorHelper:installReverseSpeedLimitSetterHook()
+    if self.reverseSpeedLimitSetterHookInstalled then
+        return true
+    end
+    if VehicleMotor == nil or type(VehicleMotor.setSpeedLimit) ~= "function" then
+        return false
+    end
+
+    local originalSetSpeedLimit = VehicleMotor.setSpeedLimit
+    VehicleMotor.setSpeedLimit = function(motor, limit)
+        originalSetSpeedLimit(motor, limit)
+
+        local vehicle = motor ~= nil and motor.vehicle or nil
+        if vehicle == nil or vehicle.uchConveyorSpeedLimitApplied ~= true then
+            return
+        end
+        if vehicle.movingDirection == nil or vehicle.movingDirection >= 0 then
+            return
+        end
+        if UniversalConveyorHelper == nil
+            or not UniversalConveyorHelper:isConveyorVehicle(vehicle)
+            or not UniversalConveyorHelper:isShopCategoryConveyorBelt(vehicle) then
+            return
+        end
+
+        local targetKmh = UniversalConveyorHelper.CONVEYOR_MAX_SPEED_KMH or 25
+        local currentLimit = tonumber(motor.speedLimit)
+        if currentLimit ~= nil and currentLimit < targetKmh then
+            motor.speedLimit = targetKmh
+            local now = g_time or 0
+            local last = tonumber(vehicle.uchReverseSetterHookLogTime) or -10000
+            if now - last >= 1000 then
+                vehicle.uchReverseSetterHookLogTime = now
+                logInfo("[SPEED_LIMIT][REVERSE_SETTER] live Limit nach nativer Setzung korrigiert | Fahrzeug=%s | angefordert=%.2f km/h | aktiv=%.2f km/h | movingDirection=%.1f",
+                    tostring(vehicle.configFileName or vehicle.configFileNameClean or vehicle.typeName or "unknown"),
+                    tonumber(limit) or -1, currentLimit, tonumber(vehicle.movingDirection) or 0)
+            end
+        end
+    end
+
+    self.reverseSpeedLimitSetterHookInstalled = true
+    logInfo("[SPEED_LIMIT][REVERSE_SETTER] VehicleMotor.setSpeedLimit Hook installiert | nur erkannte belts bei Rückwärtsfahrt")
+    return true
+end
+
+function UniversalConveyorHelper:applyConveyorReverseSpeedLimit(vehicle)
+    if vehicle == nil or vehicle.spec_motorized == nil or vehicle.movingDirection == nil or vehicle.movingDirection >= 0 then
+        return false
+    end
+    if not vehicle.uchConveyorSpeedLimitApplied or not self:isConveyorVehicle(vehicle) then
+        return false
+    end
+    local eligible = self:isShopCategoryConveyorBelt(vehicle)
+    if not eligible then
+        return false
+    end
+    local motor = vehicle.spec_motorized.motor
+    if motor == nil then
+        return false
+    end
+
+    local targetKmh = UniversalConveyorHelper.CONVEYOR_MAX_SPEED_KMH
+    local currentLimit = tonumber(motor.speedLimit)
+    if currentLimit ~= nil and currentLimit < targetKmh then
+        motor.speedLimit = targetKmh
+        local now = g_time or 0
+        local last = tonumber(vehicle.uchReverseSpeedLimitLogTime) or -10000
+        if now - last >= 1000 then
+            vehicle.uchReverseSpeedLimitLogTime = now
+            logInfo("[SPEED_LIMIT][REVERSE] aktives Limit angehoben | Fahrzeug=%s | vorher=%.2f km/h | nachher=%.2f km/h | movingDirection=%.1f",
+                tostring(vehicle.configFileName or vehicle.configFileNameClean or vehicle.typeName or "unknown"),
+                currentLimit, targetKmh, tonumber(vehicle.movingDirection) or 0)
+        end
+        return true
+    end
+    return false
+end
+
 function UniversalConveyorHelper:globalStartConveyors()
     if g_currentMission == nil then
         return
@@ -340,6 +739,12 @@ function UniversalConveyorHelper:globalStartConveyors()
     local count = 0
 
     for _, vehicle in ipairs(vehicles) do
+        -- Speed adjustment is independent from the per-conveyor AutoStart setting.
+        -- The function itself checks both conveyor identity and shop category.
+        self:applyConveyorSpeedLimit(vehicle)
+        self:applyConveyorReverseSpeedLimit(vehicle)
+        self:logLiveSpeedDiagnostics(vehicle)
+
         if self:isAutoStartVehicle(vehicle) then
             count = count + 1
 
@@ -390,6 +795,8 @@ function UniversalConveyorHelper:globalStartConveyors()
     end
 end
 
+-- Vehicle arrival detection is implemented in VehicleDetection.lua.
+
 function UniversalConveyorHelper:globalDischargeConveyors()
     if g_currentMission == nil then
         return
@@ -436,122 +843,32 @@ function UniversalConveyorHelper:globalDischargeConveyors()
     end
 end
 
-function UniversalConveyorHelper:runAIDiagnostic()
-    if self.aiDiagnosticDone or g_currentMission == nil then
-        return
-    end
-
-    local vehicles = self:getGlobalVehicleList()
-    local conveyorCount = 0
-    local aiCount = 0
-    local targetApiCount = 0
-    local canStartCount = 0
-
-    logInfo("[AI_DIAG] Starte einmalige Förderband-/AI-Diagnose | Objekte=%d", #vehicles)
-
-    for _, vehicle in ipairs(vehicles) do
-        if self:isConveyorVehicle(vehicle) then
-            conveyorCount = conveyorCount + 1
-
-            local hasConveyor = vehicle.spec_conveyorBelt ~= nil
-            local hasAI = vehicle.spec_aiConveyorBelt ~= nil
-            local hasDischarge = vehicle.spec_dischargeable ~= nil
-            local hasFillUnit = vehicle.spec_fillUnit ~= nil
-            local hasCurrentNode = vehicle.getCurrentDischargeNode ~= nil
-            local hasTargetApi = vehicle.getConveyorBeltTargetObject ~= nil
-            local hasCanDischargeApi = vehicle.getCanDischargeToObject ~= nil
-            local hasAIStartApi = vehicle.getCanStartAIVehicle ~= nil
-            local hasAIFieldWorkApi = vehicle.getCanStartFieldWork ~= nil
-            local hasAIJobApi = vehicle.getStartableAIJob ~= nil
-            local hasAIJobCheckApi = vehicle.getHasStartableAIJob ~= nil
-            local canStartAI = nil
-            local canFieldWork = nil
-
-            if hasAIStartApi then
-                local ok, result = pcall(vehicle.getCanStartAIVehicle, vehicle)
-                if ok then
-                    canStartAI = result == true
-                else
-                    canStartAI = "ERROR"
-                end
-            end
-
-            if hasAIFieldWorkApi then
-                local ok, result = pcall(vehicle.getCanStartFieldWork, vehicle)
-                if ok then
-                    canFieldWork = result == true
-                else
-                    canFieldWork = "ERROR"
-                end
-            end
-
-            if hasAI then
-                aiCount = aiCount + 1
-            end
-            if hasTargetApi then
-                targetApiCount = targetApiCount + 1
-            end
-            if canStartAI == true then
-                canStartCount = canStartCount + 1
-            end
-
-            local name = tostring(vehicle.configFileNameClean or vehicle.configFileName or vehicle.typeName or "Förderband")
-            local typeName = tostring(vehicle.typeName or "")
-            local aiSpec = vehicle.spec_aiConveyorBelt
-            local aiState = "none"
-            if aiSpec ~= nil then
-                aiState = string.format(
-                    "allowed=%s currentAngle=%.3f minAngle=%s maxAngle=%s stepSize=%s",
-                    tostring(aiSpec.isAllowed),
-                    tonumber(aiSpec.currentAngle) or 0,
-                    tostring(aiSpec.minAngle),
-                    tostring(aiSpec.maxAngle),
-                    tostring(aiSpec.stepSize)
-                )
-            end
-
-            logInfo(
-                "[AI_DIAG] %s | type=%s | ConveyorBelt=%s | AIConveyorBelt=%s | Discharge=%s | FillUnit=%s | AD=%s",
-                name, typeName, tostring(hasConveyor), tostring(hasAI), tostring(hasDischarge), tostring(hasFillUnit), tostring(vehicle.ad ~= nil)
-            )
-            logInfo(
-                "[AI_DIAG] %s | targetAPI=%s | currentDischargeNode=%s | canDischargeAPI=%s | AIStartAPI=%s/%s | FieldWorkAPI=%s/%s | AIJobAPI=%s | AIJobCheckAPI=%s | %s",
-                name, tostring(hasTargetApi), tostring(hasCurrentNode), tostring(hasCanDischargeApi), tostring(hasAIStartApi), tostring(canStartAI), tostring(hasAIFieldWorkApi), tostring(canFieldWork), tostring(hasAIJobApi), tostring(hasAIJobCheckApi), aiState
-            )
-
-            if hasCurrentNode then
-                local okNode, node = pcall(vehicle.getCurrentDischargeNode, vehicle)
-                if okNode and node ~= nil then
-                    local hitObject = node.dischargeHitObject
-                    local hitUnit = node.dischargeHitObjectUnitIndex
-                    logInfo(
-                        "[AI_DIAG] %s | dischargeNode=%s | hitObject=%s | hitUnit=%s | fillType=%s",
-                        name,
-                        tostring(node.index),
-                        tostring(hitObject ~= nil),
-                        tostring(hitUnit),
-                        tostring(node.fillType)
-                    )
-                end
-            end
-        end
-    end
-
-    logInfo(
-        "[AI_DIAG] Fertig | Förderbänder=%d | AIConveyorBelt=%d | TargetAPI=%d | canStartAI=true=%d",
-        conveyorCount, aiCount, targetApiCount, canStartCount
-    )
-
-    self.aiDiagnosticDone = true
-end
-
 function UniversalConveyorHelper:onLoadMapFinished()
     self.globalStartTimer = 1000
     self.globalDischargeTimer = 1000
     self.globalStartLogged = false
     self.globalDischargeLogged = false
-    self.aiDiagnosticTimer = 1500
-    self.aiDiagnosticDone = false
+    self.startupLogFinished = false
+    self.startupUpdateCount = 0
+
+    local gameTime = nil
+    if getTime ~= nil then
+        local ok, value = pcall(getTime)
+        if ok then
+            gameTime = value
+        end
+    end
+
+    logInfo(
+        "[STARTUP] onLoadMapFinished | gameTime=%s | controlledVehicle=%s | vehicleSystem=%s",
+        tostring(gameTime),
+        tostring(g_currentMission ~= nil and g_currentMission.controlledVehicle ~= nil),
+        tostring(g_currentMission ~= nil and g_currentMission.vehicleSystem ~= nil)
+    )
+
+    if UniversalConveyorVehicleDetection ~= nil and UniversalConveyorVehicleDetection.reset ~= nil then
+        UniversalConveyorVehicleDetection:reset()
+    end
 
     if UniversalAutoTurnOn ~= nil and UniversalAutoTurnOn.installS710Bridge ~= nil then
         UniversalAutoTurnOn.installS710Bridge()
@@ -559,18 +876,38 @@ function UniversalConveyorHelper:onLoadMapFinished()
 end
 
 function UniversalConveyorHelper:update(dt)
+    if not self.startupLogFinished then
+        self.startupUpdateCount = (self.startupUpdateCount or 0) + 1
+
+        local gameTime = nil
+        if getTime ~= nil then
+            local ok, value = pcall(getTime)
+            if ok then
+                gameTime = value
+            end
+        end
+
+        logInfo(
+            "[STARTUP] erster Update | updateNr=%d | dt=%.2f | gameTime=%s | controlledVehicle=%s | player=%s",
+            self.startupUpdateCount,
+            tonumber(dt) or 0,
+            tostring(gameTime),
+            tostring(g_currentMission ~= nil and g_currentMission.controlledVehicle ~= nil),
+            tostring(g_currentMission ~= nil and g_currentMission.player ~= nil)
+        )
+        self.startupLogFinished = true
+    end
+
     if UniversalAutoTurnOn ~= nil and UniversalAutoTurnOn.installS710Bridge ~= nil then
         UniversalAutoTurnOn.installS710Bridge()
     end
 
-    local delta = dt or 0
+    -- Install once after scripts are initialized. This catches the native
+    -- setter that repeatedly restores the 5 km/h reverse limit between manager
+    -- passes; no extra vehicle scan is introduced.
+    self:installReverseSpeedLimitSetterHook()
 
-    if not self.aiDiagnosticDone then
-        self.aiDiagnosticTimer = (self.aiDiagnosticTimer or 0) - delta
-        if self.aiDiagnosticTimer <= 0 then
-            self:runAIDiagnostic()
-        end
-    end
+    local delta = dt or 0
 
     self.globalStartTimer = (self.globalStartTimer or 0) - delta
     self.globalDischargeTimer = (self.globalDischargeTimer or 0) - delta
@@ -583,6 +920,10 @@ function UniversalConveyorHelper:update(dt)
     if self.globalDischargeTimer <= 0 then
         self.globalDischargeTimer = self.GLOBAL_DISCHARGE_INTERVAL
         self:globalDischargeConveyors()
+    end
+
+    if UniversalConveyorVehicleDetection ~= nil and UniversalConveyorVehicleDetection.update ~= nil then
+        UniversalConveyorVehicleDetection:update(delta)
     end
 end
 

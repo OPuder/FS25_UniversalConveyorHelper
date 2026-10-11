@@ -3,14 +3,13 @@
 
 UniversalConveyorSettings = {}
 
-UniversalConveyorSettings.VERSION = "1.9.26"
+UniversalConveyorSettings.VERSION = "1.9.57"
 UniversalConveyorSettings.SETTINGS_FILENAME = "settings.xml"
 UniversalConveyorSettings.SETTINGS_ROOT = "settings"
 
--- Wait until the map/savegame has fully handed over to the playable map before
--- performing the first complete conveyor scan. During the transition from the
--- 100% loading screen, some vehicle objects are still being created.
-UniversalConveyorSettings.MAP_READY_DELAY = 3000
+-- Start the first conveyor scan immediately after the map reports load completion.
+-- The scan itself is bounded by INITIAL_SCAN_WINDOW; there is no artificial post-load wait.
+UniversalConveyorSettings.MAP_READY_DELAY = 0
 -- After the loading screen is finished, some placeables/vehicles can still
 -- enter the live mission lists. Keep a short, bounded discovery window instead
 -- of scanning forever. New in-game purchases are handled by their lifecycle.
@@ -228,6 +227,20 @@ end
 function UniversalConveyorSettings:isManagedConveyor(vehicle)
     if vehicle == nil then
         return false
+    end
+
+    -- Keep the settings GUI aligned with the same shop-category gate used by
+    -- UCH AutoStart. Genuine conveyor-like objects outside the "belts" shop
+    -- category (for example Hu_super) must not become configurable UCH entries.
+    -- If the store item cannot be resolved, retain the existing native detection
+    -- rather than hiding otherwise valid modded conveyors without evidence.
+    if UniversalConveyorHelper ~= nil
+        and UniversalConveyorHelper.isShopCategoryConveyorBelt ~= nil
+    then
+        local eligible, reason = UniversalConveyorHelper:isShopCategoryConveyorBelt(vehicle)
+        if not eligible and reason == "categoryNotBelts" then
+            return false
+        end
     end
 
     -- Own specialization / runtime markers.

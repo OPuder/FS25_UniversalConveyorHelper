@@ -13,6 +13,17 @@
         <text name="uch_ui_conveyorName" text="Conveyor name" />
         <text name="uch_ui_conveyorNameDescription" text="Name of the conveyor" />
         <text name="uch_ui_conveyorNamePlaceholder" text="Enter name" />
+        <text name="uch_ui_pageTitle" text="Universal Conveyor Helper" />
+        <text name="uch_ui_pageSubtitle" text="Manage conveyors, run them automatically and discharge material" />
+        <text name="uch_ui_helpIntro" text="The symbols show the detected function of each conveyor." />
+        <text name="uch_ui_helpPickupTitle" text="Ground pickup" />
+        <text name="uch_ui_helpPickupText" text="Conveyor picks up loose material from the ground (e.g. S710)." />
+        <text name="uch_ui_helpTransferTitle" text="Conveyor transfer" />
+        <text name="uch_ui_helpTransferText" text="Conveyor transfers material to another conveyor." />
+        <text name="uch_ui_helpLoadingTitle" text="Loading (vehicles/silos)" />
+        <text name="uch_ui_helpLoadingText" text="Conveyor loads material into vehicles, trailers or suitable silos." />
+        <text name="uch_ui_helpGenericTitle" text="General conveyor" />
+        <text name="uch_ui_helpGenericText" text="Generic symbol when the function cannot be determined reliably." />
         <text name="uch_ui_infoTitle" text="Conveyor Help" />
         <text name="uch_ui_typeInfo" text="Shows the detected conveyor type for this entry." />
         <text name="uch_ui_nameInfo" text="Assign a custom name to this conveyor." />

@@ -13,6 +13,17 @@
         <text name="uch_ui_conveyorName" text="Förderbandname" />
         <text name="uch_ui_conveyorNameDescription" text="Name des Förderbands" />
         <text name="uch_ui_conveyorNamePlaceholder" text="Name eingeben" />
+        <text name="uch_ui_pageTitle" text="Universal Conveyor Helper" />
+        <text name="uch_ui_pageSubtitle" text="Förderbänder verwalten, automatisch betreiben und entladen" />
+        <text name="uch_ui_helpIntro" text="Die Symbole zeigen die erkannte Funktion des Förderbands." />
+        <text name="uch_ui_helpPickupTitle" text="Bodenaufnahme" />
+        <text name="uch_ui_helpPickupText" text="Förderband nimmt loses Material vom Boden auf (z. B. S710)." />
+        <text name="uch_ui_helpTransferTitle" text="Förderband-Übergabe" />
+        <text name="uch_ui_helpTransferText" text="Förderband übergibt Material an ein anderes Förderband." />
+        <text name="uch_ui_helpLoadingTitle" text="Beladung (Fahrzeuge/Silos)" />
+        <text name="uch_ui_helpLoadingText" text="Förderband lädt Material in Fahrzeuge, Anhänger oder geeignete Silos." />
+        <text name="uch_ui_helpGenericTitle" text="Allgemeines Förderband" />
+        <text name="uch_ui_helpGenericText" text="Allgemeines Symbol, wenn die Funktion nicht eindeutig bestimmt werden kann." />
         <text name="uch_ui_infoTitle" text="Förderband-Hilfe" />
         <text name="uch_ui_typeInfo" text="Zeigt den erkannten Förderbandtyp dieses Eintrags an." />
         <text name="uch_ui_nameInfo" text="Vergib einen eigenen Namen für dieses Förderband." />

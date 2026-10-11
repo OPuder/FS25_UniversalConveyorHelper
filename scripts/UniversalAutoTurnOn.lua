@@ -203,6 +203,16 @@ function UniversalAutoTurnOn:stopNative(vehicle)
 end
 
 function UniversalAutoTurnOn:doRecheck()
+    -- Defense in depth: even if this specialization was injected into a broad
+    -- vehicle type, it may only start vehicles in the actual shop category.
+    if UniversalConveyorHelper ~= nil
+        and UniversalConveyorHelper.isAutoStartVehicle ~= nil
+        and not UniversalConveyorHelper:isAutoStartVehicle(self)
+    then
+        self.uchAutoTurnOnDone = true
+        return
+    end
+
     if not self.isServer then
         Logging.info("[UniversalConveyorHelper][AUTO_START] %s | kein Server", uchName(self))
         return

@@ -2,7 +2,7 @@
 -- Robust automatic discharge for conveyors including S710.
 
 UniversalWideDischarge = {}
-UniversalWideDischarge.SEARCH_RADIUS = 12.0
+UniversalWideDischarge.SEARCH_RADIUS = 3.0
 UniversalWideDischarge.TRANSFER_LITERS_PER_SEC = 800
 UniversalWideDischarge.OWN_FILL_UNIT_INDEX = 1
 UniversalWideDischarge.DEBUG = true

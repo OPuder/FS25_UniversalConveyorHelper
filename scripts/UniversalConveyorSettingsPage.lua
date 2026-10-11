@@ -1,4 +1,4 @@
--- Universal Conveyor Helper 1.9.38
+-- Universal Conveyor Helper 1.9.74
 -- Controller for the custom Förderbänder settings page.
 
 UniversalConveyorSettingsPage = {}
@@ -18,7 +18,49 @@ function UniversalConveyorSettingsPage.register(settingsManager)
         return nil
     end
 
+    -- Assign custom GUI textures only after loading, using the resolved mod directory.
+    -- This avoids relative XML imageFilename paths being resolved from the game root.
+    local headerTexture = Utils.getFilename("gui/uch_header_tint.png", baseDir)
+    local rowTexture = Utils.getFilename("gui/uch_row_tint.png", baseDir)
+    if page.uchHeaderRow ~= nil and page.uchHeaderRow.setImageFilename ~= nil then
+        page.uchHeaderRow:setImageFilename(headerTexture)
+    end
+    for i = 1, 30 do
+        local row = page["row" .. i]
+        if row ~= nil and row.setImageFilename ~= nil then
+            row:setImageFilename(rowTexture)
+        end
+    end
+    -- Preview-matched header and help-card artwork. Resolve paths from the mod root,
+    -- because relative XML image paths are otherwise interpreted from the game root.
+    local staticImages = {
+        uchLogo = "gui/uch_logo.png",
+        helpCardPickup = "gui/uch_help_card.png",
+        helpCardTransfer = "gui/uch_help_card.png",
+        helpCardLoading = "gui/uch_help_card.png",
+        helpCardGeneric = "gui/uch_help_card.png",
+        helpIconPickup = "gui/icons/uch_icon_pickup.png",
+        helpIconTransfer = "gui/icons/uch_icon_transfer.png",
+        helpIconLoading = "gui/icons/uch_icon_loading.png",
+        helpIconGeneric = "gui/icons/uch_icon_generic.png"
+    }
+    for elementId, relativePath in pairs(staticImages) do
+        local element = page[elementId]
+        local imagePath = Utils.getFilename(relativePath, baseDir)
+        if element ~= nil and element.setImageFilename ~= nil then
+            element:setImageFilename(imagePath)
+            element:setVisible(true)
+            if element.setImageColor ~= nil then
+                element:setImageColor(nil, 1, 1, 1, 1)
+            end
+            Logging.info("[UniversalConveyorHelper][SETTINGS] Bild gesetzt | id=%s | path=%s", tostring(elementId), tostring(imagePath))
+        else
+            Logging.warning("[UniversalConveyorHelper][SETTINGS] Bildelement fehlt oder nicht kompatibel | id=%s", tostring(elementId))
+        end
+    end
+
     Logging.info("[UniversalConveyorHelper][SETTINGS] GUI-Datei geladen: %s", tostring(guiPath))
+    Logging.info("[UniversalConveyorHelper][SETTINGS] GUI-Texturen aufgelöst | header=%s | row=%s", tostring(headerTexture), tostring(rowTexture))
     return page
 end
 
@@ -195,8 +237,96 @@ function UniversalConveyorSettingsPage:registerInfoElement(element, rowIndex, in
     end
 end
 
+-- Classify icon category from generic runtime metadata. Unknown configurations
+-- deliberately use a neutral icon rather than guessing or special-casing a model.
+function UniversalConveyorSettingsPage:getIconCategory(vehicle)
+    if vehicle == nil then
+        return "generic"
+    end
+
+    -- If the current discharge target is another conveyor, this is currently
+    -- operating as a conveyor-to-conveyor transfer.
+    if vehicle.getCurrentDischargeNode ~= nil then
+        local ok, node = pcall(vehicle.getCurrentDischargeNode, vehicle)
+        if ok and node ~= nil then
+            local target = node.dischargeHitObject or node.dischargeObject or node.currentDischargeObject
+            if target ~= nil and target ~= vehicle and UniversalConveyorHelper ~= nil
+                and UniversalConveyorHelper.isConveyorVehicle ~= nil
+                and UniversalConveyorHelper:isConveyorVehicle(target) then
+                return "transfer"
+            end
+        end
+    end
+
+    local parts = {
+        vehicle.configFileNameClean,
+        vehicle.configFileName,
+        vehicle.typeName,
+        vehicle.vehicleName,
+        vehicle.name
+    }
+    local metadataParts = {}
+    for _, value in pairs(parts) do
+        if value ~= nil then
+            table.insert(metadataParts, tostring(value))
+        end
+    end
+    local metadata = string.lower(table.concat(metadataParts, " "))
+
+    local function containsAny(words)
+        for _, word in ipairs(words) do
+            if string.find(metadata, word, 1, true) ~= nil then return true end
+        end
+        return false
+    end
+
+    if containsAny({"pickup", "pick_up", "ground", "scoop", "aufnahme", "aufnehmen", "collect"}) then
+        return "pickup"
+    end
+    if containsAny({"transfer", "between", "zwischen", "link_belt", "conveyor_to_conveyor"}) then
+        return "transfer"
+    end
+    if containsAny({"loading", "loader", "unload", "discharge", "silo", "belad", "entlad", "fill_station"}) then
+        return "loading"
+    end
+
+    return "generic"
+end
+
+function UniversalConveyorSettingsPage:setConveyorIcon(iconElement, vehicle)
+    if iconElement == nil then return end
+    local category = self:getIconCategory(vehicle)
+    local iconPath = Utils.getFilename("gui/icons/uch_icon_" .. category .. ".png", baseDir)
+    if iconElement.setImageFilename ~= nil then
+        iconElement:setImageFilename(iconPath)
+    end
+    if iconElement.setImageColor ~= nil then
+        iconElement:setImageColor(nil, 1, 1, 1, 1)
+    end
+    iconElement:setVisible(true)
+end
+
 function UniversalConveyorSettingsPage:onGuiSetupFinished()
     UniversalConveyorSettingsPage:superClass().onGuiSetupFinished(self)
+
+    -- Row/header transparency is provided by explicit RGBA PNGs in the GUI profiles.
+
+    local iconPaths = {
+        pickup = Utils.getFilename("gui/icons/uch_icon_pickup.png", baseDir),
+        transfer = Utils.getFilename("gui/icons/uch_icon_transfer.png", baseDir),
+        loading = Utils.getFilename("gui/icons/uch_icon_loading.png", baseDir),
+        generic = Utils.getFilename("gui/icons/uch_icon_generic.png", baseDir)
+    }
+    for i = 1, 30 do
+        local icon = self["icon" .. i]
+        if icon ~= nil and icon.setImageFilename ~= nil then
+            icon:setImageFilename(iconPaths.generic)
+            if icon.setImageColor ~= nil then
+                icon:setImageColor(nil, 1, 1, 1, 1)
+            end
+            icon:setVisible(false)
+        end
+    end
 
     self.rows = {}
     self.elementToRow = {}
@@ -208,9 +338,11 @@ function UniversalConveyorSettingsPage:onGuiSetupFinished()
         local enabled = self["enabled" .. i]
         local teleport = self["teleport" .. i]
         local typeText = self["type" .. i]
+        local icon = self["icon" .. i]
 
         self.rows[i] = {
             row = row,
+            icon = icon,
             nameInput = nameInput,
             enabled = enabled,
             teleport = teleport,
@@ -350,8 +482,14 @@ function UniversalConveyorSettingsPage:updateConveyors(entries)
         if rowData.row ~= nil then
             rowData.row:setVisible(entry ~= nil)
         end
+        if rowData.icon ~= nil then
+            rowData.icon:setVisible(entry ~= nil)
+        end
 
         if entry ~= nil then
+            if rowData.icon ~= nil then
+                self:setConveyorIcon(rowData.icon, entry.vehicle)
+            end
             if rowData.nameInput ~= nil then
                 rowData.nameInput:setVisible(true)
                 local draft = self.nameDrafts[i]
