@@ -2,10 +2,10 @@
 
 **Ein Helfer für Förderbänder in Farming Simulator 25**\
 Zentrale Verwaltung, AutoStart, automatische Übergabe und spezielle
-Unterstützung für den SL 80-22 Quantum und AutoDrive-Kompatibilibäl
+Unterstützung für den SL 80-22 Quantum und AutoDrive-Kompatibilität
 
-[⬇️ **Universal Conveyor Helper
-herunterladen**](https://github.com/OPuder/FS25_UniversalConveyorHelper/releases)
+[![Download Latest Release](https://img.shields.io/github/v/release/OPuder/FS25_UniversalConveyorHelper?label=Download&sort=semver)](https://github.com/OPuder/FS25_UniversalConveyorHelper/releases/latest)
+**[⬇️ Download the latest version](https://github.com/OPuder/FS25_UniversalConveyorHelper/releases)**
 
 > **Installation:** Lade unter **Releases → Assets** die aktuelle
 > Mod-ZIP herunter und kopiere sie direkt in deinen `mods`-Ordner.
@@ -81,6 +81,20 @@ unerwartetem Verhalten bitte beide Einstellungen kontrollieren.
 -   Der KI-Ablauf verwendet eine Geschwindigkeit von **1 km/h**
 -   Der native KI-Job übernimmt die eigentliche Schwenkbewegung des
     Förderbands
+
+#### So startest du den Quantum-KI-Job mit H
+
+Bereite das Quantum zuerst für den Entladebetrieb vor. Halte dabei diese
+Reihenfolge ein:
+
+1. **Räder einklappen:** Drücke **X**, um die Räder einzuklappen.
+2. **Entladen einschalten:** Drücke **Strg + I**, um die Entladefunktion zu aktivieren.
+3. **KI-Job starten:** Sobald das Quantum für den Entladebetrieb bereit ist, drücke **H**.
+4. **KI-Job stoppen:** Drücke erneut **H**, um den KI-Job zu stoppen.
+
+> **Wichtig:** Starte den Helfer erst, nachdem die Räder eingeklappt und
+die Entladefunktion eingeschaltet wurden. Wenn du die Tastenbelegung
+geändert hast, gelten die entsprechenden Tasten aus deinen Spieleinstellungen.
 
 ### 🚚 AutoDrive-Kompatibilität
 
@@ -216,8 +230,8 @@ automation features for supported conveyor vehicles in Farming Simulator
 transfer-target detection, and dedicated support for the SL 80-22
 Quantum.
 
-[⬇️ **Download Universal Conveyor
-Helper**](https://github.com/OPuder/FS25_UniversalConveyorHelper/releases)
+[![Download Latest Release](https://img.shields.io/github/v/release/OPuder/FS25_UniversalConveyorHelper?label=Download&sort=semver)](https://github.com/OPuder/FS25_UniversalConveyorHelper/releases/latest)
+**[⬇️ Download the latest version](https://github.com/OPuder/FS25_UniversalConveyorHelper/releases)**
 
 > **Installation:** Download the latest mod ZIP under **Releases →
 > Assets** and copy it directly into your `mods` folder. **Do not
@@ -286,6 +300,19 @@ settings.
 -   Adjustable sweep angle
 -   The UCH AI workflow uses a speed of **1 km/h**
 -   The native AI job handles the conveyor's actual sweeping movement
+
+#### How to start the Quantum AI job with H
+
+Prepare the Quantum for unloading first. Follow this order:
+
+1. **Fold the wheels:** Press **X** to fold the wheels.
+2. **Enable unloading:** Press **Ctrl + I** to enable the unloading function.
+3. **Start the AI job:** Once the Quantum is ready for unloading, press **H**.
+4. **Stop the AI job:** Press **H** again to stop the AI job.
+
+> **Important:** Start the helper only after the wheels have been folded
+and the unloading function has been enabled. If you have changed the key
+bindings, use the corresponding keys shown in your game settings.
 
 ### 🚚 AutoDrive compatibility
 
