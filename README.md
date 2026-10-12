@@ -2,7 +2,7 @@
 
 **Ein Helfer für Förderbänder in Farming Simulator 25**\
 Zentrale Verwaltung, AutoStart, automatische Übergabe und spezielle
-Unterstützung für den SL 80-22 Quantum.
+Unterstützung für den SL 80-22 Quantum und AutoDrive-Kompatibilibäl
 
 [⬇️ **Universal Conveyor Helper
 herunterladen**](https://github.com/OPuder/FS25_UniversalConveyorHelper/releases)
