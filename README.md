@@ -1,68 +1,115 @@
 # FS25 Universal Conveyor Helper
 
-Ein universeller Helfer für Förderbänder in **Farming Simulator 25**.
+**Ein Helfer für Förderbänder in Farming Simulator 25**\
+Zentrale Verwaltung, AutoStart, automatische Übergabe und spezielle
+Unterstützung für den SL 80-22 Quantum.
 
-Der **Universal Conveyor Helper** erweitert die Bedienung und Verwaltung von Förderbändern und ermöglicht eine übersichtliche Steuerung mehrerer Förderbänder.
+[⬇️ **Universal Conveyor Helper
+herunterladen**](https://github.com/OPuder/FS25_UniversalConveyorHelper/releases)
 
----
-
-## 📥 Download
-
-### 👉 [⬇️ Universal Conveyor Helper herunterladen](https://github.com/OPuder/FS25_UniversalConveyorHelper/releases)
-
-Auf der Release-Seite findest du unter **Assets** die aktuelle fertige Mod-ZIP.
-
-**Die ZIP-Datei direkt in den `mods`-Ordner von Farming Simulator 25 kopieren.**
-
-⚠️ **Die ZIP-Datei nicht entpacken!**
+> **Installation:** Lade unter **Releases → Assets** die aktuelle
+> Mod-ZIP herunter und kopiere sie direkt in deinen `mods`-Ordner.
+> **Nicht entpacken!**
 
 Standardpfad:
 
-```text
+``` text
 Dokumente/My Games/FarmingSimulator2025/mods
 ```
 
----
+------------------------------------------------------------------------
+
+## 🇩🇪 Deutsch
 
 ## 🚜 Funktionen
 
-Der Universal Conveyor Helper bietet unter anderem:
+### Zentrale Förderband-Verwaltung
 
-- Automatisches Starten von Förderbändern
-- Erweiterter Auswurfbereich
-- Individuelle Einstellungen für jedes Förderband
-- Förderbänder umbenennen
-- Übersicht über alle erkannten Förderbänder
-- Förderbänder gezielt auswählen
-- Direkter Teleport zum ausgewählten Förderband
-- Unterstützung für Multiplayer
-- Unterstützung für automatisierte Abläufe
+-   Automatische Erkennung und zentrale Verwaltung unterstützter
+    Förderbänder
+-   Übersicht aller erkannten Förderbänder
+-   Förderbänder individuell benennen, damit auch mehrere gleiche Geräte
+    unterscheidbar bleiben
+-   Förderbänder gezielt auswählen und direkt zu ihnen teleportieren
+-   Einstellungen pro Förderband speichern und beim Laden des
+    Spielstands wiederherstellen
+-   Aktivierung und tatsächlicher Betriebszustand werden getrennt
+    behandelt
 
-Durch die Möglichkeit, Förderbänder individuell umzubenennen, lassen sich auch mehrere gleiche Förderbänder übersichtlich unterscheiden.
+### ⚙️ AutoStart und Betrieb
 
----
+-   **AutoStart pro Förderband:** Für jedes unterstützte Förderband
+    separat aktivierbar oder deaktivierbar
+-   Der AutoStart-Manager arbeitet unabhängig davon, ob der Spieler
+    direkt neben dem Förderband steht
+-   Motorstart und tatsächliches Einschalten des Förderbands werden
+    getrennt behandelt
+-   Unterstützung für automatisierte Abläufe, bei denen Förderbänder
+    selbstständig vorbereitet und betrieben werden
 
-# ⚠️ WICHTIG – Förderband während des Beladens nicht ausschalten!
+**Hinweis:** Die UCH-AutoStart-Einstellung ist nicht dasselbe wie die
+globale Einstellung für den automatischen Motorstart im Spiel. Bei
+unerwartetem Verhalten bitte beide Einstellungen kontrollieren.
 
-## 🔴 Förderbänder dürfen während eines laufenden Beladevorgangs nicht ausgeschaltet werden.
+### 📦 Automatische Übergabe und Entladung
 
-Wenn ein Förderband gerade Material aufnimmt bzw. ein Beladevorgang aktiv ist, muss das Förderband **eingeschaltet bleiben, bis der Vorgang vollständig abgeschlossen ist**.
+-   Automatische Erkennung geeigneter Übergabe- bzw. Entladeziele
+-   Prüfung von FillType und verfügbarer Kapazität
+-   Begrenzter Erkennungsbereich von ungefähr **3 Metern**, damit nicht
+    versehentlich weiter entfernte Objekte ausgewählt werden
+-   Automatisierte Materialübergabe für unterstützte Förderbandtypen
 
-### ❌ Falsch
+### 🏎️ Förderband-Geschwindigkeit
 
-```text
+-   Unterstützung für Förderbänder, deren Konfiguration eine höhere
+    Fahrgeschwindigkeit erlaubt
+-   Für entsprechend angepasste Förderbänder ist eine
+    Höchstgeschwindigkeit von bis zu **25 km/h** vorgesehen, sofern das
+    jeweilige Fahrzeug bzw. dessen Konfiguration dies unterstützt
+
+> Die Höchstgeschwindigkeit ist nicht automatisch für jedes beliebige
+> Förderband garantiert. Das jeweilige Fahrzeug muss die entsprechende
+> Motorisierung und Geschwindigkeitskonfiguration unterstützen.
+
+### 🎮 SL 80-22 Quantum -- nativer KI-Job
+
+-   Den nativen Förderband-KI-Job direkt im Quantum mit **H** starten
+    und stoppen
+-   Die H-Aktion ist auf den Quantum begrenzt und soll die normale
+    H-Tastenfunktion außerhalb dieses Fahrzeugs nicht verändern
+-   Einstellbarer Schwenkwinkel
+-   Der KI-Ablauf verwendet eine Geschwindigkeit von **1 km/h**
+-   Der native KI-Job übernimmt die eigentliche Schwenkbewegung des
+    Förderbands
+
+### 🧰 Unterstützung unterschiedlicher Förderbandtypen
+
+UCH berücksichtigt Besonderheiten einzelner Förderbandtypen, statt für
+alle Geräte denselben Ablauf zu erzwingen. Dazu gehören unter anderem
+die vorhandene S710-Unterstützung und die spezielle Integration des SL
+80-22 Quantum.
+
+------------------------------------------------------------------------
+
+## ⚠️ Wichtig: Förderband während des Beladens nicht ausschalten
+
+Wenn ein Förderband gerade Material aufnimmt oder ein Beladevorgang
+läuft, muss es **eingeschaltet bleiben, bis der Vorgang vollständig
+abgeschlossen ist**.
+
+**Falsch:**
+
+``` text
 Förderband belädt
        ↓
 Förderband ausschalten
        ↓
-Beladevorgang unterbrochen
+Beladevorgang möglicherweise unterbrochen
 ```
 
-Das kann dazu führen, dass der aktuelle Vorgang nicht korrekt abgeschlossen wird.
+**Richtig:**
 
-### ✅ Richtig
-
-```text
+``` text
 Förderband belädt
        ↓
 Beladevorgang vollständig abschließen
@@ -70,108 +117,281 @@ Beladevorgang vollständig abschließen
 Förderband ausschalten
 ```
 
-### Kurz gesagt:
+> 🔴 Während eines laufenden Beladevorgangs das Förderband nicht
+> ausschalten.\
+> 🟢 Erst ausschalten, wenn der Vorgang vollständig abgeschlossen ist.
 
-> 🔴 **Während des Beladens niemals das Förderband ausschalten.**
->
-> 🟢 **Erst nach Abschluss des Beladevorgangs ausschalten.**
+------------------------------------------------------------------------
 
----
+## 📥 Installation
 
-## ⚙️ Installation
+1.  Öffne die
+    [GitHub-Releases-Seite](https://github.com/OPuder/FS25_UniversalConveyorHelper/releases).
+2.  Lade unter **Assets** die aktuelle
+    `FS25_UniversalConveyorHelper.zip` herunter.
+3.  Kopiere die ZIP-Datei in den `mods`-Ordner.
+4.  **Entpacke die ZIP-Datei nicht.**
+5.  Starte Farming Simulator 25 und aktiviere den **Universal Conveyor
+    Helper** im Mod-Auswahlbildschirm.
+6.  Lade deinen Spielstand und öffne die UCH-Verwaltung.
 
-1. Die aktuelle `FS25_UniversalConveyorHelper.zip` herunterladen.
-2. Die ZIP-Datei in den `mods`-Ordner kopieren.
-3. Die ZIP-Datei **nicht entpacken**.
-4. Farming Simulator 25 starten.
-5. Den **Universal Conveyor Helper** im Mod-Menü aktivieren.
+Verwende möglichst nur eine installierte Version der Mod.
 
----
+------------------------------------------------------------------------
 
-## 🖥️ Förderband-Verwaltung
+## 💡 Tipps zur Verwendung
 
-Der Universal Conveyor Helper erkennt die vorhandenen Förderbänder und stellt sie übersichtlich zur Verfügung.
+Wenn du mehrere Förderbänder desselben Typs verwendest, vergib
+eindeutige Namen, zum Beispiel:
 
-Jedes Förderband kann individuell verwaltet werden.
-
-Unter anderem können Förderbänder:
-
-- aktiviert oder deaktiviert werden
-- individuell benannt werden
-- gezielt ausgewählt werden
-- über die Übersicht gefunden werden
-- direkt angesprungen werden
-
----
-
-## 🎮 Verwendung
-
-Nach dem Start des Spiels stehen die Funktionen des Universal Conveyor Helpers über die entsprechende Benutzeroberfläche zur Verfügung.
-
-Die Förderbänder werden automatisch erkannt und können anschließend individuell konfiguriert werden.
-
-### 💡 Tipp
-
-Wenn mehrere Förderbänder des gleichen Typs verwendet werden, empfiehlt es sich, ihnen eindeutige Namen zu geben.
-
-Zum Beispiel:
-
-```text
+``` text
 S710 Eingang
 S710 Lager 1
 S710 Lager 2
 S710 Ausgang
 ```
 
-Dadurch bleibt auch bei vielen Förderbändern die Übersicht erhalten.
+Wenn AutoStart oder ein automatisierter Ablauf nicht wie erwartet
+funktioniert, prüfe: - die UCH-Einstellung für das jeweilige
+Förderband, - die globale Einstellung für den automatischen
+Motorstart, - ob das Förderband tatsächlich eingeschaltet ist, - ob das
+Ziel den passenden FillType unterstützt und ausreichend Kapazität hat.
 
----
+------------------------------------------------------------------------
 
 ## ⚠️ Kompatibilität
 
-**Farming Simulator 25**
+-   Entwickelt für **Farming Simulator 25**
+-   Die Kompatibilität und verfügbaren Funktionen können vom
+    Förderbandtyp, dessen Konfiguration, der Spielversion und anderen
+    installierten Mods abhängen.
+-   Funktionen wie 25 km/h sind nur möglich, wenn die jeweilige
+    Fahrzeugkonfiguration diese Geschwindigkeit unterstützt.
 
-Der Universal Conveyor Helper ist als eigenständige Erweiterung für Förderbänder konzipiert.
-
-Die tatsächliche Kompatibilität kann abhängig vom verwendeten Förderband und anderen Mods variieren.
-
----
+------------------------------------------------------------------------
 
 ## 🐛 Fehler melden
 
-Sollte ein Problem auftreten, bitte möglichst folgende Informationen angeben:
+Wenn ein Problem auftritt, melde es bitte über die
+[GitHub-Issues](https://github.com/OPuder/FS25_UniversalConveyorHelper/issues)
+und gib möglichst Folgendes an:
 
-- verwendete Version des Universal Conveyor Helpers
-- verwendetes Förderband
-- verwendete weitere Mods
-- Beschreibung des Problems
-- möglichst reproduzierbare Schritte
-- `log.txt` von Farming Simulator 25
+-   UCH-Version
+-   betroffenes Förderband
+-   weitere verwendete Mods
+-   genaue Schritte zur Reproduktion
+-   erwartetes und tatsächliches Verhalten
+-   `log.txt` von Farming Simulator 25
 
-Fehler und Verbesserungsvorschläge können über die GitHub-Issues gemeldet werden.
+Bitte den Log möglichst vollständig anhängen. Fehler anderer Mods können
+ebenfalls darin erscheinen und stammen nicht zwingend von UCH.
 
----
+------------------------------------------------------------------------
 
-## 📦 Releases
+## 📦 Releases und Projekt
 
-Die jeweils aktuelle fertige Mod-Version wird über die **GitHub Releases** bereitgestellt.
+-   [⬇️ Aktuelle Version
+    herunterladen](https://github.com/OPuder/FS25_UniversalConveyorHelper/releases)
+-   [GitHub-Repository](https://github.com/OPuder/FS25_UniversalConveyorHelper)
+-   [Fehler melden / Verbesserung
+    vorschlagen](https://github.com/OPuder/FS25_UniversalConveyorHelper/issues)
 
-👉 [Zur aktuellen Release](https://github.com/OPuder/FS25_UniversalConveyorHelper/releases)
+Die aktuelle Versionsnummer findest du auf der Releases-Seite.
 
-Dort unter **Assets** die Datei `FS25_UniversalConveyorHelper.zip` herunterladen.
+------------------------------------------------------------------------
 
----
+## 🇬🇧 English
 
-## 📋 Version
+## Overview
 
-**FS25 Universal Conveyor Helper**
+**FS25 Universal Conveyor Helper (UCH)** adds centralized management and
+automation features for supported conveyor vehicles in Farming Simulator
+25. It provides per-conveyor settings, AutoStart, automatic
+transfer-target detection, and dedicated support for the SL 80-22
+Quantum.
 
-Aktuelle Version: siehe [Releases](https://github.com/OPuder/FS25_UniversalConveyorHelper/releases)
+[⬇️ **Download Universal Conveyor
+Helper**](https://github.com/OPuder/FS25_UniversalConveyorHelper/releases)
 
----
+> **Installation:** Download the latest mod ZIP under **Releases →
+> Assets** and copy it directly into your `mods` folder. **Do not
+> extract it!**
 
-## 👨‍💻 Projekt
+Default path:
 
-[OPuder/FS25_UniversalConveyorHelper](https://github.com/OPuder/FS25_UniversalConveyorHelper)
+``` text
+Documents/My Games/FarmingSimulator2025/mods
+```
 
-Viel Spaß mit dem Universal Conveyor Helper! 🚜
+------------------------------------------------------------------------
+
+## 🚜 Features
+
+### Central conveyor management
+
+-   Automatic detection and centralized management of supported
+    conveyors
+-   Overview of detected conveyor vehicles
+-   Custom names to distinguish multiple conveyors of the same type
+-   Select a conveyor directly and teleport to it
+-   Save settings per conveyor and restore them when loading a savegame
+-   Separate handling of a feature being enabled and the conveyor's
+    actual operating state
+
+### ⚙️ AutoStart and operation
+
+-   **AutoStart per conveyor:** Enable or disable it individually for
+    each supported conveyor
+-   The AutoStart manager works without requiring the player to stand
+    next to the conveyor
+-   Engine start requests and the actual conveyor operating state are
+    handled separately
+-   Supports automated workflows that prepare and operate conveyors
+
+**Note:** UCH AutoStart is separate from the game's global automatic
+engine-start setting. If a conveyor behaves unexpectedly, check both
+settings.
+
+### 📦 Automatic transfer and unloading
+
+-   Automatic detection of suitable transfer or unloading targets
+-   FillType and available-capacity checks
+-   A limited detection range of approximately **3 metres** to avoid
+    selecting distant objects unintentionally
+-   Automated material transfer for supported conveyor types
+
+### 🏎️ Conveyor speed
+
+-   Supports higher driving speeds for conveyors whose configurations
+    allow them
+-   A maximum speed of up to **25 km/h** is intended for suitably
+    configured conveyors, where supported by the vehicle and its
+    configuration
+
+> A 25 km/h maximum is not guaranteed for every conveyor. The vehicle
+> configuration must support the required motorization and speed
+> settings.
+
+### 🎮 SL 80-22 Quantum -- native AI job
+
+-   Start and stop the Quantum's native conveyor AI job using **H**
+-   The H action is intended for the Quantum only and should not change
+    normal H-key behaviour outside that vehicle
+-   Adjustable sweep angle
+-   The UCH AI workflow uses a speed of **1 km/h**
+-   The native AI job handles the conveyor's actual sweeping movement
+
+### 🧰 Support for different conveyor types
+
+UCH accounts for differences between supported conveyor vehicles instead
+of forcing every device through the same workflow. This includes the
+existing S710 support and the dedicated SL 80-22 Quantum integration.
+
+------------------------------------------------------------------------
+
+## ⚠️ Important: Do not switch off a conveyor during loading
+
+If a conveyor is currently loading material or a loading operation is in
+progress, **keep it switched on until the operation has fully
+completed**.
+
+**Incorrect:**
+
+``` text
+Conveyor is loading
+       ↓
+Switch conveyor off
+       ↓
+Loading operation may be interrupted
+```
+
+**Correct:**
+
+``` text
+Conveyor is loading
+       ↓
+Finish the loading operation
+       ↓
+Switch conveyor off
+```
+
+> 🔴 Do not switch off a conveyor during an active loading operation.\
+> 🟢 Switch it off only after the operation is complete.
+
+------------------------------------------------------------------------
+
+## 📥 Installation
+
+1.  Open the [GitHub Releases
+    page](https://github.com/OPuder/FS25_UniversalConveyorHelper/releases).
+2.  Download the latest `FS25_UniversalConveyorHelper.zip` under
+    **Assets**.
+3.  Copy the ZIP file into your `mods` folder.
+4.  **Do not extract the ZIP file.**
+5.  Start Farming Simulator 25 and enable **Universal Conveyor Helper**
+    in the mod selection screen.
+6.  Load your savegame and open the UCH management interface.
+
+If possible, keep only one installed copy of the mod.
+
+------------------------------------------------------------------------
+
+## 💡 Usage tips
+
+If you use multiple conveyors of the same type, give them unique names,
+for example:
+
+``` text
+S710 Infeed
+S710 Storage 1
+S710 Storage 2
+S710 Outfeed
+```
+
+If AutoStart or an automated workflow does not behave as expected,
+check: - the UCH setting for the individual conveyor, - the game's
+global automatic engine-start setting, - whether the conveyor is
+actually switched on, - whether the target supports the required
+FillType and has enough capacity.
+
+------------------------------------------------------------------------
+
+## ⚠️ Compatibility
+
+-   Designed for **Farming Simulator 25**
+-   Compatibility and available features may depend on the conveyor
+    type, its configuration, the game version, and other installed mods.
+-   Features such as 25 km/h are only available when the relevant
+    vehicle configuration supports that speed.
+
+------------------------------------------------------------------------
+
+## 🐛 Reporting issues
+
+If you encounter a problem, report it through [GitHub
+Issues](https://github.com/OPuder/FS25_UniversalConveyorHelper/issues)
+and include as much of the following as possible:
+
+-   UCH version
+-   affected conveyor
+-   other installed mods
+-   exact reproduction steps
+-   expected and actual behaviour
+-   Farming Simulator 25 `log.txt`
+
+Please attach the log as completely as possible. Other mods may also
+produce errors, so not every message in the log necessarily comes from
+UCH.
+
+------------------------------------------------------------------------
+
+## 📦 Releases and project
+
+-   [⬇️ Download the latest
+    version](https://github.com/OPuder/FS25_UniversalConveyorHelper/releases)
+-   [GitHub
+    repository](https://github.com/OPuder/FS25_UniversalConveyorHelper)
+-   [Report a bug / suggest an
+    improvement](https://github.com/OPuder/FS25_UniversalConveyorHelper/issues)
+
+Check the Releases page for the current version number.
