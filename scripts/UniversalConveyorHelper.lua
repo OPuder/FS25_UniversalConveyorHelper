@@ -3,7 +3,7 @@
 -- Specializations are registered manually, following the proven FS25 pattern.
 
 UniversalConveyorHelper = {}
-UniversalConveyorHelper.VERSION = "1.9.83.3"
+UniversalConveyorHelper.VERSION = "1.9.83.5"
 UniversalConveyorHelper.AUTO_START = true
 UniversalConveyorHelper.EXTENDED_DISCHARGE = true
 UniversalConveyorHelper.DEBUG = true

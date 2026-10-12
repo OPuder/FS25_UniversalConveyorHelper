@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
 <l10n>
     <texts>
+        <text name="input_UCH_QUANTUM_AI_TOGGLE" text="KI-Helfer SL 80-22 Quantum starten/stoppen" />
         <text name="global_uch_ui_folders" text="FÖRDERBÄNDER" />
         <text name="uch_ui_conveyorSettings" text="Förderband-Einstellungen" />
         <text name="uch_ui_type" text="TYP" />
         <text name="uch_ui_name" text="NAME" />
         <text name="uch_ui_automation" text="AUTOMATIK" />
         <text name="uch_ui_teleport" text="TELEPORT" />
-        <text name="uch_ui_teleportButton" text="ZUM FÖRDERBAND" />
+        <text name="uch_ui_teleportButton" text="TELEPORT" />
         <text name="uch_ui_noConveyors" text="Keine verwalteten Förderbänder gefunden." />
         <text name="uch_ui_automationTooltip" text="Aktiviert oder deaktiviert die Automatik dieses Förderbands. Bei AUS greift der Universal Conveyor Helper für dieses Förderband nicht ein." />
         <text name="uch_ui_conveyorName" text="Förderbandname" />
@@ -32,5 +33,12 @@
         <text name="uch_ui_teleportSuccess" text="Zum Förderband '%s' teleportiert." />
         <text name="uch_ui_teleportConfirm" text="Möchtest du dich wirklich zum Förderband '%s' teleportieren?" />
         <text name="uch_ui_pageInfo" text="Hier verwaltest du die erkannten Förderbänder. Namen, Automatik und Teleport werden pro Förderband gespeichert." />
+            <text name="uch_ui_aiAngle" text="KI-Winkel" />
+        <text name="uch_ui_aiHelper" text="KI-Helfer" />
+        <text name="uch_ui_ai_start"><![CDATA[KI starten]]></text>
+        <text name="uch_ui_ai_stop"><![CDATA[KI stoppen]]></text>
+        <text name="uch_ui_aiInfo"><![CDATA[SL 80-22 Quantum: KI-Helfer starten/stoppen. Winkel über die Taste ändern; Standard 30°. Einstellungen werden pro Förderband gespeichert.]]></text>
     </texts>
+
+
 </l10n>

@@ -75,6 +75,7 @@ function UniversalConveyorSettingsPage.new(customMt)
     self.nameDrafts = {}
     self.focusedRowIndex = nil
     self.lastInfoElement = nil
+    self.selectedCategory = "all"
     return self
 end
 
@@ -118,6 +119,8 @@ function UniversalConveyorSettingsPage:updateInfoForElement(element)
         text = g_i18n:getText("uch_ui_automationInfo")
     elseif infoKind == "teleport" or element == rowData.teleport then
         text = g_i18n:getText("uch_ui_teleportInfo")
+    elseif infoKind == "ai" or element == rowData.aiAngle or element == rowData.aiToggle then
+        text = g_i18n:getText("uch_ui_aiInfo")
     end
 
     if text ~= nil then
@@ -192,6 +195,12 @@ function UniversalConveyorSettingsPage:onFocusAutomation(element)
         self.focusedRowIndex = self.elementToRow[element] or self.focusedRowIndex
     end
     self:setInfo(g_i18n:getText("uch_ui_automationInfo"))
+end
+
+function UniversalConveyorSettingsPage:onFocusAI(element)
+    self.lastInfoElement = nil
+    if element ~= nil then self.focusedRowIndex = self.elementToRow[element] or self.focusedRowIndex end
+    self:setInfo(g_i18n:getText("uch_ui_aiInfo"))
 end
 
 function UniversalConveyorSettingsPage:onFocusTeleport(element)
@@ -337,6 +346,8 @@ function UniversalConveyorSettingsPage:onGuiSetupFinished()
         local nameInput = self["name" .. i]
         local enabled = self["enabled" .. i]
         local teleport = self["teleport" .. i]
+        local aiAngle = self["aiAngle" .. i]
+        local aiToggle = self["aiToggle" .. i]
         local typeText = self["type" .. i]
         local icon = self["icon" .. i]
 
@@ -346,6 +357,8 @@ function UniversalConveyorSettingsPage:onGuiSetupFinished()
             nameInput = nameInput,
             enabled = enabled,
             teleport = teleport,
+            aiAngle = aiAngle,
+            aiToggle = aiToggle,
             typeText = typeText,
             entry = nil
         }
@@ -422,6 +435,31 @@ function UniversalConveyorSettingsPage:onGuiSetupFinished()
             teleport.onHighlightCallback = UniversalConveyorSettingsPage.onFocusTeleport
             teleport.onHighlightRemoveCallback = UniversalConveyorSettingsPage.onHighlightRemove
         end
+        if aiAngle ~= nil then
+            self:registerInfoElement(aiAngle, i, "ai")
+            aiAngle.target = self
+            aiAngle.handleFocus = true
+            -- FS25 ButtonElement invokes callbacks on the target without
+            -- passing the clicked element. Capture this row's control so the
+            -- handler never has to guess the active row from mouse focus.
+            aiAngle.onClickCallback = function()
+                self:onClickAISetAngle(aiAngle)
+            end
+            aiAngle.onFocusCallback = UniversalConveyorSettingsPage.onFocusAI
+            aiAngle.onHighlightCallback = UniversalConveyorSettingsPage.onFocusAI
+            aiAngle.onHighlightRemoveCallback = UniversalConveyorSettingsPage.onHighlightRemove
+        end
+        if aiToggle ~= nil then
+            self:registerInfoElement(aiToggle, i, "ai")
+            aiToggle.target = self
+            aiToggle.handleFocus = true
+            aiToggle.onClickCallback = function(state)
+                self:onClickAIToggle(aiToggle, state)
+            end
+            aiToggle.onFocusCallback = UniversalConveyorSettingsPage.onFocusAI
+            aiToggle.onHighlightCallback = UniversalConveyorSettingsPage.onFocusAI
+            aiToggle.onHighlightRemoveCallback = UniversalConveyorSettingsPage.onHighlightRemove
+        end
     end
 end
 
@@ -440,6 +478,30 @@ function UniversalConveyorSettingsPage:onFrameOpen()
     self.isOpen = true
     self.lastInfoElement = nil
     self:onTabOpen()
+end
+
+function UniversalConveyorSettingsPage:onClickCategory(arg1)
+    local element = type(arg1) == "table" and arg1 or nil
+    local id = element ~= nil and element.id or nil
+    local category = nil
+    if id == "uchCategoryAll" then
+        category = "all"
+    elseif id == "uchCategoryS710" then
+        category = "s710"
+    elseif id == "uchCategorySL8022" then
+        category = "sl8022"
+    elseif id == "uchCategoryTC816" then
+        category = "tc816"
+    end
+    if category == nil then
+        Logging.warning("[UniversalConveyorHelper][GUI] Kategorie konnte nicht ermittelt werden | element=%s", tostring(element))
+        return
+    end
+    self.selectedCategory = category
+    if self.controller ~= nil then
+        self:updateConveyors(self.controller:scanConveyors(true))
+    end
+    Logging.info("[UniversalConveyorHelper][GUI] Kategorie gewählt | category=%s", category)
 end
 
 function UniversalConveyorSettingsPage:onTabOpen()
@@ -471,8 +533,54 @@ function UniversalConveyorSettingsPage:updateConveyors(entries)
         return
     end
 
+    -- Preserve the current scroll position when refreshing row values.
+    -- This update changes only the existing row controls; it must not send
+    -- the user back to the top after toggles or angle changes.
+    local scrollLayout = self.conveyorSettingsLayout
+    local savedContentOffsetY = scrollLayout ~= nil and scrollLayout.contentOffsetY or nil
+    local savedTargetContentOffsetY = scrollLayout ~= nil and scrollLayout.targetContentOffsetY or nil
+    local savedScrollPosition = scrollLayout ~= nil and scrollLayout.scrollPosition or nil
+
+    -- Category filtering only changes which rows are displayed. Every entry
+    -- retains its own controller state and all controls remain per-vehicle.
+    local filteredEntries = {}
+    for _, candidate in ipairs(entries or {}) do
+        local vehicle = candidate ~= nil and candidate.vehicle or nil
+        local category = "other"
+        if vehicle ~= nil and self.controller ~= nil then
+            if self.controller:isSL8022(vehicle) then
+                category = "sl8022"
+            else
+                local metadata = string.lower(table.concat({
+                    tostring(vehicle.configFileName or ""),
+                    tostring(vehicle.configFileNameClean or ""),
+                    tostring(vehicle.typeName or ""),
+                    tostring(vehicle.vehicleName or "")
+                }, " "))
+                if string.find(metadata, "s710", 1, true) then
+                    category = "s710"
+                elseif string.find(metadata, "tc816", 1, true) or string.find(metadata, "tc 816", 1, true) then
+                    category = "tc816"
+                end
+            end
+        end
+        if self.selectedCategory == "all" or self.selectedCategory == category then
+            table.insert(filteredEntries, candidate)
+        end
+    end
+    entries = filteredEntries
     local count = #entries
     self.isRefreshing = true
+    local hasQuantum = false
+    for _, candidate in ipairs(entries) do
+        if candidate ~= nil and self.controller:isSL8022(candidate.vehicle) then
+            hasQuantum = true
+            break
+        end
+    end
+    -- Do not show empty KI columns when the current list contains no Quantum.
+    if self.uchHeaderAngleText ~= nil then self.uchHeaderAngleText:setVisible(hasQuantum) end
+    if self.uchHeaderAIText ~= nil then self.uchHeaderAIText:setVisible(hasQuantum) end
 
     for i = 1, #self.rows do
         local rowData = self.rows[i]
@@ -507,6 +615,15 @@ function UniversalConveyorSettingsPage:updateConveyors(entries)
             if rowData.teleport ~= nil then
                 rowData.teleport:setVisible(true)
             end
+            local isQuantum = self.controller:isSL8022(entry.vehicle)
+            if rowData.aiAngle ~= nil then
+                rowData.aiAngle:setVisible(isQuantum)
+                rowData.aiAngle:setText(string.format("%d°", entry.aiAngle or 30))
+            end
+            if rowData.aiToggle ~= nil then
+                rowData.aiToggle:setVisible(isQuantum)
+                rowData.aiToggle:setIsChecked(entry.aiEnabled == true, true)
+            end
 
             if rowData.typeText ~= nil then
                 rowData.typeText:setVisible(true)
@@ -524,6 +641,18 @@ function UniversalConveyorSettingsPage:updateConveyors(entries)
     if self.conveyorSettingsLayout ~= nil then
         self.conveyorSettingsLayout:invalidateLayout()
         self.conveyorSettingsLayout:updateAbsolutePosition()
+
+        -- Restore both the current and target offsets: ScrollingLayoutElement
+        -- animates between these values and resetting only one can still jump.
+        if savedContentOffsetY ~= nil then
+            self.conveyorSettingsLayout.contentOffsetY = savedContentOffsetY
+        end
+        if savedTargetContentOffsetY ~= nil then
+            self.conveyorSettingsLayout.targetContentOffsetY = savedTargetContentOffsetY
+        end
+        if savedScrollPosition ~= nil then
+            self.conveyorSettingsLayout.scrollPosition = savedScrollPosition
+        end
     end
 end
 
@@ -641,6 +770,39 @@ function UniversalConveyorSettingsPage:onClickCheckbox(arg1, arg2)
     )
 
     self.controller:setEnabled(entry.vehicle, enabled)
+    self:updateConveyors(self.controller.currentEntries)
+end
+
+function UniversalConveyorSettingsPage:onClickAISetAngle(arg1)
+    local element = type(arg1) == "table" and arg1 or nil
+    if element == nil or self.elementToRow[element] == nil then
+        if self.focusedRowIndex ~= nil and self.rows[self.focusedRowIndex] ~= nil then element = self.rows[self.focusedRowIndex].aiAngle end
+    end
+    local entry = self:getEntryFromElement(element)
+    if entry == nil or self.controller == nil or not self.controller:isSL8022(entry.vehicle) then
+        Logging.warning("[UniversalConveyorHelper][GUI][AI] Winkel-Klick konnte keiner Quantum-Zeile zugeordnet werden | element=%s", tostring(element))
+        return
+    end
+    local nextAngle = (entry.aiAngle or 30) + 5
+    if nextAngle > 50 then nextAngle = 5 end
+    self.controller:setAIAngle(entry.vehicle, nextAngle)
+    Logging.info("[UniversalConveyorHelper][GUI][AI] Winkel geändert | row=%s | vehicle=%s | angle=%d", tostring(self.elementToRow[element]), tostring(entry.name or entry.typeName), nextAngle)
+    self:updateConveyors(self.controller.currentEntries)
+end
+
+function UniversalConveyorSettingsPage:onClickAIToggle(arg1, state)
+    local element = type(arg1) == "table" and arg1 or nil
+    if element == nil or self.elementToRow[element] == nil then
+        if self.focusedRowIndex ~= nil and self.rows[self.focusedRowIndex] ~= nil then element = self.rows[self.focusedRowIndex].aiToggle end
+    end
+    local entry = self:getEntryFromElement(element)
+    if entry == nil or self.controller == nil or not self.controller:isSL8022(entry.vehicle) then
+        Logging.warning("[UniversalConveyorHelper][GUI][AI] Start/Stopp-Klick konnte keiner Quantum-Zeile zugeordnet werden | element=%s", tostring(element))
+        return
+    end
+    local requestedEnabled = entry.aiEnabled ~= true
+    local accepted = self.controller:setAIEnabled(entry.vehicle, requestedEnabled)
+    Logging.info("[UniversalConveyorHelper][GUI][AI] Start/Stopp betätigt | row=%s | vehicle=%s | requested=%s | accepted=%s", tostring(self.elementToRow[element]), tostring(entry.name or entry.typeName), tostring(requestedEnabled), tostring(accepted))
     self:updateConveyors(self.controller.currentEntries)
 end
 

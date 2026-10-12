@@ -220,8 +220,7 @@ function UniversalAutoTurnOn:stopNative(vehicle)
 end
 
 function UniversalAutoTurnOn:doRecheck()
-    -- Defense in depth: even if this specialization was injected into a broad
-    -- vehicle type, it may only start vehicles in the actual shop category.
+    -- Defense in depth: only actual conveyor shop-category vehicles may be started.
     if UniversalConveyorHelper ~= nil
         and UniversalConveyorHelper.isAutoStartVehicle ~= nil
         and not UniversalConveyorHelper:isAutoStartVehicle(self)
@@ -231,13 +230,18 @@ function UniversalAutoTurnOn:doRecheck()
     end
 
     if not self.isServer then
-        Logging.info("[UniversalConveyorHelper][AUTO_START] %s | kein Server", uchName(self))
+        return
+    end
+
+    -- The global manager revisits conveyors periodically. Once this instance has
+    -- reached a final state, do not repeat start/stop side effects until settings
+    -- explicitly re-enable it (applyRuntimeState resets this flag).
+    if self.uchAutoTurnOnDone then
         return
     end
 
     if self.uchAutoTurnOnEnabled == false then
         self.uchAutoTurnOnDone = true
-        Logging.info("[UniversalConveyorHelper][AUTO_START] Deaktiviert (Runtime-Gate): %s", uchName(self))
         return
     end
 
@@ -248,59 +252,106 @@ function UniversalAutoTurnOn:doRecheck()
         return
     end
 
-    local name = uchName(self)
-
     suppressNativeS710AutoTurnOn(self)
 
-    local startOk = false
-    local running, stateKnown = UniversalAutoTurnOn:getRunningState(self)
-    if running then
+    local name = uchName(self)
+
+    -- Stage 1: distinguish "engine running" from "conveyor switched on".
+    local turnedOn = false
+    local turnStateKnown = false
+    if self.getIsTurnedOn ~= nil then
+        local ok, value = pcall(self.getIsTurnedOn, self)
+        if ok and type(value) == "boolean" then
+            turnedOn, turnStateKnown = value, true
+        end
+    end
+
+    if turnedOn then
         self.uchAutoTurnOnDone = true
+        -- It was already on before this helper completed a start sequence.
+        -- Do not claim ownership and later shut down a manually-started conveyor.
         self.uchAutoTurnOnStartedByHelper = false
-        Logging.info("[UniversalConveyorHelper][AUTO_START] Bereits aktiv: %s", name)
+        self.uchAutoTurnOnStartRequested = nil
+        Logging.info("[UniversalConveyorHelper][AUTO_START] Förderband bereits eingeschaltet: %s", name)
         return
     end
-    local motorResult = nil
-    local turnResult = nil
+
+    -- Read the real motor state. startMotor() only requests STARTING; it does not
+    -- mean the engine is already ON and ready for setIsTurnedOn().
+    local motorState = nil
+    if self.getMotorState ~= nil then
+        local ok, value = pcall(self.getMotorState, self)
+        if ok then motorState = value end
+    end
+
+    local motorStarted = false
+    local motorStateKnown = false
+    if self.getIsMotorStarted ~= nil then
+        local ok, value = pcall(self.getIsMotorStarted, self)
+        if ok and type(value) == "boolean" then
+            motorStarted, motorStateKnown = value, true
+        end
+    end
+
+    local isStarting = MotorState ~= nil and motorState ~= nil and MotorState.STARTING ~= nil
+        and motorState == MotorState.STARTING
+    local isOffOrIgnition = MotorState ~= nil and motorState ~= nil
+        and ((MotorState.OFF ~= nil and motorState == MotorState.OFF)
+            or (MotorState.IGNITION ~= nil and motorState == MotorState.IGNITION))
+
+    if isStarting then
+        -- Wait for a later recheck; never spam startMotor() while the engine is starting.
+        self.uchAutoTurnOnStartRequested = true
+        return
+    end
+
+    if motorStarted then
+        self.uchAutoTurnOnStartRequested = nil
+        if self.setIsTurnedOn ~= nil then
+            local ok, result = pcall(self.setIsTurnedOn, self, true, true)
+            Logging.info("[UniversalConveyorHelper][AUTO_START] %s | Motor läuft; setIsTurnedOn ok=%s result=%s",
+                name, tostring(ok), tostring(result))
+            local verifyOk, verifyValue = false, nil
+            if self.getIsTurnedOn ~= nil then
+                verifyOk, verifyValue = pcall(self.getIsTurnedOn, self)
+            end
+            if verifyOk and verifyValue == true then
+                self.uchAutoTurnOnDone = true
+                self.uchAutoTurnOnStartedByHelper = true
+                Logging.info("[UniversalConveyorHelper][AUTO_START] ERFOLG: %s | Motor und Förderband aktiv", name)
+            else
+                Logging.info("[UniversalConveyorHelper][AUTO_START] %s | Motor läuft, Förderband noch nicht eingeschaltet",
+                    name)
+            end
+        else
+            -- Some conveyor types have no TurnOnVehicle API; a running motor is
+            -- the only available native operating signal for those types.
+            self.uchAutoTurnOnDone = true
+            self.uchAutoTurnOnStartedByHelper = true
+            Logging.info("[UniversalConveyorHelper][AUTO_START] ERFOLG: %s | Motor aktiv; keine TurnOnVehicle-API", name)
+        end
+        return
+    end
+
+    -- If no native motor-state API exists, avoid repeated requests while the first
+    -- start request is pending. A later successful getIsMotorStarted clears this flag.
+    if self.uchAutoTurnOnStartRequested and not isOffOrIgnition and not motorStateKnown then
+        return
+    end
 
     if self.startMotor ~= nil then
         local ok, result = pcall(self.startMotor, self, true)
-        motorResult = result
-        startOk = ok and result ~= false
-        Logging.info("[UniversalConveyorHelper][AUTO_START] %s | startMotor ok=%s result=%s",
-            name, tostring(ok), tostring(result))
-    else
-        Logging.info("[UniversalConveyorHelper][AUTO_START] %s | startMotor=nil", name)
-    end
-
-    if self.setIsTurnedOn ~= nil then
-        local ok, result = pcall(self.setIsTurnedOn, self, true, true)
-        turnResult = result
-        startOk = startOk or (ok and result ~= false)
-        Logging.info("[UniversalConveyorHelper][AUTO_START] %s | setIsTurnedOn ok=%s result=%s",
-            name, tostring(ok), tostring(result))
-    else
-        Logging.info("[UniversalConveyorHelper][AUTO_START] %s | setIsTurnedOn=nil", name)
-    end
-
-    local nowRunning, nowKnown = UniversalAutoTurnOn:getRunningState(self)
-    Logging.info(
-        "[UniversalConveyorHelper][AUTO_START] %s | nach Start running=%s stateKnown=%s",
-        name, tostring(nowRunning), tostring(nowKnown)
-    )
-    if nowRunning then
-        self.uchAutoTurnOnDone = true
-        self.uchAutoTurnOnStartedByHelper = true
-        suppressNativeS710AutoTurnOn(self)
-        Logging.info("[UniversalConveyorHelper][AUTO_START] ERFOLG: %s | vom Helper gestartet", name)
+        self.uchAutoTurnOnStartRequested = ok and result ~= false
+        Logging.info("[UniversalConveyorHelper][AUTO_START] %s | startMotor angefordert | ok=%s | result=%s | motorState=%s",
+            name, tostring(ok), tostring(result), tostring(motorState))
         return
     end
 
-    if not startOk then
-        Logging.info("[UniversalConveyorHelper][AUTO_START] %s | noch nicht startbar", name)
+    -- A vehicle without startMotor cannot progress through the staged engine path.
+    if turnStateKnown then
+        Logging.warning("[UniversalConveyorHelper][AUTO_START] %s | Motorstart nicht möglich: startMotor=nil", name)
     end
 end
-
 
 function UniversalAutoTurnOn.disableBySettings(self, forceStop)
     if self == nil then

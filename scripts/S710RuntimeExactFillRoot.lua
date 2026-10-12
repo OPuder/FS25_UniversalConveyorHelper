@@ -3,7 +3,7 @@
 -- This is deliberately restricted to S710 and does not alter other conveyor models.
 
 UCHS710RuntimeExactFillRoot = {}
-UCHS710RuntimeExactFillRoot.VERSION = "1.9.82.9"
+UCHS710RuntimeExactFillRoot.VERSION = "1.9.83.10"
 UCHS710RuntimeExactFillRoot.DEBUG = true
 
 -- Capture the mod directory while this mod is being loaded. GIANTS may change

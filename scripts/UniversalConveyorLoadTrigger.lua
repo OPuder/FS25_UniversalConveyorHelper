@@ -4,7 +4,7 @@
 -- This does not replace or wrap AutoDrive input handling.
 
 UniversalConveyorLoadTrigger = {}
-UniversalConveyorLoadTrigger.VERSION = "1.9.82.9"
+UniversalConveyorLoadTrigger.VERSION = "1.9.83.10"
 
 local function log(message, ...)
     if Logging ~= nil and Logging.info ~= nil then

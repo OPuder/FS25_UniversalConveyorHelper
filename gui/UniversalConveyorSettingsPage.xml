@@ -8,11 +8,27 @@
         </BoxLayout>
 
         <GuiElement profile="fs25_subCategorySelectorTabbedContainer" id="uchConveyorSettingsPage">
+            <BoxLayout profile="fs25_subCategorySelectorTabbedBox" id="uchCategoryBar">
+                <Button profile="fs25_subCategorySelectorTabbedTab" id="uchCategoryAll" text="Alle" onClick="onClickCategory">
+                    <ThreePartBitmap profile="fs25_subCategorySelectorTabbedTabBg" name="background" />
+                </Button>
+                <Button profile="fs25_subCategorySelectorTabbedTab" id="uchCategoryS710" text="S710" onClick="onClickCategory">
+                    <ThreePartBitmap profile="fs25_subCategorySelectorTabbedTabBg" name="background" />
+                </Button>
+                <Button profile="fs25_subCategorySelectorTabbedTab" id="uchCategorySL8022" text="SL 80-22" onClick="onClickCategory">
+                    <ThreePartBitmap profile="fs25_subCategorySelectorTabbedTabBg" name="background" />
+                </Button>
+                <Button profile="fs25_subCategorySelectorTabbedTab" id="uchCategoryTC816" text="TC816" onClick="onClickCategory">
+                    <ThreePartBitmap profile="fs25_subCategorySelectorTabbedTabBg" name="background" />
+                </Button>
+            </BoxLayout>
             <ScrollingLayout profile="uch_settingsLayout" id="conveyorSettingsLayout">
                 <Bitmap profile="uch_headerRow" id="uchHeaderRow">
                     <Text profile="uch_headerType" text="$l10n_uch_ui_type" />
                     <Text profile="uch_headerName" text="$l10n_uch_ui_name" />
                     <Text profile="uch_headerAutomation" text="$l10n_uch_ui_automation" />
+                    <Text profile="uch_headerAngle" id="uchHeaderAngleText" text="$l10n_uch_ui_aiAngle" />
+                    <Text profile="uch_headerAI" id="uchHeaderAIText" text="$l10n_uch_ui_aiHelper" />
                     <Text profile="uch_headerTeleport" text="$l10n_uch_ui_teleport" />
                 </Bitmap>
 
@@ -22,6 +38,8 @@
                     <TextInput profile="uch_nameInput" id="name1" text="" maxCharacters="40" textColor="1 1 1 1" textHighlightedColor="1 1 1 1" textSelectedColor="1 1 1 1" textDisabledColor="1 1 1 1" imeTitle="$l10n_uch_ui_conveyorName" imeDescription="$l10n_uch_ui_conveyorNameDescription" imePlaceholder="$l10n_uch_ui_conveyorNamePlaceholder" onEnterPressed="onEnterName" onFocus="onFocusName" onFocusLeave="onFocusLeaveName" />
                     <BinaryOption profile="uch_enabled" id="enabled1" onClick="onClickCheckbox" onFocus="onFocusAutomation" onHighlight="onFocusAutomation" onHighlightRemove="onHighlightRemove">
                     </BinaryOption>
+                    <Button profile="uch_aiAngle" id="aiAngle1" text="30°" onClick="onClickAISetAngle" onFocus="onFocusAI" onHighlight="onFocusAI" onHighlightRemove="onHighlightRemove" />
+                    <BinaryOption profile="uch_aiEnabled" id="aiToggle1" onClick="onClickAIToggle" onFocus="onFocusAI" onHighlight="onFocusAI" onHighlightRemove="onHighlightRemove" />
                     <Button profile="uch_teleport" id="teleport1" text="$l10n_uch_ui_teleportButton" onClick="onClickTeleport" onFocus="onFocusTeleport" onHighlight="onFocusTeleport" onHighlightRemove="onHighlightRemove" />
                 </Bitmap>
                 <Bitmap profile="uch_row" id="row2">
@@ -30,6 +48,8 @@
                     <TextInput profile="uch_nameInput" id="name2" text="" maxCharacters="40" textColor="1 1 1 1" textHighlightedColor="1 1 1 1" textSelectedColor="1 1 1 1" textDisabledColor="1 1 1 1" imeTitle="$l10n_uch_ui_conveyorName" imeDescription="$l10n_uch_ui_conveyorNameDescription" imePlaceholder="$l10n_uch_ui_conveyorNamePlaceholder" onEnterPressed="onEnterName" onFocus="onFocusName" onFocusLeave="onFocusLeaveName" />
                     <BinaryOption profile="uch_enabled" id="enabled2" onClick="onClickCheckbox" onFocus="onFocusAutomation" onHighlight="onFocusAutomation" onHighlightRemove="onHighlightRemove">
                     </BinaryOption>
+                    <Button profile="uch_aiAngle" id="aiAngle2" text="30°" onClick="onClickAISetAngle" onFocus="onFocusAI" onHighlight="onFocusAI" onHighlightRemove="onHighlightRemove" />
+                    <BinaryOption profile="uch_aiEnabled" id="aiToggle2" onClick="onClickAIToggle" onFocus="onFocusAI" onHighlight="onFocusAI" onHighlightRemove="onHighlightRemove" />
                     <Button profile="uch_teleport" id="teleport2" text="$l10n_uch_ui_teleportButton" onClick="onClickTeleport" onFocus="onFocusTeleport" onHighlight="onFocusTeleport" onHighlightRemove="onHighlightRemove" />
                 </Bitmap>
                 <Bitmap profile="uch_row" id="row3">
@@ -38,6 +58,8 @@
                     <TextInput profile="uch_nameInput" id="name3" text="" maxCharacters="40" textColor="1 1 1 1" textHighlightedColor="1 1 1 1" textSelectedColor="1 1 1 1" textDisabledColor="1 1 1 1" imeTitle="$l10n_uch_ui_conveyorName" imeDescription="$l10n_uch_ui_conveyorNameDescription" imePlaceholder="$l10n_uch_ui_conveyorNamePlaceholder" onEnterPressed="onEnterName" onFocus="onFocusName" onFocusLeave="onFocusLeaveName" />
                     <BinaryOption profile="uch_enabled" id="enabled3" onClick="onClickCheckbox" onFocus="onFocusAutomation" onHighlight="onFocusAutomation" onHighlightRemove="onHighlightRemove">
                     </BinaryOption>
+                    <Button profile="uch_aiAngle" id="aiAngle3" text="30°" onClick="onClickAISetAngle" onFocus="onFocusAI" onHighlight="onFocusAI" onHighlightRemove="onHighlightRemove" />
+                    <BinaryOption profile="uch_aiEnabled" id="aiToggle3" onClick="onClickAIToggle" onFocus="onFocusAI" onHighlight="onFocusAI" onHighlightRemove="onHighlightRemove" />
                     <Button profile="uch_teleport" id="teleport3" text="$l10n_uch_ui_teleportButton" onClick="onClickTeleport" onFocus="onFocusTeleport" onHighlight="onFocusTeleport" onHighlightRemove="onHighlightRemove" />
                 </Bitmap>
                 <Bitmap profile="uch_row" id="row4">
@@ -46,6 +68,8 @@
                     <TextInput profile="uch_nameInput" id="name4" text="" maxCharacters="40" textColor="1 1 1 1" textHighlightedColor="1 1 1 1" textSelectedColor="1 1 1 1" textDisabledColor="1 1 1 1" imeTitle="$l10n_uch_ui_conveyorName" imeDescription="$l10n_uch_ui_conveyorNameDescription" imePlaceholder="$l10n_uch_ui_conveyorNamePlaceholder" onEnterPressed="onEnterName" onFocus="onFocusName" onFocusLeave="onFocusLeaveName" />
                     <BinaryOption profile="uch_enabled" id="enabled4" onClick="onClickCheckbox" onFocus="onFocusAutomation" onHighlight="onFocusAutomation" onHighlightRemove="onHighlightRemove">
                     </BinaryOption>
+                    <Button profile="uch_aiAngle" id="aiAngle4" text="30°" onClick="onClickAISetAngle" onFocus="onFocusAI" onHighlight="onFocusAI" onHighlightRemove="onHighlightRemove" />
+                    <BinaryOption profile="uch_aiEnabled" id="aiToggle4" onClick="onClickAIToggle" onFocus="onFocusAI" onHighlight="onFocusAI" onHighlightRemove="onHighlightRemove" />
                     <Button profile="uch_teleport" id="teleport4" text="$l10n_uch_ui_teleportButton" onClick="onClickTeleport" onFocus="onFocusTeleport" onHighlight="onFocusTeleport" onHighlightRemove="onHighlightRemove" />
                 </Bitmap>
                 <Bitmap profile="uch_row" id="row5">
@@ -54,6 +78,8 @@
                     <TextInput profile="uch_nameInput" id="name5" text="" maxCharacters="40" textColor="1 1 1 1" textHighlightedColor="1 1 1 1" textSelectedColor="1 1 1 1" textDisabledColor="1 1 1 1" imeTitle="$l10n_uch_ui_conveyorName" imeDescription="$l10n_uch_ui_conveyorNameDescription" imePlaceholder="$l10n_uch_ui_conveyorNamePlaceholder" onEnterPressed="onEnterName" onFocus="onFocusName" onFocusLeave="onFocusLeaveName" />
                     <BinaryOption profile="uch_enabled" id="enabled5" onClick="onClickCheckbox" onFocus="onFocusAutomation" onHighlight="onFocusAutomation" onHighlightRemove="onHighlightRemove">
                     </BinaryOption>
+                    <Button profile="uch_aiAngle" id="aiAngle5" text="30°" onClick="onClickAISetAngle" onFocus="onFocusAI" onHighlight="onFocusAI" onHighlightRemove="onHighlightRemove" />
+                    <BinaryOption profile="uch_aiEnabled" id="aiToggle5" onClick="onClickAIToggle" onFocus="onFocusAI" onHighlight="onFocusAI" onHighlightRemove="onHighlightRemove" />
                     <Button profile="uch_teleport" id="teleport5" text="$l10n_uch_ui_teleportButton" onClick="onClickTeleport" onFocus="onFocusTeleport" onHighlight="onFocusTeleport" onHighlightRemove="onHighlightRemove" />
                 </Bitmap>
                 <Bitmap profile="uch_row" id="row6">
@@ -62,6 +88,8 @@
                     <TextInput profile="uch_nameInput" id="name6" text="" maxCharacters="40" textColor="1 1 1 1" textHighlightedColor="1 1 1 1" textSelectedColor="1 1 1 1" textDisabledColor="1 1 1 1" imeTitle="$l10n_uch_ui_conveyorName" imeDescription="$l10n_uch_ui_conveyorNameDescription" imePlaceholder="$l10n_uch_ui_conveyorNamePlaceholder" onEnterPressed="onEnterName" onFocus="onFocusName" onFocusLeave="onFocusLeaveName" />
                     <BinaryOption profile="uch_enabled" id="enabled6" onClick="onClickCheckbox" onFocus="onFocusAutomation" onHighlight="onFocusAutomation" onHighlightRemove="onHighlightRemove">
                     </BinaryOption>
+                    <Button profile="uch_aiAngle" id="aiAngle6" text="30°" onClick="onClickAISetAngle" onFocus="onFocusAI" onHighlight="onFocusAI" onHighlightRemove="onHighlightRemove" />
+                    <BinaryOption profile="uch_aiEnabled" id="aiToggle6" onClick="onClickAIToggle" onFocus="onFocusAI" onHighlight="onFocusAI" onHighlightRemove="onHighlightRemove" />
                     <Button profile="uch_teleport" id="teleport6" text="$l10n_uch_ui_teleportButton" onClick="onClickTeleport" onFocus="onFocusTeleport" onHighlight="onFocusTeleport" onHighlightRemove="onHighlightRemove" />
                 </Bitmap>
                 <Bitmap profile="uch_row" id="row7">
@@ -70,6 +98,8 @@
                     <TextInput profile="uch_nameInput" id="name7" text="" maxCharacters="40" textColor="1 1 1 1" textHighlightedColor="1 1 1 1" textSelectedColor="1 1 1 1" textDisabledColor="1 1 1 1" imeTitle="$l10n_uch_ui_conveyorName" imeDescription="$l10n_uch_ui_conveyorNameDescription" imePlaceholder="$l10n_uch_ui_conveyorNamePlaceholder" onEnterPressed="onEnterName" onFocus="onFocusName" onFocusLeave="onFocusLeaveName" />
                     <BinaryOption profile="uch_enabled" id="enabled7" onClick="onClickCheckbox" onFocus="onFocusAutomation" onHighlight="onFocusAutomation" onHighlightRemove="onHighlightRemove">
                     </BinaryOption>
+                    <Button profile="uch_aiAngle" id="aiAngle7" text="30°" onClick="onClickAISetAngle" onFocus="onFocusAI" onHighlight="onFocusAI" onHighlightRemove="onHighlightRemove" />
+                    <BinaryOption profile="uch_aiEnabled" id="aiToggle7" onClick="onClickAIToggle" onFocus="onFocusAI" onHighlight="onFocusAI" onHighlightRemove="onHighlightRemove" />
                     <Button profile="uch_teleport" id="teleport7" text="$l10n_uch_ui_teleportButton" onClick="onClickTeleport" onFocus="onFocusTeleport" onHighlight="onFocusTeleport" onHighlightRemove="onHighlightRemove" />
                 </Bitmap>
                 <Bitmap profile="uch_row" id="row8">
@@ -78,6 +108,8 @@
                     <TextInput profile="uch_nameInput" id="name8" text="" maxCharacters="40" textColor="1 1 1 1" textHighlightedColor="1 1 1 1" textSelectedColor="1 1 1 1" textDisabledColor="1 1 1 1" imeTitle="$l10n_uch_ui_conveyorName" imeDescription="$l10n_uch_ui_conveyorNameDescription" imePlaceholder="$l10n_uch_ui_conveyorNamePlaceholder" onEnterPressed="onEnterName" onFocus="onFocusName" onFocusLeave="onFocusLeaveName" />
                     <BinaryOption profile="uch_enabled" id="enabled8" onClick="onClickCheckbox" onFocus="onFocusAutomation" onHighlight="onFocusAutomation" onHighlightRemove="onHighlightRemove">
                     </BinaryOption>
+                    <Button profile="uch_aiAngle" id="aiAngle8" text="30°" onClick="onClickAISetAngle" onFocus="onFocusAI" onHighlight="onFocusAI" onHighlightRemove="onHighlightRemove" />
+                    <BinaryOption profile="uch_aiEnabled" id="aiToggle8" onClick="onClickAIToggle" onFocus="onFocusAI" onHighlight="onFocusAI" onHighlightRemove="onHighlightRemove" />
                     <Button profile="uch_teleport" id="teleport8" text="$l10n_uch_ui_teleportButton" onClick="onClickTeleport" onFocus="onFocusTeleport" onHighlight="onFocusTeleport" onHighlightRemove="onHighlightRemove" />
                 </Bitmap>
                 <Bitmap profile="uch_row" id="row9">
@@ -86,6 +118,8 @@
                     <TextInput profile="uch_nameInput" id="name9" text="" maxCharacters="40" textColor="1 1 1 1" textHighlightedColor="1 1 1 1" textSelectedColor="1 1 1 1" textDisabledColor="1 1 1 1" imeTitle="$l10n_uch_ui_conveyorName" imeDescription="$l10n_uch_ui_conveyorNameDescription" imePlaceholder="$l10n_uch_ui_conveyorNamePlaceholder" onEnterPressed="onEnterName" onFocus="onFocusName" onFocusLeave="onFocusLeaveName" />
                     <BinaryOption profile="uch_enabled" id="enabled9" onClick="onClickCheckbox" onFocus="onFocusAutomation" onHighlight="onFocusAutomation" onHighlightRemove="onHighlightRemove">
                     </BinaryOption>
+                    <Button profile="uch_aiAngle" id="aiAngle9" text="30°" onClick="onClickAISetAngle" onFocus="onFocusAI" onHighlight="onFocusAI" onHighlightRemove="onHighlightRemove" />
+                    <BinaryOption profile="uch_aiEnabled" id="aiToggle9" onClick="onClickAIToggle" onFocus="onFocusAI" onHighlight="onFocusAI" onHighlightRemove="onHighlightRemove" />
                     <Button profile="uch_teleport" id="teleport9" text="$l10n_uch_ui_teleportButton" onClick="onClickTeleport" onFocus="onFocusTeleport" onHighlight="onFocusTeleport" onHighlightRemove="onHighlightRemove" />
                 </Bitmap>
                 <Bitmap profile="uch_row" id="row10">
@@ -94,6 +128,8 @@
                     <TextInput profile="uch_nameInput" id="name10" text="" maxCharacters="40" textColor="1 1 1 1" textHighlightedColor="1 1 1 1" textSelectedColor="1 1 1 1" textDisabledColor="1 1 1 1" imeTitle="$l10n_uch_ui_conveyorName" imeDescription="$l10n_uch_ui_conveyorNameDescription" imePlaceholder="$l10n_uch_ui_conveyorNamePlaceholder" onEnterPressed="onEnterName" onFocus="onFocusName" onFocusLeave="onFocusLeaveName" />
                     <BinaryOption profile="uch_enabled" id="enabled10" onClick="onClickCheckbox" onFocus="onFocusAutomation" onHighlight="onFocusAutomation" onHighlightRemove="onHighlightRemove">
                     </BinaryOption>
+                    <Button profile="uch_aiAngle" id="aiAngle10" text="30°" onClick="onClickAISetAngle" onFocus="onFocusAI" onHighlight="onFocusAI" onHighlightRemove="onHighlightRemove" />
+                    <BinaryOption profile="uch_aiEnabled" id="aiToggle10" onClick="onClickAIToggle" onFocus="onFocusAI" onHighlight="onFocusAI" onHighlightRemove="onHighlightRemove" />
                     <Button profile="uch_teleport" id="teleport10" text="$l10n_uch_ui_teleportButton" onClick="onClickTeleport" onFocus="onFocusTeleport" onHighlight="onFocusTeleport" onHighlightRemove="onHighlightRemove" />
                 </Bitmap>
                 <Bitmap profile="uch_row" id="row11">
@@ -102,6 +138,8 @@
                     <TextInput profile="uch_nameInput" id="name11" text="" maxCharacters="40" textColor="1 1 1 1" textHighlightedColor="1 1 1 1" textSelectedColor="1 1 1 1" textDisabledColor="1 1 1 1" imeTitle="$l10n_uch_ui_conveyorName" imeDescription="$l10n_uch_ui_conveyorNameDescription" imePlaceholder="$l10n_uch_ui_conveyorNamePlaceholder" onEnterPressed="onEnterName" onFocus="onFocusName" onFocusLeave="onFocusLeaveName" />
                     <BinaryOption profile="uch_enabled" id="enabled11" onClick="onClickCheckbox" onFocus="onFocusAutomation" onHighlight="onFocusAutomation" onHighlightRemove="onHighlightRemove">
                     </BinaryOption>
+                    <Button profile="uch_aiAngle" id="aiAngle11" text="30°" onClick="onClickAISetAngle" onFocus="onFocusAI" onHighlight="onFocusAI" onHighlightRemove="onHighlightRemove" />
+                    <BinaryOption profile="uch_aiEnabled" id="aiToggle11" onClick="onClickAIToggle" onFocus="onFocusAI" onHighlight="onFocusAI" onHighlightRemove="onHighlightRemove" />
                     <Button profile="uch_teleport" id="teleport11" text="$l10n_uch_ui_teleportButton" onClick="onClickTeleport" onFocus="onFocusTeleport" onHighlight="onFocusTeleport" onHighlightRemove="onHighlightRemove" />
                 </Bitmap>
                 <Bitmap profile="uch_row" id="row12">
@@ -110,6 +148,8 @@
                     <TextInput profile="uch_nameInput" id="name12" text="" maxCharacters="40" textColor="1 1 1 1" textHighlightedColor="1 1 1 1" textSelectedColor="1 1 1 1" textDisabledColor="1 1 1 1" imeTitle="$l10n_uch_ui_conveyorName" imeDescription="$l10n_uch_ui_conveyorNameDescription" imePlaceholder="$l10n_uch_ui_conveyorNamePlaceholder" onEnterPressed="onEnterName" onFocus="onFocusName" onFocusLeave="onFocusLeaveName" />
                     <BinaryOption profile="uch_enabled" id="enabled12" onClick="onClickCheckbox" onFocus="onFocusAutomation" onHighlight="onFocusAutomation" onHighlightRemove="onHighlightRemove">
                     </BinaryOption>
+                    <Button profile="uch_aiAngle" id="aiAngle12" text="30°" onClick="onClickAISetAngle" onFocus="onFocusAI" onHighlight="onFocusAI" onHighlightRemove="onHighlightRemove" />
+                    <BinaryOption profile="uch_aiEnabled" id="aiToggle12" onClick="onClickAIToggle" onFocus="onFocusAI" onHighlight="onFocusAI" onHighlightRemove="onHighlightRemove" />
                     <Button profile="uch_teleport" id="teleport12" text="$l10n_uch_ui_teleportButton" onClick="onClickTeleport" onFocus="onFocusTeleport" onHighlight="onFocusTeleport" onHighlightRemove="onHighlightRemove" />
                 </Bitmap>
                 <Bitmap profile="uch_row" id="row13">
@@ -118,6 +158,8 @@
                     <TextInput profile="uch_nameInput" id="name13" text="" maxCharacters="40" textColor="1 1 1 1" textHighlightedColor="1 1 1 1" textSelectedColor="1 1 1 1" textDisabledColor="1 1 1 1" imeTitle="$l10n_uch_ui_conveyorName" imeDescription="$l10n_uch_ui_conveyorNameDescription" imePlaceholder="$l10n_uch_ui_conveyorNamePlaceholder" onEnterPressed="onEnterName" onFocus="onFocusName" onFocusLeave="onFocusLeaveName" />
                     <BinaryOption profile="uch_enabled" id="enabled13" onClick="onClickCheckbox" onFocus="onFocusAutomation" onHighlight="onFocusAutomation" onHighlightRemove="onHighlightRemove">
                     </BinaryOption>
+                    <Button profile="uch_aiAngle" id="aiAngle13" text="30°" onClick="onClickAISetAngle" onFocus="onFocusAI" onHighlight="onFocusAI" onHighlightRemove="onHighlightRemove" />
+                    <BinaryOption profile="uch_aiEnabled" id="aiToggle13" onClick="onClickAIToggle" onFocus="onFocusAI" onHighlight="onFocusAI" onHighlightRemove="onHighlightRemove" />
                     <Button profile="uch_teleport" id="teleport13" text="$l10n_uch_ui_teleportButton" onClick="onClickTeleport" onFocus="onFocusTeleport" onHighlight="onFocusTeleport" onHighlightRemove="onHighlightRemove" />
                 </Bitmap>
                 <Bitmap profile="uch_row" id="row14">
@@ -126,6 +168,8 @@
                     <TextInput profile="uch_nameInput" id="name14" text="" maxCharacters="40" textColor="1 1 1 1" textHighlightedColor="1 1 1 1" textSelectedColor="1 1 1 1" textDisabledColor="1 1 1 1" imeTitle="$l10n_uch_ui_conveyorName" imeDescription="$l10n_uch_ui_conveyorNameDescription" imePlaceholder="$l10n_uch_ui_conveyorNamePlaceholder" onEnterPressed="onEnterName" onFocus="onFocusName" onFocusLeave="onFocusLeaveName" />
                     <BinaryOption profile="uch_enabled" id="enabled14" onClick="onClickCheckbox" onFocus="onFocusAutomation" onHighlight="onFocusAutomation" onHighlightRemove="onHighlightRemove">
                     </BinaryOption>
+                    <Button profile="uch_aiAngle" id="aiAngle14" text="30°" onClick="onClickAISetAngle" onFocus="onFocusAI" onHighlight="onFocusAI" onHighlightRemove="onHighlightRemove" />
+                    <BinaryOption profile="uch_aiEnabled" id="aiToggle14" onClick="onClickAIToggle" onFocus="onFocusAI" onHighlight="onFocusAI" onHighlightRemove="onHighlightRemove" />
                     <Button profile="uch_teleport" id="teleport14" text="$l10n_uch_ui_teleportButton" onClick="onClickTeleport" onFocus="onFocusTeleport" onHighlight="onFocusTeleport" onHighlightRemove="onHighlightRemove" />
                 </Bitmap>
                 <Bitmap profile="uch_row" id="row15">
@@ -134,6 +178,8 @@
                     <TextInput profile="uch_nameInput" id="name15" text="" maxCharacters="40" textColor="1 1 1 1" textHighlightedColor="1 1 1 1" textSelectedColor="1 1 1 1" textDisabledColor="1 1 1 1" imeTitle="$l10n_uch_ui_conveyorName" imeDescription="$l10n_uch_ui_conveyorNameDescription" imePlaceholder="$l10n_uch_ui_conveyorNamePlaceholder" onEnterPressed="onEnterName" onFocus="onFocusName" onFocusLeave="onFocusLeaveName" />
                     <BinaryOption profile="uch_enabled" id="enabled15" onClick="onClickCheckbox" onFocus="onFocusAutomation" onHighlight="onFocusAutomation" onHighlightRemove="onHighlightRemove">
                     </BinaryOption>
+                    <Button profile="uch_aiAngle" id="aiAngle15" text="30°" onClick="onClickAISetAngle" onFocus="onFocusAI" onHighlight="onFocusAI" onHighlightRemove="onHighlightRemove" />
+                    <BinaryOption profile="uch_aiEnabled" id="aiToggle15" onClick="onClickAIToggle" onFocus="onFocusAI" onHighlight="onFocusAI" onHighlightRemove="onHighlightRemove" />
                     <Button profile="uch_teleport" id="teleport15" text="$l10n_uch_ui_teleportButton" onClick="onClickTeleport" onFocus="onFocusTeleport" onHighlight="onFocusTeleport" onHighlightRemove="onHighlightRemove" />
                 </Bitmap>
                 <Bitmap profile="uch_row" id="row16">
@@ -142,6 +188,8 @@
                     <TextInput profile="uch_nameInput" id="name16" text="" maxCharacters="40" textColor="1 1 1 1" textHighlightedColor="1 1 1 1" textSelectedColor="1 1 1 1" textDisabledColor="1 1 1 1" imeTitle="$l10n_uch_ui_conveyorName" imeDescription="$l10n_uch_ui_conveyorNameDescription" imePlaceholder="$l10n_uch_ui_conveyorNamePlaceholder" onEnterPressed="onEnterName" onFocus="onFocusName" onFocusLeave="onFocusLeaveName" />
                     <BinaryOption profile="uch_enabled" id="enabled16" onClick="onClickCheckbox" onFocus="onFocusAutomation" onHighlight="onFocusAutomation" onHighlightRemove="onHighlightRemove">
                     </BinaryOption>
+                    <Button profile="uch_aiAngle" id="aiAngle16" text="30°" onClick="onClickAISetAngle" onFocus="onFocusAI" onHighlight="onFocusAI" onHighlightRemove="onHighlightRemove" />
+                    <BinaryOption profile="uch_aiEnabled" id="aiToggle16" onClick="onClickAIToggle" onFocus="onFocusAI" onHighlight="onFocusAI" onHighlightRemove="onHighlightRemove" />
                     <Button profile="uch_teleport" id="teleport16" text="$l10n_uch_ui_teleportButton" onClick="onClickTeleport" onFocus="onFocusTeleport" onHighlight="onFocusTeleport" onHighlightRemove="onHighlightRemove" />
                 </Bitmap>
                 <Bitmap profile="uch_row" id="row17">
@@ -150,6 +198,8 @@
                     <TextInput profile="uch_nameInput" id="name17" text="" maxCharacters="40" textColor="1 1 1 1" textHighlightedColor="1 1 1 1" textSelectedColor="1 1 1 1" textDisabledColor="1 1 1 1" imeTitle="$l10n_uch_ui_conveyorName" imeDescription="$l10n_uch_ui_conveyorNameDescription" imePlaceholder="$l10n_uch_ui_conveyorNamePlaceholder" onEnterPressed="onEnterName" onFocus="onFocusName" onFocusLeave="onFocusLeaveName" />
                     <BinaryOption profile="uch_enabled" id="enabled17" onClick="onClickCheckbox" onFocus="onFocusAutomation" onHighlight="onFocusAutomation" onHighlightRemove="onHighlightRemove">
                     </BinaryOption>
+                    <Button profile="uch_aiAngle" id="aiAngle17" text="30°" onClick="onClickAISetAngle" onFocus="onFocusAI" onHighlight="onFocusAI" onHighlightRemove="onHighlightRemove" />
+                    <BinaryOption profile="uch_aiEnabled" id="aiToggle17" onClick="onClickAIToggle" onFocus="onFocusAI" onHighlight="onFocusAI" onHighlightRemove="onHighlightRemove" />
                     <Button profile="uch_teleport" id="teleport17" text="$l10n_uch_ui_teleportButton" onClick="onClickTeleport" onFocus="onFocusTeleport" onHighlight="onFocusTeleport" onHighlightRemove="onHighlightRemove" />
                 </Bitmap>
                 <Bitmap profile="uch_row" id="row18">
@@ -158,6 +208,8 @@
                     <TextInput profile="uch_nameInput" id="name18" text="" maxCharacters="40" textColor="1 1 1 1" textHighlightedColor="1 1 1 1" textSelectedColor="1 1 1 1" textDisabledColor="1 1 1 1" imeTitle="$l10n_uch_ui_conveyorName" imeDescription="$l10n_uch_ui_conveyorNameDescription" imePlaceholder="$l10n_uch_ui_conveyorNamePlaceholder" onEnterPressed="onEnterName" onFocus="onFocusName" onFocusLeave="onFocusLeaveName" />
                     <BinaryOption profile="uch_enabled" id="enabled18" onClick="onClickCheckbox" onFocus="onFocusAutomation" onHighlight="onFocusAutomation" onHighlightRemove="onHighlightRemove">
                     </BinaryOption>
+                    <Button profile="uch_aiAngle" id="aiAngle18" text="30°" onClick="onClickAISetAngle" onFocus="onFocusAI" onHighlight="onFocusAI" onHighlightRemove="onHighlightRemove" />
+                    <BinaryOption profile="uch_aiEnabled" id="aiToggle18" onClick="onClickAIToggle" onFocus="onFocusAI" onHighlight="onFocusAI" onHighlightRemove="onHighlightRemove" />
                     <Button profile="uch_teleport" id="teleport18" text="$l10n_uch_ui_teleportButton" onClick="onClickTeleport" onFocus="onFocusTeleport" onHighlight="onFocusTeleport" onHighlightRemove="onHighlightRemove" />
                 </Bitmap>
                 <Bitmap profile="uch_row" id="row19">
@@ -166,6 +218,8 @@
                     <TextInput profile="uch_nameInput" id="name19" text="" maxCharacters="40" textColor="1 1 1 1" textHighlightedColor="1 1 1 1" textSelectedColor="1 1 1 1" textDisabledColor="1 1 1 1" imeTitle="$l10n_uch_ui_conveyorName" imeDescription="$l10n_uch_ui_conveyorNameDescription" imePlaceholder="$l10n_uch_ui_conveyorNamePlaceholder" onEnterPressed="onEnterName" onFocus="onFocusName" onFocusLeave="onFocusLeaveName" />
                     <BinaryOption profile="uch_enabled" id="enabled19" onClick="onClickCheckbox" onFocus="onFocusAutomation" onHighlight="onFocusAutomation" onHighlightRemove="onHighlightRemove">
                     </BinaryOption>
+                    <Button profile="uch_aiAngle" id="aiAngle19" text="30°" onClick="onClickAISetAngle" onFocus="onFocusAI" onHighlight="onFocusAI" onHighlightRemove="onHighlightRemove" />
+                    <BinaryOption profile="uch_aiEnabled" id="aiToggle19" onClick="onClickAIToggle" onFocus="onFocusAI" onHighlight="onFocusAI" onHighlightRemove="onHighlightRemove" />
                     <Button profile="uch_teleport" id="teleport19" text="$l10n_uch_ui_teleportButton" onClick="onClickTeleport" onFocus="onFocusTeleport" onHighlight="onFocusTeleport" onHighlightRemove="onHighlightRemove" />
                 </Bitmap>
                 <Bitmap profile="uch_row" id="row20">
@@ -174,6 +228,8 @@
                     <TextInput profile="uch_nameInput" id="name20" text="" maxCharacters="40" textColor="1 1 1 1" textHighlightedColor="1 1 1 1" textSelectedColor="1 1 1 1" textDisabledColor="1 1 1 1" imeTitle="$l10n_uch_ui_conveyorName" imeDescription="$l10n_uch_ui_conveyorNameDescription" imePlaceholder="$l10n_uch_ui_conveyorNamePlaceholder" onEnterPressed="onEnterName" onFocus="onFocusName" onFocusLeave="onFocusLeaveName" />
                     <BinaryOption profile="uch_enabled" id="enabled20" onClick="onClickCheckbox" onFocus="onFocusAutomation" onHighlight="onFocusAutomation" onHighlightRemove="onHighlightRemove">
                     </BinaryOption>
+                    <Button profile="uch_aiAngle" id="aiAngle20" text="30°" onClick="onClickAISetAngle" onFocus="onFocusAI" onHighlight="onFocusAI" onHighlightRemove="onHighlightRemove" />
+                    <BinaryOption profile="uch_aiEnabled" id="aiToggle20" onClick="onClickAIToggle" onFocus="onFocusAI" onHighlight="onFocusAI" onHighlightRemove="onHighlightRemove" />
                     <Button profile="uch_teleport" id="teleport20" text="$l10n_uch_ui_teleportButton" onClick="onClickTeleport" onFocus="onFocusTeleport" onHighlight="onFocusTeleport" onHighlightRemove="onHighlightRemove" />
                 </Bitmap>
                 <Bitmap profile="uch_row" id="row21">
@@ -182,6 +238,8 @@
                     <TextInput profile="uch_nameInput" id="name21" text="" maxCharacters="40" textColor="1 1 1 1" textHighlightedColor="1 1 1 1" textSelectedColor="1 1 1 1" textDisabledColor="1 1 1 1" imeTitle="$l10n_uch_ui_conveyorName" imeDescription="$l10n_uch_ui_conveyorNameDescription" imePlaceholder="$l10n_uch_ui_conveyorNamePlaceholder" onEnterPressed="onEnterName" onFocus="onFocusName" onFocusLeave="onFocusLeaveName" />
                     <BinaryOption profile="uch_enabled" id="enabled21" onClick="onClickCheckbox" onFocus="onFocusAutomation" onHighlight="onFocusAutomation" onHighlightRemove="onHighlightRemove">
                     </BinaryOption>
+                    <Button profile="uch_aiAngle" id="aiAngle21" text="30°" onClick="onClickAISetAngle" onFocus="onFocusAI" onHighlight="onFocusAI" onHighlightRemove="onHighlightRemove" />
+                    <BinaryOption profile="uch_aiEnabled" id="aiToggle21" onClick="onClickAIToggle" onFocus="onFocusAI" onHighlight="onFocusAI" onHighlightRemove="onHighlightRemove" />
                     <Button profile="uch_teleport" id="teleport21" text="$l10n_uch_ui_teleportButton" onClick="onClickTeleport" onFocus="onFocusTeleport" onHighlight="onFocusTeleport" onHighlightRemove="onHighlightRemove" />
                 </Bitmap>
                 <Bitmap profile="uch_row" id="row22">
@@ -190,6 +248,8 @@
                     <TextInput profile="uch_nameInput" id="name22" text="" maxCharacters="40" textColor="1 1 1 1" textHighlightedColor="1 1 1 1" textSelectedColor="1 1 1 1" textDisabledColor="1 1 1 1" imeTitle="$l10n_uch_ui_conveyorName" imeDescription="$l10n_uch_ui_conveyorNameDescription" imePlaceholder="$l10n_uch_ui_conveyorNamePlaceholder" onEnterPressed="onEnterName" onFocus="onFocusName" onFocusLeave="onFocusLeaveName" />
                     <BinaryOption profile="uch_enabled" id="enabled22" onClick="onClickCheckbox" onFocus="onFocusAutomation" onHighlight="onFocusAutomation" onHighlightRemove="onHighlightRemove">
                     </BinaryOption>
+                    <Button profile="uch_aiAngle" id="aiAngle22" text="30°" onClick="onClickAISetAngle" onFocus="onFocusAI" onHighlight="onFocusAI" onHighlightRemove="onHighlightRemove" />
+                    <BinaryOption profile="uch_aiEnabled" id="aiToggle22" onClick="onClickAIToggle" onFocus="onFocusAI" onHighlight="onFocusAI" onHighlightRemove="onHighlightRemove" />
                     <Button profile="uch_teleport" id="teleport22" text="$l10n_uch_ui_teleportButton" onClick="onClickTeleport" onFocus="onFocusTeleport" onHighlight="onFocusTeleport" onHighlightRemove="onHighlightRemove" />
                 </Bitmap>
                 <Bitmap profile="uch_row" id="row23">
@@ -198,6 +258,8 @@
                     <TextInput profile="uch_nameInput" id="name23" text="" maxCharacters="40" textColor="1 1 1 1" textHighlightedColor="1 1 1 1" textSelectedColor="1 1 1 1" textDisabledColor="1 1 1 1" imeTitle="$l10n_uch_ui_conveyorName" imeDescription="$l10n_uch_ui_conveyorNameDescription" imePlaceholder="$l10n_uch_ui_conveyorNamePlaceholder" onEnterPressed="onEnterName" onFocus="onFocusName" onFocusLeave="onFocusLeaveName" />
                     <BinaryOption profile="uch_enabled" id="enabled23" onClick="onClickCheckbox" onFocus="onFocusAutomation" onHighlight="onFocusAutomation" onHighlightRemove="onHighlightRemove">
                     </BinaryOption>
+                    <Button profile="uch_aiAngle" id="aiAngle23" text="30°" onClick="onClickAISetAngle" onFocus="onFocusAI" onHighlight="onFocusAI" onHighlightRemove="onHighlightRemove" />
+                    <BinaryOption profile="uch_aiEnabled" id="aiToggle23" onClick="onClickAIToggle" onFocus="onFocusAI" onHighlight="onFocusAI" onHighlightRemove="onHighlightRemove" />
                     <Button profile="uch_teleport" id="teleport23" text="$l10n_uch_ui_teleportButton" onClick="onClickTeleport" onFocus="onFocusTeleport" onHighlight="onFocusTeleport" onHighlightRemove="onHighlightRemove" />
                 </Bitmap>
                 <Bitmap profile="uch_row" id="row24">
@@ -206,6 +268,8 @@
                     <TextInput profile="uch_nameInput" id="name24" text="" maxCharacters="40" textColor="1 1 1 1" textHighlightedColor="1 1 1 1" textSelectedColor="1 1 1 1" textDisabledColor="1 1 1 1" imeTitle="$l10n_uch_ui_conveyorName" imeDescription="$l10n_uch_ui_conveyorNameDescription" imePlaceholder="$l10n_uch_ui_conveyorNamePlaceholder" onEnterPressed="onEnterName" onFocus="onFocusName" onFocusLeave="onFocusLeaveName" />
                     <BinaryOption profile="uch_enabled" id="enabled24" onClick="onClickCheckbox" onFocus="onFocusAutomation" onHighlight="onFocusAutomation" onHighlightRemove="onHighlightRemove">
                     </BinaryOption>
+                    <Button profile="uch_aiAngle" id="aiAngle24" text="30°" onClick="onClickAISetAngle" onFocus="onFocusAI" onHighlight="onFocusAI" onHighlightRemove="onHighlightRemove" />
+                    <BinaryOption profile="uch_aiEnabled" id="aiToggle24" onClick="onClickAIToggle" onFocus="onFocusAI" onHighlight="onFocusAI" onHighlightRemove="onHighlightRemove" />
                     <Button profile="uch_teleport" id="teleport24" text="$l10n_uch_ui_teleportButton" onClick="onClickTeleport" onFocus="onFocusTeleport" onHighlight="onFocusTeleport" onHighlightRemove="onHighlightRemove" />
                 </Bitmap>
                 <Bitmap profile="uch_row" id="row25">
@@ -214,6 +278,8 @@
                     <TextInput profile="uch_nameInput" id="name25" text="" maxCharacters="40" textColor="1 1 1 1" textHighlightedColor="1 1 1 1" textSelectedColor="1 1 1 1" textDisabledColor="1 1 1 1" imeTitle="$l10n_uch_ui_conveyorName" imeDescription="$l10n_uch_ui_conveyorNameDescription" imePlaceholder="$l10n_uch_ui_conveyorNamePlaceholder" onEnterPressed="onEnterName" onFocus="onFocusName" onFocusLeave="onFocusLeaveName" />
                     <BinaryOption profile="uch_enabled" id="enabled25" onClick="onClickCheckbox" onFocus="onFocusAutomation" onHighlight="onFocusAutomation" onHighlightRemove="onHighlightRemove">
                     </BinaryOption>
+                    <Button profile="uch_aiAngle" id="aiAngle25" text="30°" onClick="onClickAISetAngle" onFocus="onFocusAI" onHighlight="onFocusAI" onHighlightRemove="onHighlightRemove" />
+                    <BinaryOption profile="uch_aiEnabled" id="aiToggle25" onClick="onClickAIToggle" onFocus="onFocusAI" onHighlight="onFocusAI" onHighlightRemove="onHighlightRemove" />
                     <Button profile="uch_teleport" id="teleport25" text="$l10n_uch_ui_teleportButton" onClick="onClickTeleport" onFocus="onFocusTeleport" onHighlight="onFocusTeleport" onHighlightRemove="onHighlightRemove" />
                 </Bitmap>
                 <Bitmap profile="uch_row" id="row26">
@@ -222,6 +288,8 @@
                     <TextInput profile="uch_nameInput" id="name26" text="" maxCharacters="40" textColor="1 1 1 1" textHighlightedColor="1 1 1 1" textSelectedColor="1 1 1 1" textDisabledColor="1 1 1 1" imeTitle="$l10n_uch_ui_conveyorName" imeDescription="$l10n_uch_ui_conveyorNameDescription" imePlaceholder="$l10n_uch_ui_conveyorNamePlaceholder" onEnterPressed="onEnterName" onFocus="onFocusName" onFocusLeave="onFocusLeaveName" />
                     <BinaryOption profile="uch_enabled" id="enabled26" onClick="onClickCheckbox" onFocus="onFocusAutomation" onHighlight="onFocusAutomation" onHighlightRemove="onHighlightRemove">
                     </BinaryOption>
+                    <Button profile="uch_aiAngle" id="aiAngle26" text="30°" onClick="onClickAISetAngle" onFocus="onFocusAI" onHighlight="onFocusAI" onHighlightRemove="onHighlightRemove" />
+                    <BinaryOption profile="uch_aiEnabled" id="aiToggle26" onClick="onClickAIToggle" onFocus="onFocusAI" onHighlight="onFocusAI" onHighlightRemove="onHighlightRemove" />
                     <Button profile="uch_teleport" id="teleport26" text="$l10n_uch_ui_teleportButton" onClick="onClickTeleport" onFocus="onFocusTeleport" onHighlight="onFocusTeleport" onHighlightRemove="onHighlightRemove" />
                 </Bitmap>
                 <Bitmap profile="uch_row" id="row27">
@@ -230,6 +298,8 @@
                     <TextInput profile="uch_nameInput" id="name27" text="" maxCharacters="40" textColor="1 1 1 1" textHighlightedColor="1 1 1 1" textSelectedColor="1 1 1 1" textDisabledColor="1 1 1 1" imeTitle="$l10n_uch_ui_conveyorName" imeDescription="$l10n_uch_ui_conveyorNameDescription" imePlaceholder="$l10n_uch_ui_conveyorNamePlaceholder" onEnterPressed="onEnterName" onFocus="onFocusName" onFocusLeave="onFocusLeaveName" />
                     <BinaryOption profile="uch_enabled" id="enabled27" onClick="onClickCheckbox" onFocus="onFocusAutomation" onHighlight="onFocusAutomation" onHighlightRemove="onHighlightRemove">
                     </BinaryOption>
+                    <Button profile="uch_aiAngle" id="aiAngle27" text="30°" onClick="onClickAISetAngle" onFocus="onFocusAI" onHighlight="onFocusAI" onHighlightRemove="onHighlightRemove" />
+                    <BinaryOption profile="uch_aiEnabled" id="aiToggle27" onClick="onClickAIToggle" onFocus="onFocusAI" onHighlight="onFocusAI" onHighlightRemove="onHighlightRemove" />
                     <Button profile="uch_teleport" id="teleport27" text="$l10n_uch_ui_teleportButton" onClick="onClickTeleport" onFocus="onFocusTeleport" onHighlight="onFocusTeleport" onHighlightRemove="onHighlightRemove" />
                 </Bitmap>
                 <Bitmap profile="uch_row" id="row28">
@@ -238,6 +308,8 @@
                     <TextInput profile="uch_nameInput" id="name28" text="" maxCharacters="40" textColor="1 1 1 1" textHighlightedColor="1 1 1 1" textSelectedColor="1 1 1 1" textDisabledColor="1 1 1 1" imeTitle="$l10n_uch_ui_conveyorName" imeDescription="$l10n_uch_ui_conveyorNameDescription" imePlaceholder="$l10n_uch_ui_conveyorNamePlaceholder" onEnterPressed="onEnterName" onFocus="onFocusName" onFocusLeave="onFocusLeaveName" />
                     <BinaryOption profile="uch_enabled" id="enabled28" onClick="onClickCheckbox" onFocus="onFocusAutomation" onHighlight="onFocusAutomation" onHighlightRemove="onHighlightRemove">
                     </BinaryOption>
+                    <Button profile="uch_aiAngle" id="aiAngle28" text="30°" onClick="onClickAISetAngle" onFocus="onFocusAI" onHighlight="onFocusAI" onHighlightRemove="onHighlightRemove" />
+                    <BinaryOption profile="uch_aiEnabled" id="aiToggle28" onClick="onClickAIToggle" onFocus="onFocusAI" onHighlight="onFocusAI" onHighlightRemove="onHighlightRemove" />
                     <Button profile="uch_teleport" id="teleport28" text="$l10n_uch_ui_teleportButton" onClick="onClickTeleport" onFocus="onFocusTeleport" onHighlight="onFocusTeleport" onHighlightRemove="onHighlightRemove" />
                 </Bitmap>
                 <Bitmap profile="uch_row" id="row29">
@@ -246,6 +318,8 @@
                     <TextInput profile="uch_nameInput" id="name29" text="" maxCharacters="40" textColor="1 1 1 1" textHighlightedColor="1 1 1 1" textSelectedColor="1 1 1 1" textDisabledColor="1 1 1 1" imeTitle="$l10n_uch_ui_conveyorName" imeDescription="$l10n_uch_ui_conveyorNameDescription" imePlaceholder="$l10n_uch_ui_conveyorNamePlaceholder" onEnterPressed="onEnterName" onFocus="onFocusName" onFocusLeave="onFocusLeaveName" />
                     <BinaryOption profile="uch_enabled" id="enabled29" onClick="onClickCheckbox" onFocus="onFocusAutomation" onHighlight="onFocusAutomation" onHighlightRemove="onHighlightRemove">
                     </BinaryOption>
+                    <Button profile="uch_aiAngle" id="aiAngle29" text="30°" onClick="onClickAISetAngle" onFocus="onFocusAI" onHighlight="onFocusAI" onHighlightRemove="onHighlightRemove" />
+                    <BinaryOption profile="uch_aiEnabled" id="aiToggle29" onClick="onClickAIToggle" onFocus="onFocusAI" onHighlight="onFocusAI" onHighlightRemove="onHighlightRemove" />
                     <Button profile="uch_teleport" id="teleport29" text="$l10n_uch_ui_teleportButton" onClick="onClickTeleport" onFocus="onFocusTeleport" onHighlight="onFocusTeleport" onHighlightRemove="onHighlightRemove" />
                 </Bitmap>
                 <Bitmap profile="uch_row" id="row30">
@@ -254,6 +328,8 @@
                     <TextInput profile="uch_nameInput" id="name30" text="" maxCharacters="40" textColor="1 1 1 1" textHighlightedColor="1 1 1 1" textSelectedColor="1 1 1 1" textDisabledColor="1 1 1 1" imeTitle="$l10n_uch_ui_conveyorName" imeDescription="$l10n_uch_ui_conveyorNameDescription" imePlaceholder="$l10n_uch_ui_conveyorNamePlaceholder" onEnterPressed="onEnterName" onFocus="onFocusName" onFocusLeave="onFocusLeaveName" />
                     <BinaryOption profile="uch_enabled" id="enabled30" onClick="onClickCheckbox" onFocus="onFocusAutomation" onHighlight="onFocusAutomation" onHighlightRemove="onHighlightRemove">
                     </BinaryOption>
+                    <Button profile="uch_aiAngle" id="aiAngle30" text="30°" onClick="onClickAISetAngle" onFocus="onFocusAI" onHighlight="onFocusAI" onHighlightRemove="onHighlightRemove" />
+                    <BinaryOption profile="uch_aiEnabled" id="aiToggle30" onClick="onClickAIToggle" onFocus="onFocusAI" onHighlight="onFocusAI" onHighlightRemove="onHighlightRemove" />
                     <Button profile="uch_teleport" id="teleport30" text="$l10n_uch_ui_teleportButton" onClick="onClickTeleport" onFocus="onFocusTeleport" onHighlight="onFocusTeleport" onHighlightRemove="onHighlightRemove" />
                 </Bitmap>
             </ScrollingLayout>
@@ -319,24 +395,28 @@
             <height value="42px" />
         </Profile>
         <Profile name="uch_typeText" extends="fs25_textDefault" with="anchorMiddleLeft"><focusOnHighlight value="true" />
-            <position value="105px 0px" />
-            <width value="175px" />
+            <position value="65px 0px" />
+            <width value="140px" />
             <textAlignment value="left" />
             <textSize value="17px" />
             <textBold value="false" />
             <textAutoWidth value="false" />
         </Profile>
 
-        <Profile name="uch_headerType" extends="fs25_textDefault" with="anchorMiddleLeft"><position value="110px 0px" /><width value="175px" /><textSize value="15px" /></Profile>
-        <Profile name="uch_headerName" extends="fs25_textDefault" with="anchorMiddleLeft"><position value="290px 0px" /><width value="250px" /><textSize value="15px" /><textAlignment value="left" /></Profile>
-        <Profile name="uch_headerAutomation" extends="fs25_textDefault" with="anchorMiddleLeft"><position value="555px 0px" /><width value="130px" /><textSize value="15px" /><textAlignment value="center" /></Profile>
-        <Profile name="uch_headerTeleport" extends="fs25_textDefault" with="anchorMiddleLeft"><position value="715px 0px" /><width value="175px" /><textSize value="15px" /><textAlignment value="center" /></Profile>
+        <Profile name="uch_headerType" extends="fs25_textDefault" with="anchorMiddleLeft"><position value="65px 0px" /><width value="140px" /><textSize value="15px" /></Profile>
+        <Profile name="uch_headerName" extends="fs25_textDefault" with="anchorMiddleLeft"><position value="170px 0px" /><width value="245px" /><textSize value="15px" /><textAlignment value="left" /></Profile>
+        <Profile name="uch_headerAutomation" extends="fs25_textDefault" with="anchorMiddleLeft"><position value="420px 0px" /><width value="110px" /><textSize value="15px" /><textAlignment value="center" /></Profile>
+        <Profile name="uch_headerAngle" extends="fs25_textDefault" with="anchorMiddleLeft"><position value="540px 0px" /><width value="85px" /><textSize value="15px" /><textAlignment value="center" /></Profile>
+        <Profile name="uch_headerAI" extends="fs25_textDefault" with="anchorMiddleLeft"><position value="635px 0px" /><width value="120px" /><textSize value="15px" /><textAlignment value="center" /></Profile>
+        <Profile name="uch_headerTeleport" extends="fs25_textDefault" with="anchorMiddleLeft"><position value="770px 0px" /><width value="110px" /><textSize value="15px" /><textAlignment value="center" /></Profile>
 
-        <Profile name="uch_nameInput" extends="textInput" with="anchorMiddleLeft"><enterWhenClickOutside value="true" /><position value="290px 0px" /><width value="250px" /><height value="38px" /><textSize value="18px" /><textAlignment value="left" /><textAutoWidth value="false" /><imageColor value="0.10 0.10 0.10 1" /><textColor value="1 1 1 1" /><textHighlightedColor value="1 1 1 1" /><textSelectedColor value="1 1 1 1" /><textDisabledColor value="1 1 1 1" /><focusOnHighlight value="true" /><maxCharacters value="40" /><maxInputTextWidth value="220px" /><cursorSize value="2px 24px" /><cursorOffset value="0px 0px" /><applyProfanityFilter value="false" /></Profile>
+        <Profile name="uch_nameInput" extends="textInput" with="anchorMiddleLeft"><enterWhenClickOutside value="true" /><position value="155px 0px" /><width value="260px" /><height value="38px" /><textSize value="18px" /><textAlignment value="left" /><textAutoWidth value="false" /><imageColor value="0.10 0.10 0.10 1" /><textColor value="1 1 1 1" /><textHighlightedColor value="1 1 1 1" /><textSelectedColor value="1 1 1 1" /><textDisabledColor value="1 1 1 1" /><focusOnHighlight value="true" /><maxCharacters value="40" /><maxInputTextWidth value="260px" /><cursorSize value="2px 24px" /><cursorOffset value="0px 0px" /><applyProfanityFilter value="false" /></Profile>
 
-        <Profile name="uch_enabled" extends="fs25_binaryOption" with="anchorMiddleLeft"><position value="555px 0px" /><width value="130px" /><height value="38px" /><focusOnHighlight value="true" /></Profile>
+        <Profile name="uch_enabled" extends="fs25_binaryOption" with="anchorMiddleLeft"><position value="420px 0px" /><width value="110px" /><height value="38px" /><focusOnHighlight value="true" /></Profile>
 
-        <Profile name="uch_teleport" extends="buttonActivate" with="anchorMiddleLeft"><position value="715px 0px" /><width value="175px" /><height value="38px" /><textSize value="15px" /><textAlignment value="center" /><focusOnHighlight value="true" /></Profile>
+        <Profile name="uch_aiAngle" extends="fs25_button" with="anchorMiddleLeft"><position value="540px 0px" /><width value="85px" /><height value="38px" /><textSize value="17px" /><textAlignment value="center" /><textColor value="1 1 1 1" /><imageColor value="0 0 0 0" /><focusOnHighlight value="true" /></Profile>
+        <Profile name="uch_aiEnabled" extends="fs25_binaryOption" with="anchorMiddleLeft"><position value="635px 0px" /><width value="120px" /><height value="38px" /><focusOnHighlight value="true" /></Profile>
+        <Profile name="uch_teleport" extends="fs25_button" with="anchorMiddleLeft"><position value="770px 0px" /><width value="110px" /><height value="38px" /><textSize value="15px" /><textAlignment value="center" /><textColor value="1 1 1 1" /><imageColor value="0 0 0 0" /><focusOnHighlight value="true" /></Profile>
 
         <Profile name="uch_infoSeparator" extends="fs25_settingsTooltipSeparator" with="anchorTopLeft"><position value="1110px -100px" /><height value="700px" /></Profile>
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
 <modDesc descVersion="113">
     <author>OligenOle</author>
-    <version>1.9.83.3</version>
+    <version>1.9.83.35</version>
     <title>
         <en>Universal Conveyor Helper</en>
         <de>Universal Förderband Helper</de>
@@ -17,6 +17,9 @@
         <sourceFile filename="scripts/UniversalConveyorSettingsPage.lua"/>
         <sourceFile filename="scripts/UniversalConveyorSettingsGui.lua"/>
         <sourceFile filename="scripts/UniversalConveyorSettings.lua"/>
+        <sourceFile filename="scripts/UniversalConveyorRegistry.lua"/>
+        <sourceFile filename="scripts/UniversalConveyorAI.lua"/>
+        <sourceFile filename="scripts/UniversalConveyorOperations.lua"/>
         <sourceFile filename="scripts/UniversalConveyorHelper.lua"/>
         <sourceFile filename="scripts/ConveyorDetection.lua"/>
         <sourceFile filename="scripts/ConveyorSpeedControl.lua"/>
@@ -26,4 +29,12 @@
         <sourceFile filename="scripts/VehicleDetection.lua"/>
         <sourceFile filename="scripts/S710RuntimeExactFillRoot.lua"/>
     </extraSourceFiles>
+    <actions>
+        <action name="UCH_QUANTUM_AI_TOGGLE" category="VEHICLE" axisType="HALF" ignoreComboMask="false"/>
+    </actions>
+    <inputBinding>
+        <actionBinding action="UCH_QUANTUM_AI_TOGGLE">
+            <binding device="KB_MOUSE_DEFAULT" input="KEY_h" />
+        </actionBinding>
+    </inputBinding>
 </modDesc>

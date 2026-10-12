@@ -2,7 +2,7 @@
 -- Diagnostic-only inspection of native nodes relevant to AutoDrive unload-target support.
 -- Does not create triggers, alter discharge behavior, or modify other mods.
 AutoDriveUnloadNodeDiagnostics = {}
-AutoDriveUnloadNodeDiagnostics.VERSION = "1.9.82.9"
+AutoDriveUnloadNodeDiagnostics.VERSION = "1.9.83.10"
 
 local function log(message, ...)
     if Logging ~= nil and Logging.info ~= nil then

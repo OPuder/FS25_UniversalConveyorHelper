@@ -4,7 +4,7 @@
 -- nodes and FillVolume/LoadInfo structures already exist. It does not create
 -- I3D geometry or fabricate missing native FillVolume/trigger objects.
 AutoDriveUnloadSupport = {}
-AutoDriveUnloadSupport.VERSION = "1.9.82.9"
+AutoDriveUnloadSupport.VERSION = "1.9.83.10"
 
 local function log(message, ...)
     if Logging ~= nil and Logging.info ~= nil then

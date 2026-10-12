@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
 <l10n>
     <texts>
+        <text name="input_UCH_QUANTUM_AI_TOGGLE" text="Toggle SL 80-22 Quantum AI helper" />
         <text name="global_uch_ui_folders" text="CONVEYORS" />
         <text name="uch_ui_conveyorSettings" text="Conveyor Settings" />
         <text name="uch_ui_type" text="TYPE" />
         <text name="uch_ui_name" text="NAME" />
         <text name="uch_ui_automation" text="AUTOMATION" />
         <text name="uch_ui_teleport" text="TELEPORT" />
-        <text name="uch_ui_teleportButton" text="TO CONVEYOR" />
+        <text name="uch_ui_teleportButton" text="TELEPORT" />
         <text name="uch_ui_noConveyors" text="No managed conveyors found." />
         <text name="uch_ui_automationTooltip" text="Enables or disables automation for this conveyor. When OFF, the Universal Conveyor Helper does not act on this conveyor." />
         <text name="uch_ui_conveyorName" text="Conveyor name" />
@@ -32,5 +33,12 @@
         <text name="uch_ui_teleportSuccess" text="Teleported to conveyor '%s'." />
         <text name="uch_ui_teleportConfirm" text="Do you really want to teleport to conveyor '%s'?" />
         <text name="uch_ui_pageInfo" text="Manage the detected conveyors here. Names, automation and teleport settings are stored per conveyor." />
+            <text name="uch_ui_aiAngle" text="AI ANGLE" />
+        <text name="uch_ui_aiHelper" text="AI HELPER" />
+        <text name="uch_ui_ai_start"><![CDATA[Start AI]]></text>
+        <text name="uch_ui_ai_stop"><![CDATA[Stop AI]]></text>
+        <text name="uch_ui_aiInfo"><![CDATA[SL 80-22 Quantum: start/stop the AI helper. Change the angle with the angle button; default 30°. Settings are saved per conveyor.]]></text>
     </texts>
+
+
 </l10n>
