@@ -82,6 +82,12 @@ unerwartetem Verhalten bitte beide Einstellungen kontrollieren.
 -   Der native KI-Job übernimmt die eigentliche Schwenkbewegung des
     Förderbands
 
+### 🚚 AutoDrive-Kompatibilität
+
+- **UCH kann zusammen mit AutoDrive verwendet werden.** AutoDrive bleibt für seine Fahr- und Routenaufgaben zuständig, während UCH die unterstützten Förderbänder verwaltet und deren Funktionen bereitstellt.
+- UCH ersetzt AutoDrive nicht und nimmt keine Änderungen an dessen Kernlogik vor.
+- Welche Abläufe funktionieren, hängt vom eingesetzten Fahrzeug, dem Förderbandtyp und der jeweiligen Mod-Konfiguration ab. Bitte die Abläufe mit der eigenen Kombination testen.
+
 ### 🧰 Unterstützung unterschiedlicher Förderbandtypen
 
 UCH berücksichtigt Besonderheiten einzelner Förderbandtypen, statt für
@@ -280,6 +286,12 @@ settings.
 -   Adjustable sweep angle
 -   The UCH AI workflow uses a speed of **1 km/h**
 -   The native AI job handles the conveyor's actual sweeping movement
+
+### 🚚 AutoDrive compatibility
+
+- **UCH can be used alongside AutoDrive.** AutoDrive remains responsible for its driving and route tasks, while UCH manages supported conveyors and provides its conveyor-related features.
+- UCH does not replace AutoDrive or modify its core logic.
+- Available workflows depend on the vehicle, conveyor type, and mod configuration. Please test the intended workflow with your specific setup.
 
 ### 🧰 Support for different conveyor types
 
